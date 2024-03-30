@@ -1,0 +1,46 @@
+﻿@using MusicProject
+@using MusicProject.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model IEnumerable<MusicProject.Models.Artist>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="artist-details">
+    <!-- Этот блок будет отображаться только для первого артиста в коллекции -->
+    @if (Model.Any())
+    {
+        <h2>ID of First Artist: @Model.First().Id</h2>
+        <h2>Name of First Artist: @Model.First().Name</h2>
+    }
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var artist in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => artist.Name)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@artist.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@artist.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@artist.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
