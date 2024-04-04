@@ -1,12 +1,26 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MusicProject.Data;
+using MusicProject.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddDbContext<MusicProjectContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("default")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddIdentity<User, IdentityRole>(
+    options =>
+    {
+        options.Password.RequiredUniqueChars = 0;
+        options.Password.RequireUppercase = false;
+        options.Password.RequiredLength = 8;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequireLowercase = false;
+    })
+    .AddEntityFrameworkStores<MusicProjectContext>().AddDefaultTokenProviders();
 
 var app = builder.Build();
 

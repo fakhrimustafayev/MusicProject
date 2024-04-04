@@ -321,7 +321,8 @@
                             <ul class="sub-nav collapse" id="sidebar-user" data-bs-parent="#sidebar-menu">
                                 <li class="nav-item">
                                     <a class="nav-link "
-                                        href="app/user-profile.html">
+                                        href="app/user-
+.html">
                                         <i class="icon">
                                             <svg class="icon-10" width="10" viewBox="0 0 24 24" fill="currentColor"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -732,7 +733,7 @@
         <!-- qompacui Script -->
         <script src="~/assets/js/muzikf700.js?v=1.0.1" defer></script>
         <script src="~/assets/js/sidebarf700.js?v=1.0.1" defer></script>
-        
+    @await RenderSectionAsync("Scripts", required: false)
     </body>
 </html>
 

@@ -1,10 +1,19 @@
-﻿namespace MusicProject.Models;
-    public class User
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
+
+namespace MusicProject.Models;
+    public class User : IdentityUser
     {
-    public int Id { get; set; }
+
+    [Key]
+    public new int Id { get; set; } 
+
+    [StringLength(100)]
+    [MaxLength(100)]
+    [Required]
     public string Username { get; set; } = null!;
 
-    public string Email { get; set; } = null!;
+    public string? Email { get; set; } 
 
     public string Password { get; set; } = null!;
     }
