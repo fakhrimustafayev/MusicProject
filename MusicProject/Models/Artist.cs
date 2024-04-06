@@ -1,4 +1,4 @@
-﻿namespace MusicProject.Models;
+﻿namespace MusicProject.Models.Art;
 
 public class Artist
 {

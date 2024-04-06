@@ -49,7 +49,7 @@ namespace MusicProject.Areas.admin.Controllers
         // GET: admin/Tracks/Create
         public IActionResult Create()
         {
-            ViewData["ArtistId"] = new SelectList(_context.Set<Artist>(), "Id", "Id");
+            ViewData["ArtistId"] = new SelectList(_context.Set<Singer>(), "Id", "Id");
             return View();
         }
 
@@ -66,7 +66,7 @@ namespace MusicProject.Areas.admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ArtistId"] = new SelectList(_context.Set<Artist>(), "Id", "Id", track.Id);
+            ViewData["ArtistId"] = new SelectList(_context.Set<Singer>(), "Id", "Id", track.Id);
             return View(track);
         }
 
@@ -83,7 +83,7 @@ namespace MusicProject.Areas.admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["ArtistId"] = new SelectList(_context.Set<Artist>(), "Id", "Id", track.Id);
+            ViewData["ArtistId"] = new SelectList(_context.Set<Singer>(), "Id", "Id", track.Id);
             return View(track);
         }
 
@@ -119,7 +119,7 @@ namespace MusicProject.Areas.admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ArtistId"] = new SelectList(_context.Set<Artist>(), "Id", "Id", track.Id);
+            ViewData["ArtistId"] = new SelectList(_context.Set<Singer>(), "Id", "Id", track.Id);
             return View(track);
         }
 

@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MusicProject.Data;
 using MusicProject.Models;
+using MusicProject.Services.Spotify;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,17 @@ builder.Services.AddDbContext<MusicProjectContext>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddHttpClient<ISpotifyAccountService, SpotifyAccountService>(c =>
+{
+    c.BaseAddress = new Uri("https://accounts.spotify.com/api/");
+});
+
+builder.Services.AddHttpClient<ISpotifyService, SpotifyService>(c =>
+{
+    c.BaseAddress = new Uri("https://api.spotify.com/v1/");
+    c.DefaultRequestHeaders.Add("Accept", "application/json");
+});
 
 builder.Services.AddIdentity<User, IdentityRole>(
     options =>
@@ -22,7 +35,9 @@ builder.Services.AddIdentity<User, IdentityRole>(
     })
     .AddEntityFrameworkStores<MusicProjectContext>().AddDefaultTokenProviders();
 
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

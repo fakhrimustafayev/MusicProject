@@ -19,7 +19,7 @@ namespace MusicProject.ViewModels
         [DataType(DataType.Password)]
         public string? ConfirmPassword { get; set; }
 
-        [DataType(DataType.PhoneNumber)]
-        public string? Phone { get; set; }
+        //[DataType(DataType.PhoneNumber)]
+        //public string? Phone { get; set; }
     }
 }

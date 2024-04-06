@@ -16,6 +16,6 @@ public class Track
     public string Preview { get; set; }
     public string Md5Image { get; set; }
     public long TimeAdd { get; set; }
-    public Artist Artist { get; set; }
+    public Singer Artist { get; set; }
     public Album Album { get; set; }
 }

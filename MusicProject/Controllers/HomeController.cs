@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MusicProject.Models;
+using MusicProject.Services.Spotify;
+using System.Collections;
 using System.Diagnostics;
 
 namespace MusicProject.Controllers
@@ -7,15 +9,39 @@ namespace MusicProject.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IConfiguration _configuration;
+        private readonly ISpotifyService _spotifyService;
+        private readonly ISpotifyAccountService _spotifyAccountService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ISpotifyAccountService spotifyAccountService, IConfiguration configuration, ISpotifyService spotifyService)
         {
-            _logger = logger;
+            _spotifyAccountService = spotifyAccountService;
+            _configuration = configuration;
+            _spotifyService = spotifyService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var newRelease = await GetReleases();
+            return View(newRelease);
+        }
+
+        private async Task<IEnumerable<Release>> GetReleases()
+        {
+            try
+            {
+                var token = await _spotifyAccountService.GetToken(_configuration["Spotify:ClientId"], _configuration["Spotify:ClientSecret"]);
+
+                var newReleases = await _spotifyService.GetNewReleases("US", 20, token);
+
+                return newReleases;
+            }
+            catch (Exception ex)
+            {
+                Debug.Write(ex);
+
+                return Enumerable.Empty<Release>();
+            }
         }
 
         public IActionResult Users()

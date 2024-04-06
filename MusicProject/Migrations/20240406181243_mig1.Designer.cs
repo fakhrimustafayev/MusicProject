@@ -12,15 +12,15 @@ using MusicProject.Data;
 namespace MusicProject.Migrations
 {
     [DbContext(typeof(MusicProjectContext))]
-    [Migration("20240311200254_econdigration")]
-    partial class econdigration
+    [Migration("20240406181243_mig1")]
+    partial class mig1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasAnnotation("ProductVersion", "8.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -74,7 +74,7 @@ namespace MusicProject.Migrations
                     b.ToTable("Album");
                 });
 
-            modelBuilder.Entity("MusicProject.Models.Artist", b =>
+            modelBuilder.Entity("MusicProject.Models.Art.Artist", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -236,6 +236,32 @@ namespace MusicProject.Migrations
                     b.ToTable("Playlist");
                 });
 
+            modelBuilder.Entity("MusicProject.Models.Singer", b =>
+                {
+                    b.Property<string>("id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("href")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("uri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Singer");
+                });
+
             modelBuilder.Entity("MusicProject.Models.Track", b =>
                 {
                     b.Property<int>("Id")
@@ -247,8 +273,8 @@ namespace MusicProject.Migrations
                     b.Property<int>("AlbumId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ArtistId")
-                        .HasColumnType("int");
+                    b.Property<string>("Artistid")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("CategoryId")
                         .HasColumnType("int");
@@ -302,7 +328,7 @@ namespace MusicProject.Migrations
 
                     b.HasIndex("AlbumId");
 
-                    b.HasIndex("ArtistId");
+                    b.HasIndex("Artistid");
 
                     b.HasIndex("CategoryId");
 
@@ -317,16 +343,46 @@ namespace MusicProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -353,11 +409,9 @@ namespace MusicProject.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MusicProject.Models.Artist", "Artist")
+                    b.HasOne("MusicProject.Models.Singer", "Artist")
                         .WithMany()
-                        .HasForeignKey("ArtistId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Artistid");
 
                     b.HasOne("MusicProject.Models.Category", null)
                         .WithMany("Tracks")

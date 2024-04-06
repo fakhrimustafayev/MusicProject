@@ -18,7 +18,8 @@ namespace MusicProject.Data
         public DbSet<MusicProject.Models.Track> Track { get; set; } = default!;
         public DbSet<MusicProject.Models.Playlist> Playlist { get; set; } = default!;
         public DbSet<MusicProject.Models.Category> Category { get; set; } = default!;
-        public DbSet<MusicProject.Models.Artist> Artist { get; set; } = default!;
+        public DbSet<MusicProject.Models.Art.Artist> Artist { get; set; } = default!;
+
         public DbSet<MusicProject.Models.Album> Album { get; set; } = default!;
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -34,6 +35,13 @@ namespace MusicProject.Data
         //        .WithMany(a => a.Tracklist)
         //        .HasForeignKey(t => t.AlbumId);
 
+        //    base.OnModelCreating(modelBuilder);
+        //}
+
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<External_Urls1>().HasNoKey();
         //    base.OnModelCreating(modelBuilder);
         //}
 
