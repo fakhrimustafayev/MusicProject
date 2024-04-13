@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MusicProject.Data;
 using MusicProject.Models;
 using MusicProject.Services.Spotify;
+using MusicProject.Services.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,8 @@ builder.Services.AddDbContext<MusicProjectContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("default")));
 
 // Add services to the container.
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+builder.Services.AddScoped<IUserService,UserService>();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient<ISpotifyAccountService, SpotifyAccountService>(c =>
@@ -23,6 +26,15 @@ builder.Services.AddHttpClient<ISpotifyService, SpotifyService>(c =>
     c.BaseAddress = new Uri("https://api.spotify.com/v1/");
     c.DefaultRequestHeaders.Add("Accept", "application/json");
 });
+builder.Services.AddTransient<ISpotifyService, SpotifyService>();
+
+builder.Services.AddHttpClient<SpotifyService>(client =>
+{
+    client.BaseAddress = new Uri("https://spotify81.p.rapidapi.com/");
+});
+
+builder.Services.AddScoped<SpotifyService>();
+
 
 builder.Services.AddIdentity<User, IdentityRole>(
     options =>

@@ -1,17 +1,22 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MusicProject.Models;
+using MusicProject.Services.Users;
 using MusicProject.ViewModels;
 
 namespace MusicProject.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly IUserService _userService;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+
+        public AccountController(IUserService userService, UserManager<User> userManager, SignInManager<User> signInManager)
         {
+            _userService = userService;
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -23,11 +28,13 @@ namespace MusicProject.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email };
+                var user = new User { UserName = model.Username, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password!);
                 if (result.Succeeded)
                 {
@@ -40,6 +47,8 @@ namespace MusicProject.Controllers
                 }
             }
             return View(model);
+
+
         }
 
         [HttpGet]

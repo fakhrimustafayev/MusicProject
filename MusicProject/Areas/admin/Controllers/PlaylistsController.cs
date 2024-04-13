@@ -21,17 +21,26 @@ namespace MusicProject.Areas.admin.Controllers
             _context = context;
         }
 
-        // GET: admin/Playlists
+
         // GET: admin/Playlists
         public async Task<IActionResult> Index()
         {
+          
 
-           return View(await _context.Playlist.ToListAsync());
+            return View(await _context.Playlist.ToListAsync());
         }
 
+
+     
+
+
+
         // GET: admin/Playlists/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details()
         {
+
+            //var tracks = GetTracksFromFolder("wwwroot/assets/80s");
+            //return View(tracks);
             //if (id == null)
             //{
             //    return NotFound();
@@ -216,8 +225,66 @@ namespace MusicProject.Areas.admin.Controllers
 //    return NotFound();
 //}
 
+//private async Task<List<Track>> GetSongsFromDeviceAsync()
+//{
+//    var songs = new List<Track>();
+
+//    // Path to the folder containing your songs
+//    string folderPath = @"C:\Users\User\Music\80s Songs for Weddings ♫ Top Love 1980s Wedding Music Playlist";
+
+//    // Check if the folder exists
+//    if (Directory.Exists(folderPath))
+//    {
+//        // Get all files with supported audio extensions from the folder
+//        var audioFiles = Directory.GetFiles(folderPath, "*.*", SearchOption.AllDirectories)
+//            .Where(file => file.EndsWith(".mp3") || file.EndsWith(".wav") || file.EndsWith(".ogg"))
+//            .ToList();
+
+//        // Iterate over the audio files and create Song objects
+//        int songNumber = 1;
+//        foreach (var file in audioFiles)
+//        {
+//            var song = new Track
+//            {
+//                Id = songNumber++,
+//                Title = Path.GetFileNameWithoutExtension(file),
+//                // You can set the artist based on file metadata
+//                // You can set the album based on file metadata
+//                Duration = 0      // You can get the duration from file metadata     
+//            };
+
+//            songs.Add(song);
+//        }
+//    }
+
+//    return songs;
+//}
 
 
+//private List<Track> GetTracksFromFolder(string folderPath)
+//{
+//    var tracks = new List<Track>();
+
+//    var directoryPath = Path.Combine(Directory.GetCurrentDirectory(), folderPath);
+
+//    if (Directory.Exists(directoryPath))
+//    {
+//        var mp3Files = Directory.GetFiles(directoryPath, "*.mp3");
+
+//        foreach (var mp3File in mp3Files)
+//        {
+//            var fileName = Path.GetFileName(mp3File);
+//            tracks.Add(new Track
+//            {
+//                Id = tracks.Count + 1,
+//                Title = Path.GetFileNameWithoutExtension(fileName),
+//                FilePath = Path.Combine(folderPath, fileName)
+//            });
+//        }
+//    }
+
+//    return tracks;
+//}
 
 
 

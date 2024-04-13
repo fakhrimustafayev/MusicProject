@@ -6,7 +6,9 @@ public class Playlist
 {
     public int Id { get; set; }
     public string Title { get; set; }
-    public string Description { get; set; }
+
+   // public List<Track> Tracks { get; set; }
+
     public int Duration { get; set; }
     public bool Public { get; set; }
     public bool IsLovedTrack { get; set; }
@@ -26,4 +28,6 @@ public class Playlist
     public string Md5Image { get; set; }
     public string PictureType { get; set; }
     public Creator Creator { get; set; }
+
+    public string Description { get; set; }
 }

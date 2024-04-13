@@ -1,732 +1,149 @@
-﻿@model IEnumerable<MusicProject.Models.Release>
+﻿@* @model IEnumerable<MusicProject.Models.Release> *@
+@*  @model List<SpotifyTrack>  *@
+@model List<PlaylistTrack>
+@* @model MusicProject.Models.PlaylistResponse *@
+@* @model SpotifyPlaylistResponse *@
+
+@* @{
+    ViewData["Title"] = "Playlists";
+}
+ *@
 
 @{
+   //var topTracks = ViewBag.TopTracks;
     ViewData["Title"] = "Home Page";
 }
 
-
-<div class="row">
-    @if (Model != null && Model.Any())
-    {
-        @foreach (var item in Model)
-        {
-            <div class="card m-1" style="width:350px;">
-                <div class="card-body">
-                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Artists)</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(modelItem => item.Name)</h6>
-                    <p class="card-text">@Html.DisplayFor(modelItem => item.Date)</p>
-                    <img src="@Html.DisplayFor(modelItem => item.ImageUrl)" width="300" height="300" alt="Release picture" />
-                    <a href="@Html.DisplayFor(modelItem => item.Link)" target="_blank">Listen</a>
-                </div>
-            </div>
-        }
-    }
-    else
-    {
-        <p>No data available</p>
-    }
-</div>
-
-@*   <main class="main-content">
-            <div class="position-relative ">
-            <!--Nav Start-->
-                <nav class="nav navbar navbar-expand-xl navbar-light iq-navbar">
-                   <div class="container-fluid navbar-inner">
-                      <a href="index-2.html" class="navbar-brand">
-                         
-                         <!--Logo start-->
-                         <div class="logo-main">
-                             <img src="~/assets/images/logo.svg" class="logo-normal img-fluid" alt="logo">
-                             <img src="~/assets/images/logo-dark.svg" class="logo-normal dark-normal img-fluid" alt="logo-dark">
-                             <img src="~/assets/images/logo-color.svg" class="logo-normal white-normal img-fluid" alt="logo-color">
-                             <img src="~/assets/images/logo-mini.svg" class="logo-mini img-fluid" alt="logo-mini">
-                             <img src="~/assets/images/logo-dark-mini.svg" class="logo-mini dark-mini img-fluid" alt="logo-dark-mini">
-                             <img src="~/assets/images/logo-color-mini.svg" class="logo-mini white-mini img-fluid" alt="logo-white-mini">
-                         </div>
-                         <!--logo End-->      </a>
-                      <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
-                         <i class="icon d-flex">
-                            <svg class="icon-20" width="20" viewBox="0 0 24 24">
-                               <path fill="currentColor" d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" />
-                            </svg>
-                         </i>
-                      </div>
-                      <div class="d-flex align-items-center justify-content-between product-offcanvas">
-                         <div class="offcanvas offcanvas-end shadow-none iq-product-menu-responsive" tabindex="-1" id="offcanvasBottom">
-                            <div class="offcanvas-body">
-                               <ul class="iq-nav-menu list-unstyled">
-                                  <li class="nav-item">
-                                     <a class="nav-link active" aria-current="page"
-                                        href="index-2.html">
-                                        <span class="item-name">Ana sayfa</span>
-                                     </a>
-                                  </li>
-                                  <li class="nav-item">
-                                     <a class="nav-link " aria-current="page"
-                                        href="release.html">
-                                        <span class="item-name">Release</span>
-                                     </a>
-                                  </li>
-                                  <li class="nav-item">
-                                     <a class="nav-link " aria-current="page"
-                                           href="albums.html">
-                                           <span class="item-name">Albumler</span>
-                                     </a>
-                                  </li>
-                               </ul>
-                            </div>
-                         </div>
-                      </div>
-                      <div class="d-flex align-items-center">
-                         <button id="navbar-toggle" class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                            aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon">
-                               <span class="navbar-toggler-bar bar1 mt-1"></span>
-                               <span class="navbar-toggler-bar bar2"></span>
-                               <span class="navbar-toggler-bar bar3"></span>
-                            </span>
-                         </button>
-                      </div>
-                      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                         <div class="search-box d-xl-block d-none">
-                            <div class="dropdown">
-                               <div class="search-box-drop" id="search-box-drop" data-bs-toggle="dropdown">
-                                  <div class="d-flex align-items-center justify-content-between gap-2">
-                                     <div class="search-box-inner">
-                                        <button type="submit" class="search-box-drop-submit">
-                                           <svg fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                              viewBox="0 0 24 24">
-                                              <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5"
-                                                 stroke-linecap="round" stroke-linejoin="round" />
-                                              <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5"
-                                                 stroke-linecap="round" stroke-linejoin="round" />
-                                           </svg>
-                                        </button>
-                                        <input type="text" placeholder="Search Here...">
-                                     </div>
-                                     <div class="flex-shrink-0 search-box-btn">
-                                        <a class="btn  text-capitalize">
-                                           clt + k
-                                        </a>
-                                     </div>
-                                  </div>
-                               </div>
-                               <ul class="p-0 sub-drop dropdown-menu dropdown-menu-end" aria-labelledby="search-drop">
-                                  <li class="">
-                                     <div class="p-0 card-body all-notification">
-                                        <div class="d-flex align-items-center border-bottom search-hover py-2 px-3">
-                                           <div class="flex-shrink-0">
-                                                                                                <img src="~/assets/images/dashboard/64.jpg" />
-                                        
-                                                 class="align-self-center img-fluid avatar-50 rounded-pill" alt="#">
-                                           </div>
-                                           <div class="d-flex flex-column ms-3 w-100">
-                                              <a href="javascript:void(0);" class="h5">Paige Turner</a>
-                                              <span>Paige001</span>
-                                           </div>
-                                        </div>
-                                        <div class="d-flex align-items-center border-bottom search-hover py-2 px-3">
-                                           <div class="flex-shrink-0">
-                                              <img src="~/assets/images/dashboard/02.png"
-                                                 class="align-self-center img-fluid avatar-50 rounded-pill" alt="#">
-                                           </div>
-                                           <div class="d-flex flex-column ms-3 w-100">
-                                              <a href="javascript:void(0);" class="h5">Monty Carlo</a>
-                                              <span>Carlo.m</span>
-                                           </div>
-                                        </div>
-                                        <div class="d-flex align-items-center search-hover py-2 px-3 border-bottom">
-                                           <div class="flex-shrink-0">
-                                              <img src="~/assets/images/dashboard/03.png"
-                                                 class="align-self-center img-fluid avatar-50 rounded-pill" alt="#">
-                                           </div>
-                                           <div class="d-flex flex-column ms-3 w-100">
-                                              <a href="javascript:void(0);" class="h5">Paul Molive</a>
-                                              <span>Paul.45</span>
-                                           </div>
-                                        </div>
-                                        <div class="d-flex align-items-center border-bottom search-hover py-2 px-3">
-                                           <div class="flex-shrink-0">
-                                              <img src="~/assets/images/dashboard/04.png"
-                                                 class="align-self-center img-fluid avatar-50 rounded-pill" alt="#">
-                                           </div>
-                                           <div class="d-flex flex-column ms-3 w-100">
-                                              <a href="javascript:void(0);" class="h5">Monty Carlo</a>
-                                              <span>Carlo.m</span>
-                                           </div>
-                                        </div>
-                                     </div>
-                                  </li>
-                               </ul>
-                            </div>
-                         </div>
-                         <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
-                            <li class="nav-item dropdown d-xl-none d-block">
-                               <a href="#" class="nav-link" id="search-drop" data-bs-toggle="dropdown">
-                                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                     <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1"
-                                        transform="rotate(45 17.0365 15.1223)" fill="currentColor"></rect>
-                                     <path
-                                        d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
-                                        fill="currentColor"></path>
-                                  </svg>
-                               </a>
-                               <ul class="p-0 sub-drop dropdown-menu dropdown-menu-end" aria-labelledby="search-drop">
-                                  <li class="">
-                                     <div class="p-3 card-header justify-content-between border-bottom rounded-top">
-                                        <div class="header-title">
-                                           <div class="iq-search-bar device-search  position-relative">
-                                              <form action="#" class="searchbox">
-                                                 <input type="text" class="text search-input form-control bg-soft-primary"
-                                                    placeholder="Search here...">
-                                                 <a class="d-lg-none d-flex" href="javascript:void(0);">
-                                                    <span class="material-symbols-outlined">search</span>
-                                                 </a>
-                                              </form>
-                                           </div>
-                                        </div>
-                                     </div>
-                                     <div class="p-0 card-body all-notification">
-                                        <div class="d-flex align-items-center border-bottom search-hover py-2 px-3">
-                                           <div class="flex-shrink-0">
-                                              <img src="~/assets/images/dashboard/64.jpg"
-                                                 class="align-self-center img-fluid avatar-50 rounded-pill" alt="#">
-                                           </div>
-                                           <div class="d-flex flex-column ms-3 w-100">
-                                              <a href="javascript:void(0);" class="h6">Alexa Zone</a>
-                                              <span>Muzic Player</span>
-                                           </div>
-                                        </div>
-                                        <div class="d-flex align-items-center border-bottom search-hover py-2 px-3">
-                                           <div class="flex-shrink-0">
-                                              <img src="~/assets/images/dashboard/55.png"
-                                                 class="align-self-center img-fluid avatar-50 rounded-pill" alt="#">
-                                           </div>
-                                           <div class="d-flex flex-column ms-3 w-100">
-                                              <a href="javascript:void(0);" class="h6">Karuna Trusaa</a>
-                                              <span>Singer</span>
-                                           </div>
-                                        </div>
-                                        <div class="d-flex align-items-center search-hover py-2 px-3 border-bottom">
-                                           <div class="flex-shrink-0">
-                                              <img src="~/assets/images/dashboard/56.png"
-                                                 class="align-self-center img-fluid avatar-50 rounded-pill" alt="#">
-                                           </div>
-                                           <div class="d-flex flex-column ms-3 w-100">
-                                              <a href="javascript:void(0);" class="h6">Vibrato Ecruct</a>
-                                              <span>Playback</span>
-                                           </div>
-                                        </div>
-                                        <div class="d-flex align-items-center border-bottom search-hover py-2 px-3">
-                                           <div class="flex-shrink-0">
-                                              <img src="~/assets/images/dashboard/57.png"
-                                                 class="align-self-center img-fluid avatar-50 rounded-pill" alt="#">
-                                           </div>
-                                           <div class="d-flex flex-column ms-3 w-100">
-                                              <a href="javascript:void(0);" class="h6">Omen Smith</a>
-                                              <span>Singer</span>
-                                           </div>
-                                        </div>
-                                     </div>
-                                  </li>
-                               </ul>
-                            </li>
-                            <li>
-                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                  <g clip-path="url(#clip0_549_1300)">
-                                     <path d="M10 13.125C11.7259 13.125 13.125 11.7259 13.125 10C13.125 8.27411 11.7259 6.875 10 6.875C8.27411 6.875 6.875 8.27411 6.875 10C6.875 11.7259 8.27411 13.125 10 13.125Z" stroke="#AAAAAA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                     <path d="M10.1601 16.1023C10.0555 16.1023 9.94999 16.1023 9.84765 16.1023L7.34374 17.5C6.36899 17.1721 5.46489 16.6632 4.6789 16L4.66952 13.1875C4.61405 13.1 4.56171 13.0117 4.51327 12.9211L2.02343 11.5031C1.82731 10.5112 1.82731 9.4904 2.02343 8.49844L4.51093 7.08438C4.56171 6.99453 4.61405 6.90547 4.66718 6.81797L4.67968 4.00547C5.46496 3.34035 6.36883 2.82957 7.34374 2.5L9.84374 3.89766C9.94843 3.89766 10.0539 3.89766 10.1562 3.89766L12.6562 2.5C13.631 2.82788 14.5351 3.33679 15.3211 4L15.3305 6.8125C15.3859 6.9 15.4383 6.98828 15.4867 7.07891L17.975 8.49609C18.1711 9.48806 18.1711 10.5088 17.975 11.5008L15.4875 12.9148C15.4367 13.0047 15.3844 13.0938 15.3312 13.1813L15.3187 15.9938C14.534 16.659 13.6307 17.17 12.6562 17.5L10.1601 16.1023Z" stroke="#AAAAAA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                  </g>
-                                  <defs>
-                                     <clipPath id="clip0_549_1300">
-                                        <rect width="20" height="20" fill="white"/>
-                                     </clipPath>
-                                  </defs>
-                               </svg>
-                            </li>
-                            <li class="nav-item dropdown">
-                               <a href="#" class="nav-link p-0 ps-3" id="notification-drop" data-bs-toggle="dropdown">
-                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                     <g clip-path="url(#clip0_549_1304)">
-                                        <path d="M7.5 15C7.5 15.663 7.76339 16.2989 8.23223 16.7678C8.70107 17.2366 9.33696 17.5 10 17.5C10.663 17.5 11.2989 17.2366 11.7678 16.7678C12.2366 16.2989 12.5 15.663 12.5 15" stroke="#AAAAAA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M4.37502 8.125C4.37502 6.63316 4.96766 5.20242 6.02255 4.14752C7.07744 3.09263 8.50818 2.5 10 2.5C11.4919 2.5 12.9226 3.09263 13.9775 4.14752C15.0324 5.20242 15.625 6.63316 15.625 8.125C15.625 10.9234 16.2735 13.1719 16.7891 14.0625C16.8439 14.1574 16.8727 14.2649 16.8728 14.3744C16.8729 14.484 16.8442 14.5916 16.7896 14.6865C16.735 14.7815 16.6565 14.8604 16.5618 14.9154C16.467 14.9705 16.3595 14.9996 16.25 15H3.75002C3.64063 14.9993 3.53333 14.97 3.43884 14.9149C3.34435 14.8597 3.26599 14.7808 3.21158 14.6859C3.15717 14.591 3.12862 14.4835 3.12878 14.3741C3.12895 14.2647 3.15783 14.1572 3.21252 14.0625C3.72737 13.1719 4.37502 10.9227 4.37502 8.125Z" stroke="#AAAAAA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <circle cx="14.2803" cy="2.91665" r="2.58333" fill="#EF3E36" stroke="white"/>
-                                     </g>
-                                     <defs>
-                                        <clipPath id="clip0_549_1304">
-                                           <rect width="20" height="20" fill="white"/>
-                                        </clipPath>
-                                     </defs>
-                                  </svg>
-                                  <span class="bg-danger dots"></span>
-                               </a>
-                               <ul class="p-0 sub-drop dropdown-menu dropdown-menu-end" aria-labelledby="notification-drop">
-                                  <li class="">
-                                     <div class="p-3 card-header d-flex justify-content-between bg-primary rounded-top">
-                                        <div class="header-title">
-                                           <h5 class="mb-0 text-white">All Notifications</h5>
-                                        </div>
-                                     </div>
-                                     <div class="p-0 card-body all-notification">
-                                        <a href="#" class="iq-sub-card">
-                                           <div class="d-flex align-items-center">
-                                              <img class="p-1 avatar-40 rounded-pill bg-soft-primary"
-                                                 src="~/assets/images/dashboard/24.png" alt="" loading="lazy">
-                                              <div class="ms-3 w-100">
-                                                 <h6 class="mb-0 ">Emma Watson Bni</h6>
-                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <p class="mb-0">95 MB</p>
-                                                    <small class="float-end font-size-12">Just Now</small>
-                                                 </div>
-                                              </div>
-                                           </div>
-                                        </a>
-                                        <a href="#" class="iq-sub-card">
-                                           <div class="d-flex align-items-center">
-                                              <div>
-                                                 <img class="p-1 avatar-40 rounded-pill bg-soft-primary"
-                                                    src="~/assets/images/dashboard/25.png" alt="" loading="lazy">
-                                              </div>
-                                              <div class="ms-3 w-100">
-                                                 <h6 class="mb-0 ">New customer is join</h6>
-                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <p class="mb-0">Cyst Bni</p>
-                                                    <small class="float-end font-size-12">5 days ago</small>
-                                                 </div>
-                                              </div>
-                                           </div>
-                                        </a>
-                                        <a href="#" class="iq-sub-card">
-                                           <div class="d-flex align-items-center">
-                                              <img class="p-1 avatar-40 rounded-pill bg-soft-primary"
-                                                 src="~/assets/images/dashboard/26.png" alt="" loading="lazy">
-                                              <div class="ms-3 w-100">
-                                                 <h6 class="mb-0 ">Two customer is left</h6>
-                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <p class="mb-0">Cyst Bni</p>
-                                                    <small class="float-end font-size-12">2 days ago</small>
-                                                 </div>
-                                              </div>
-                                           </div>
-                                        </a>
-                                        <a href="#" class="iq-sub-card">
-                                           <div class="d-flex align-items-center">
-                                              <img class="p-1 avatar-40 rounded-pill bg-soft-primary"
-                                                 src="~/assets/images/dashboard/27.png" alt="" loading="lazy">
-                                              <div class="w-100 ms-3">
-                                                 <h6 class="mb-0 ">New Mail from Fenny</h6>
-                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <p class="mb-0">Cyst Bni</p>
-                                                    <small class="float-end font-size-12">3 days ago</small>
-                                                 </div>
-                                              </div>
-                                           </div>
-                                        </a>
-                                     </div>
-                                  </li>
-                               </ul>
-                            </li>
-                            <li class="nav-item dropdown">
-                               <a class="p-0 ps-3 nav-link d-flex align-items-center position-relative" href="#" id="profile-setting" role="button"
-                                  data-bs-toggle="dropdown" aria-expanded="false">
-                                  <img src="~/assets/images/dashboard/64.jpg" alt="User-Profile"
-                                     class="theme-color-default-img img-fluid avatar avatar-40 avatar-rounded" loading="lazy">
-                                     <div class="iq-profile-badge  bg-success"></div>
-                               </a>
-                               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile-setting">
-                                  <li><a asp-controller="Home" asp-action="Users" class="dropdown-item" >Profile</a></li>
-                                  <li><a class="dropdown-item" href="app/user-privacy-setting.html">Privacy
-                                        Setting</a></li>
-                                  <li>
-                                     <hr class="dropdown-divider">
-                                  </li>
-                                  <li><a class="dropdown-item" href="auth/sign-in.html">Logout</a></li>
-                               </ul>
-                            </li>
-                         </ul>
-                      </div>
-                   </div>
-                </nav>            <!--Nav End-->
-            </div>
-            <div class="content-inner container-fluid pb-0" id="page_layout">
-<div class="row mb-5">
-    <div class="col-lg-12">
-        <div class="card-header">
-            <div class="header-title">
-                <h4 class="card-title text-capitalize mb-3">playlist by artist</h4>
-            </div>
-        </div>
-    </div>
+<main class="main-content">
+    @await Html.PartialAsync("/Views/Partials/NavbarPartial.cshtml")
+    <div class="content-inner container-fluid pb-0" id="page_layout">
+         <div class="row mb-5">
+          @*         @foreach (var track in Model)
+            {
             <div class="col-xl-3 col-md-6 mb-3">
-                <div class="bg-soft-danger position-relative rounded-3 card-box mb-3">
-                    <a href="@Url.Action("Details", "Playlists", new { area = "admin" })" class="text-decoration-none">
-                        <img src="~/assets/images/dashboard/80selektro.png" id="01" class="img-fluid mx-auto d-block" alt="play-img">
-                        <div class="d-flex align-items-center play-list-icon">
-                            <svg class="text-danger" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g id="Play">
-                                    <path id="Fill 1" opacity="0.4" d="M21.8334 11.0052C21.8334 16.9732 16.9709 21.8334 11 21.8334C5.02914 21.8334 0.166687 16.9732 0.166687 11.0052C0.166687 5.02679 5.02914 0.166687 11 0.166687C16.9709 0.166687 21.8334 5.02679 21.8334 11.0052Z" fill="currentColor" />
-                                    <path id="Fill 4" d="M15.3333 11.0053C15.3333 11.2791 15.2472 11.5539 15.0748 11.774C15.0425 11.8172 14.8917 11.9952 14.7732 12.111L14.7086 12.1742C13.8037 13.1335 11.5524 14.5762 10.4106 15.0385C10.4106 15.049 9.73201 15.3239 9.40885 15.3334H9.36577C8.87027 15.3334 8.40708 15.0606 8.1701 14.6183C8.04084 14.3751 7.92235 13.6695 7.91158 13.66C7.81463 13.0272 7.75 12.0583 7.75 10.9948C7.75 9.87957 7.81463 8.86758 7.93312 8.24627C7.93312 8.23574 8.05161 7.66709 8.12701 7.47754C8.2455 7.2048 8.46094 6.97207 8.73023 6.82465C8.94567 6.72039 9.17188 6.66669 9.40885 6.66669C9.65661 6.67827 10.1198 6.83518 10.3029 6.90889C11.5094 7.37224 13.8145 8.88864 14.6978 9.81533C14.8486 9.96276 15.0102 10.1428 15.0533 10.1839C15.2364 10.4156 15.3333 10.6999 15.3333 11.0053Z" fill="currentColor" />
-                                </g>
-                            </svg>
-                            <span class="ms-2 fw-semibold text-capitalize">12 tracks</span>
-                        </div>
-                   </a
-                </div>
+            <div class="bg-soft-info position-relative rounded-3 card-box mb-3">
+            <img src="@track.TrackMetadata.DisplayImageUri" class="img-fluid mx-auto d-block" alt="play-img">
+            <div class="d-flex align-items-center play-list-icon">
+            <!-- Display track details as needed -->
+            <span class="ms-2 fw-semibold text-capitalize">@track.TrackMetadata.TrackName</span>
             </div>
+            </div>
+            <a href="@Url.Action("Details", "Track", new { id = track.TrackMetadata.TrackUri })" class="text-capitalize h5">@track.TrackMetadata.TrackName</a>
+            <small class="fw-normal line-count-1 text-capitalize">Artist: @track.TrackMetadata.Artists.FirstOrDefault()?.Name</small>
+            </div>
+            }  *@
 
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>    </th>
+                        <th>Track Name</th>
+                        <th>Preview</th>
+                        <th>Album</th>
+                        <th>Artists</th>
+                    </tr>
+                </thead>
+                <tbody>
+          
+                    @foreach (var playlistTrack in Model)
+                    {
+                        <tr>
 
-        <a href="music-player.html" class="text-capitalize h5">80s Electro</a>
-        <small class="fw-normal line-count-1 text-capitalize">top 12 songs from Eliana and all
-                type of songs.</small>    </div>
-    <div class="col-xl-3 col-md-6 mb-3">
-        <div class="bg-soft-warning position-relative  rounded-3 card-box mb-3 ">
-            <img src="~/assets/images/dashboard/02.png" id="02" class="img-fluid mx-auto d-block" alt="play-img">
-            <div class="d-flex align-items-center play-list-icon">
-                <svg class="text-warning" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g id="Play">
-                    <path id="Fill 1" opacity="0.4" d="M21.8334 11.0052C21.8334 16.9732 16.9709 21.8334 11 21.8334C5.02914 21.8334 0.166687 16.9732 0.166687 11.0052C0.166687 5.02679 5.02914 0.166687 11 0.166687C16.9709 0.166687 21.8334 5.02679 21.8334 11.0052Z" fill="currentColor"/>
-                    <path id="Fill 4" d="M15.3333 11.0053C15.3333 11.2791 15.2472 11.5539 15.0748 11.774C15.0425 11.8172 14.8917 11.9952 14.7732 12.111L14.7086 12.1742C13.8037 13.1335 11.5524 14.5762 10.4106 15.0385C10.4106 15.049 9.73201 15.3239 9.40885 15.3334H9.36577C8.87027 15.3334 8.40708 15.0606 8.1701 14.6183C8.04084 14.3751 7.92235 13.6695 7.91158 13.66C7.81463 13.0272 7.75 12.0583 7.75 10.9948C7.75 9.87957 7.81463 8.86758 7.93312 8.24627C7.93312 8.23574 8.05161 7.66709 8.12701 7.47754C8.2455 7.2048 8.46094 6.97207 8.73023 6.82465C8.94567 6.72039 9.17188 6.66669 9.40885 6.66669C9.65661 6.67827 10.1198 6.83518 10.3029 6.90889C11.5094 7.37224 13.8145 8.88864 14.6978 9.81533C14.8486 9.96276 15.0102 10.1428 15.0533 10.1839C15.2364 10.4156 15.3333 10.6999 15.3333 11.0053Z" fill="currentColor"/>
-                    </g>
-                </svg>
-                <span class="ms-2 fw-semibold text-capitalize">18 tracks</span>
-            </div>
+                            <td> <img width="80" height="80" style="border-radius:40px" src="@playlistTrack.Track.Album.Images[0].Url"/></td>
+
+                            <td>@playlistTrack.Track.Name</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(playlistTrack.Track.Preview_Url))
+                                {
+                                    <audio controls>
+                                        <source src="@playlistTrack.Track.Preview_Url" type="audio/mpeg">
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                }
+                                else
+                                {
+                                   // No preview available
+                                 }
+                            </td>
+                            <td>@playlistTrack.Track.Album.Name</td>
+                            <td>
+                                @foreach (var artist in playlistTrack.Track.Artists)
+                                {
+                                    <span>@artist.Name</span>
+
+                                    <br />
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @* <style>
+                .track-name {
+                    padding-left: 20px; /* Adjust the padding as needed */
+                }
+
+                /* Add more styles as needed */
+            </style>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th style="padding-left: 20px;">Track Name</th>
+                        <th>Artists</th>
+                        <th>Added By</th>
+                        <th>Preview URL</th>
+                        <th>Available Markets</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var track in Model)
+                    {
+                        <tr>
+                            <td class="track-name">@track.Track.Name</td>
+                            <td>
+                                @foreach (var artist in track.Track.Album.Artists)
+                                {
+                                    <span>@artist.Name</span>
+                                }
+                            </td>
+                            @*  <td>@track.AddedBy.Spotify</td> *@
+                   @*         <td><a href="@track.Track.PreviewUrl">Preview</a></td>
+                            <td>
+                                @if (track.Track.AvailableMarkets != null)
+                                {
+                                    @string.Join(", ", track.Track.AvailableMarkets)
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+ *@
+
         </div>
-        <a href="music-player.html" class="text-capitalize h5">omen smith playlist</a>
-        <small class="fw-normal line-count-1 text-capitalize">top 18 songs from omen and mainly
-                party song.</small>    </div>
-    <div class="col-xl-3 col-md-6 mb-3">
-        <div class="bg-soft-info position-relative  rounded-3 card-box mb-3 ">
-            <img src="~/assets/images/dashboard/03.png" id="03" class="img-fluid mx-auto d-block" alt="play-img">
-            <div class="d-flex align-items-center play-list-icon">
-                <svg class="text-info" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g id="Play">
-                    <path id="Fill 1" opacity="0.4" d="M21.8334 11.0052C21.8334 16.9732 16.9709 21.8334 11 21.8334C5.02914 21.8334 0.166687 16.9732 0.166687 11.0052C0.166687 5.02679 5.02914 0.166687 11 0.166687C16.9709 0.166687 21.8334 5.02679 21.8334 11.0052Z" fill="currentColor"/>
-                    <path id="Fill 4" d="M15.3333 11.0053C15.3333 11.2791 15.2472 11.5539 15.0748 11.774C15.0425 11.8172 14.8917 11.9952 14.7732 12.111L14.7086 12.1742C13.8037 13.1335 11.5524 14.5762 10.4106 15.0385C10.4106 15.049 9.73201 15.3239 9.40885 15.3334H9.36577C8.87027 15.3334 8.40708 15.0606 8.1701 14.6183C8.04084 14.3751 7.92235 13.6695 7.91158 13.66C7.81463 13.0272 7.75 12.0583 7.75 10.9948C7.75 9.87957 7.81463 8.86758 7.93312 8.24627C7.93312 8.23574 8.05161 7.66709 8.12701 7.47754C8.2455 7.2048 8.46094 6.97207 8.73023 6.82465C8.94567 6.72039 9.17188 6.66669 9.40885 6.66669C9.65661 6.67827 10.1198 6.83518 10.3029 6.90889C11.5094 7.37224 13.8145 8.88864 14.6978 9.81533C14.8486 9.96276 15.0102 10.1428 15.0533 10.1839C15.2364 10.4156 15.3333 10.6999 15.3333 11.0053Z" fill="currentColor"/>
-                    </g>
-                </svg>
-                <span class="ms-2 fw-semibold text-capitalize">16 tracks</span>
-            </div>
         </div>
-        <a href="music-player.html" class="text-capitalize h5">Alexa Jonas</a>
-        <small class="fw-normal line-count-1 text-capitalize">top 16 songs from Alexa and most of the relax
-                songs.</small>    </div>
-    <div class="col-xl-3 col-md-6 mb-3">
-        <div class="bg-soft-success position-relative  rounded-3 card-box mb-3 ">
-            <img src="~/assets/images/dashboard/04.png" id="04" class="img-fluid mx-auto d-block" alt="play-img">
-            <div class="d-flex align-items-center play-list-icon">
-                <svg class="text-success" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g id="Play">
-                    <path id="Fill 1" opacity="0.4" d="M21.8334 11.0052C21.8334 16.9732 16.9709 21.8334 11 21.8334C5.02914 21.8334 0.166687 16.9732 0.166687 11.0052C0.166687 5.02679 5.02914 0.166687 11 0.166687C16.9709 0.166687 21.8334 5.02679 21.8334 11.0052Z" fill="currentColor"/>
-                    <path id="Fill 4" d="M15.3333 11.0053C15.3333 11.2791 15.2472 11.5539 15.0748 11.774C15.0425 11.8172 14.8917 11.9952 14.7732 12.111L14.7086 12.1742C13.8037 13.1335 11.5524 14.5762 10.4106 15.0385C10.4106 15.049 9.73201 15.3239 9.40885 15.3334H9.36577C8.87027 15.3334 8.40708 15.0606 8.1701 14.6183C8.04084 14.3751 7.92235 13.6695 7.91158 13.66C7.81463 13.0272 7.75 12.0583 7.75 10.9948C7.75 9.87957 7.81463 8.86758 7.93312 8.24627C7.93312 8.23574 8.05161 7.66709 8.12701 7.47754C8.2455 7.2048 8.46094 6.97207 8.73023 6.82465C8.94567 6.72039 9.17188 6.66669 9.40885 6.66669C9.65661 6.67827 10.1198 6.83518 10.3029 6.90889C11.5094 7.37224 13.8145 8.88864 14.6978 9.81533C14.8486 9.96276 15.0102 10.1428 15.0533 10.1839C15.2364 10.4156 15.3333 10.6999 15.3333 11.0053Z" fill="currentColor"/>
-                    </g>
-                </svg>
-                <span class="ms-2 fw-semibold text-capitalize">22 tracks</span>
-            </div>
-        </div>
-        <a href="music-player.html" class="text-capitalize h5">vibrato eruct</a>
-        <small class="fw-normal line-count-1 text-capitalize">top 22 songs from vibrato and all type of
-                songs.</small>    </div>
-</div>
 <div class="row mb-4">
-    <div class="col-lg-12">
-        <div class="card-header mb-3">
-            <div class="header-title d-flex align-items-center justify-content-between">
-                <h4 class="card-title text-capitalize">trending songs</h4>
-                <a href="release.html" class="small text-body">View All <svg xmlns="http://www.w3.org/2000/svg" width="14"
-                    height="15" viewBox="0 0 14 15" fill="none">
-                    <path
-                        d="M10.9375 4V9.6875C10.9375 9.80353 10.8914 9.91481 10.8094 9.99686C10.7273 10.0789 10.616 10.125 10.5 10.125C10.384 10.125 10.2727 10.0789 10.1906 9.99686C10.1086 9.91481 10.0625 9.80353 10.0625 9.6875V5.05602L3.80953 11.3095C3.72744 11.3916 3.6161 11.4377 3.5 11.4377C3.3839 11.4377 3.27256 11.3916 3.19047 11.3095C3.10838 11.2274 3.06226 11.1161 3.06226 11C3.06226 10.8839 3.10838 10.7726 3.19047 10.6905L9.44398 4.4375H4.8125C4.69647 4.4375 4.58519 4.39141 4.50314 4.30936C4.42109 4.22731 4.375 4.11603 4.375 4C4.375 3.88397 4.42109 3.77269 4.50314 3.69064C4.58519 3.60859 4.69647 3.5625 4.8125 3.5625H10.5C10.616 3.5625 10.7273 3.60859 10.8094 3.69064C10.8914 3.77269 10.9375 3.88397 10.9375 4Z"
-                        fill="#4A525F" />
-                </svg></a>
-            </div>
-        </div>
-    </div>
-    <ul class="row row-cols-lg-6 row-cols-md-4  row-cols-2 list-unstyled mb-0">
-        <li class="col">
-            <div class="card">
-                <div class="card-body">
-                    
-                    
-                        <img src="~/assets/images/dashboard/05.png" id="05" class="mb-3 img-fluid rounded-3" alt="song-img">
-                        <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">the girl</a>
-                        <small class="fw-normal text-capitalize line-count-1">by
-                                        snoods smith Jonas </small>
-                </div>
-            </div>
-        </li>
-        <li class="col">
-            <div class="card">
-                <div class="card-body">
-                    
-                    
-                        <img src="~/assets/images/dashboard/06.png" id="06" class="mb-3 img-fluid rounded-3" alt="song-img">
-                        <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">masinc party album</a>
-                        <small class="fw-normal text-capitalize line-count-1">by kerana euc veena</small>
-                </div>
-            </div>
-        </li>
-        <li class="col">
-            <div class="card">
-                <div class="card-body">
-                    
-                    
-                        <img src="~/assets/images/dashboard/07.png" id="07" class="mb-3 img-fluid rounded-3" alt="song-img">
-                        <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">the silent one</a>
-                        <small class="fw-normal text-capitalize line-count-1">by Alex Williams </small>
-                </div>
-            </div>
-        </li>
-        <li class="col">
-            <div class="card">
-                <div class="card-body">
-                    
-                    
-                        <img src="~/assets/images/dashboard/08.png" id="08" class="mb-3 img-fluid rounded-3" alt="song-img">
-                        <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">just perfect</a>
-                        <small class="fw-normal text-capitalize line-count-1">by karuna truss</small>
-                </div>
-            </div>
-        </li>
-        <li class="col">
-            <div class="card">
-                <div class="card-body">
-                    
-                    
-                        <img src="~/assets/images/dashboard/09.png" id="09" class="mb-3 img-fluid rounded-3" alt="song-img">
-                        <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">everything i want</a>
-                        <small class="fw-normal text-capitalize line-count-1">by Neha arena </small>
-                </div>
-            </div>
-        </li>
-        <li class="col">
-            <div class="card">
-                <div class="card-body">
-                    
-                    
-                        <img src="~/assets/images/dashboard/10.png" id="10" class="mb-3 img-fluid rounded-3" alt="song-img">
-                        <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">infinity</a>
-                        <small class="fw-normal text-capitalize line-count-1">by
-                                        nil ana meet nagak</small>
-                </div>
-            </div>
-        </li>
-    </ul>
+        
 </div>
-<div class="row">
-    <div class="col-lg-12 mb-4">
-        <div class="card-header  mb-3">
-            <div class="header-title">
-                <h4 class="card-title text-capitalize">recently played</h4>
+    <div class="row">
+        <div class="col-lg-12 mb-4">
+       @*       @foreach (var track in Model)
+            {
+            <div class="col-xl-3 col-md-6 mb-3">
+            <div class="bg-soft-info position-relative rounded-3 card-box mb-3">
+            <img src="@track.TrackMetadata.DisplayImageUri" class="img-fluid mx-auto d-block" alt="play-img">
+            <div class="d-flex align-items-center play-list-icon">
+            <!-- Display track details as needed -->
+            <span class="ms-2 fw-semibold text-capitalize">@track.TrackMetadata.TrackName</span>
             </div>
-            <div class="common-album position-relative d-lg-block d-none">
-                <div class="swiper-button-prev" id="prev">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">
-                        <path
-                            d="M15.75 9.5C15.75 9.64918 15.6908 9.79226 15.5853 9.89775C15.4798 10.0032 15.3367 10.0625 15.1875 10.0625H4.17025L8.27298 14.1645C8.32525 14.2168 8.3667 14.2788 8.39499 14.3471C8.42327 14.4154 8.43783 14.4886 8.43783 14.5625C8.43783 14.6364 8.42327 14.7096 8.39499 14.7779C8.3667 14.8462 8.32525 14.9082 8.27298 14.9605C8.22072 15.0127 8.15868 15.0542 8.09039 15.0825C8.02211 15.1108 7.94893 15.1253 7.87502 15.1253C7.80111 15.1253 7.72792 15.1108 7.65964 15.0825C7.59135 15.0542 7.52931 15.0127 7.47705 14.9605L2.41455 9.89797C2.36225 9.84573 2.32076 9.78369 2.29245 9.7154C2.26414 9.64712 2.24957 9.57392 2.24957 9.5C2.24957 9.42608 2.26414 9.35288 2.29245 9.2846C2.32076 9.21631 2.36225 9.15427 2.41455 9.10203L7.47705 4.03953C7.58259 3.93398 7.72575 3.87469 7.87502 3.87469C8.02428 3.87469 8.16744 3.93398 8.27298 4.03953C8.37853 4.14508 8.43783 4.28823 8.43783 4.4375C8.43783 4.58677 8.37853 4.72992 8.27298 4.83547L4.17025 8.9375H15.1875C15.3367 8.9375 15.4798 8.99676 15.5853 9.10225C15.6908 9.20774 15.75 9.35082 15.75 9.5Z"
-                            fill="#4A525F" />
-                    </svg>
-                </div>
-                <div class="swiper-button-next" id="next">
-                    <svg  xmlns="http://www.w3.org/2000/svg" width="18" height="19"
-                        viewBox="0 0 18 19" fill="none">
-                        <path
-                            d="M15.5855 9.89797L10.523 14.9605C10.4174 15.066 10.2743 15.1253 10.125 15.1253C9.97573 15.1253 9.83258 15.066 9.72703 14.9605C9.62148 14.8549 9.56219 14.7118 9.56219 14.5625C9.56219 14.4132 9.62148 14.2701 9.72703 14.1645L13.8298 10.0625H2.8125C2.66332 10.0625 2.52024 10.0032 2.41475 9.89775C2.30926 9.79226 2.25 9.64918 2.25 9.5C2.25 9.35082 2.30926 9.20774 2.41475 9.10225C2.52024 8.99676 2.66332 8.9375 2.8125 8.9375H13.8298L9.72703 4.83547C9.62148 4.72992 9.56219 4.58677 9.56219 4.4375C9.56219 4.28823 9.62148 4.14508 9.72703 4.03953C9.83258 3.93398 9.97573 3.87469 10.125 3.87469C10.2743 3.87469 10.4174 3.93398 10.523 4.03953L15.5855 9.10203C15.6378 9.15427 15.6793 9.21631 15.7076 9.2846C15.7359 9.35288 15.7504 9.42608 15.7504 9.5C15.7504 9.57392 15.7359 9.64712 15.7076 9.7154C15.6793 9.78369 15.6378 9.84573 15.5855 9.89797Z"
-                            fill="currentColor" />
-                    </svg>
-                </div>
             </div>
-        </div>
-        <div class="swiper overflow-hidden" data-swiper="song-slider">
-            <ul class="swiper-wrapper   p-0 list-unstyled mb-0 ">
-                <li class="swiper-slide card card-slide">
-                    <div class="card-body">
-                        
-                        
-                            <img src="~/assets/images/dashboard/11.png" id="11" class="mb-3 img-fluid rounded-3" alt="song-img">
-                            <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">way of right</a>
-                            <small class="fw-normal text-capitalize line-count-1">by king sing</small>
-                    </div>
-                </li>
-                <li class="swiper-slide card card-slide">
-                    <div class="card-body">
-                        
-                        
-                            <img src="~/assets/images/dashboard/12.png" id="12" class="mb-3 img-fluid rounded-3" alt="song-img">
-                            <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">years of hundred</a>
-                            <small class="fw-normal text-capitalize line-count-1">by Helena illation</small>
-                    </div>
-                </li>
-                <li class="swiper-slide card card-slide">
-                    <div class="card-body">
-                        
-                        
-                            <img src="~/assets/images/dashboard/13.png" id="13" class="mb-3 img-fluid rounded-3" alt="song-img">
-                            <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">you are mine</a>
-                            <small class="fw-normal text-capitalize line-count-1">you are mine</small>
-                    </div>
-                </li>
-                <li class="swiper-slide card card-slide">
-                    <div class="card-body">
-                        
-                        
-                            <img src="~/assets/images/dashboard/14.png" id="14" class="mb-3 img-fluid rounded-3" alt="song-img">
-                            <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">heart is beating</a>
-                            <small class="fw-normal text-capitalize line-count-1">snoods smith jonas </small>
-                    </div>
-                </li>
-                <li class="swiper-slide card card-slide">
-                    <div class="card-body">
-                        
-                        
-                            <img src="~/assets/images/dashboard/15.png" id="15" class="mb-3 img-fluid rounded-3" alt="song-img">
-                            <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">my crying eyes</a>
-                            <small class="fw-normal text-capitalize line-count-1">snoods smith jonas </small>
-                    </div>
-                </li>
-                <li class="swiper-slide card card-slide">
-                    <div class="card-body">
-                        
-                        
-                            <img src="~/assets/images/dashboard/16.png" id="16" class="mb-3 img-fluid rounded-3" alt="song-img">
-                            <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">my lovely dad</a>
-                            <small class="fw-normal text-capitalize line-count-1">snoods smith jonas</small>
-                    </div>
-                </li>
-                <li class="swiper-slide card card-slide">
-                    <div class="card-body">
-                        
-                        
-                            <img src="~/assets/images/dashboard/11.png" id="17" class="mb-3 img-fluid rounded-3" alt="song-img">
-                            <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">the girl</a>
-                            <small class="fw-normal text-capitalize line-count-1">by
-                                                snoods smith Jonas </small>
-                    </div>
-                </li>
-                <li class="swiper-slide card card-slide">
-                    <div class="card-body">
-                        
-                        
-                            <img src="~/assets/images/dashboard/12.png" id="18" class="mb-3 img-fluid rounded-3" alt="song-img">
-                            <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">way of right</a>
-                            <small class="fw-normal text-capitalize line-count-1">by king sing</small>
-                    </div>
-                </li>
-                <li class="swiper-slide card card-slide">
-                    <div class="card-body">
-                        
-                        
-                            <img src="~/assets/images/dashboard/13.png" id="19" class="mb-3 img-fluid rounded-3" alt="song-img">
-                            <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">years of hundred</a>
-                            <small class="fw-normal text-capitalize line-count-1">by Helena illation</small>
-                    </div>
-                </li>
-                <li class="swiper-slide card card-slide">
-                    <div class="card-body">
-                        
-                        
-                            <img src="~/assets/images/dashboard/14.png" id="20" class="mb-3 img-fluid rounded-3" alt="song-img">
-                            <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">you are mine</a>
-                            <small class="fw-normal text-capitalize line-count-1">you are mine</small>
-                    </div>
-                </li>
-                <li class="swiper-slide card card-slide">
-                    <div class="card-body">
-                        
-                        
-                            <img src="~/assets/images/dashboard/15.png" id="21" class="mb-3 img-fluid rounded-3" alt="song-img">
-                            <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">heart is beating</a>
-                            <small class="fw-normal text-capitalize line-count-1">snoods smith jonas </small>
-                    </div>
-                </li>
-                <li class="swiper-slide card card-slide">
-                    <div class="card-body">
-                        
-                        
-                            <img src="~/assets/images/dashboard/16.png" id="22" class="mb-3 img-fluid rounded-3" alt="song-img">
-                            <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">my crying eyes</a>
-                            <small class="fw-normal text-capitalize line-count-1">snoods smith jonas </small>
-                    </div>
-                </li>
-            </ul>
+            <a href="@Url.Action("Details", "Track", new { id = track.TrackMetadata.TrackUri })" class="text-capitalize h5">@track.TrackMetadata.TrackName</a>
+            <small class="fw-normal line-count-1 text-capitalize">Artist: @track.TrackMetadata.Artists.FirstOrDefault()?.Name</small>
+            </div>
+            } *@
         </div>
     </div>
-    <div class="col-lg-12 mb-5">
-        <div class="card-header  mb-3">
-            <div class="header-title">
-                <h4 class="card-title text-capitalize">top genres for you</h4>
-            </div>
-            <div class="common-album position-relative d-lg-block d-none">
-                <div class="swiper-button-prev" id="prev1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">
-                        <path
-                            d="M15.75 9.5C15.75 9.64918 15.6908 9.79226 15.5853 9.89775C15.4798 10.0032 15.3367 10.0625 15.1875 10.0625H4.17025L8.27298 14.1645C8.32525 14.2168 8.3667 14.2788 8.39499 14.3471C8.42327 14.4154 8.43783 14.4886 8.43783 14.5625C8.43783 14.6364 8.42327 14.7096 8.39499 14.7779C8.3667 14.8462 8.32525 14.9082 8.27298 14.9605C8.22072 15.0127 8.15868 15.0542 8.09039 15.0825C8.02211 15.1108 7.94893 15.1253 7.87502 15.1253C7.80111 15.1253 7.72792 15.1108 7.65964 15.0825C7.59135 15.0542 7.52931 15.0127 7.47705 14.9605L2.41455 9.89797C2.36225 9.84573 2.32076 9.78369 2.29245 9.7154C2.26414 9.64712 2.24957 9.57392 2.24957 9.5C2.24957 9.42608 2.26414 9.35288 2.29245 9.2846C2.32076 9.21631 2.36225 9.15427 2.41455 9.10203L7.47705 4.03953C7.58259 3.93398 7.72575 3.87469 7.87502 3.87469C8.02428 3.87469 8.16744 3.93398 8.27298 4.03953C8.37853 4.14508 8.43783 4.28823 8.43783 4.4375C8.43783 4.58677 8.37853 4.72992 8.27298 4.83547L4.17025 8.9375H15.1875C15.3367 8.9375 15.4798 8.99676 15.5853 9.10225C15.6908 9.20774 15.75 9.35082 15.75 9.5Z"
-                            fill="#4A525F" />
-                    </svg>
-                </div>
-                <div class="swiper-button-next" id="next1">
-                    <svg  xmlns="http://www.w3.org/2000/svg" width="18" height="19"
-                        viewBox="0 0 18 19" fill="none">
-                        <path
-                            d="M15.5855 9.89797L10.523 14.9605C10.4174 15.066 10.2743 15.1253 10.125 15.1253C9.97573 15.1253 9.83258 15.066 9.72703 14.9605C9.62148 14.8549 9.56219 14.7118 9.56219 14.5625C9.56219 14.4132 9.62148 14.2701 9.72703 14.1645L13.8298 10.0625H2.8125C2.66332 10.0625 2.52024 10.0032 2.41475 9.89775C2.30926 9.79226 2.25 9.64918 2.25 9.5C2.25 9.35082 2.30926 9.20774 2.41475 9.10225C2.52024 8.99676 2.66332 8.9375 2.8125 8.9375H13.8298L9.72703 4.83547C9.62148 4.72992 9.56219 4.58677 9.56219 4.4375C9.56219 4.28823 9.62148 4.14508 9.72703 4.03953C9.83258 3.93398 9.97573 3.87469 10.125 3.87469C10.2743 3.87469 10.4174 3.93398 10.523 4.03953L15.5855 9.10203C15.6378 9.15427 15.6793 9.21631 15.7076 9.2846C15.7359 9.35288 15.7504 9.42608 15.7504 9.5C15.7504 9.57392 15.7359 9.64712 15.7076 9.7154C15.6793 9.78369 15.6378 9.84573 15.5855 9.89797Z"
-                            fill="currentColor" />
-                    </svg>
-                </div>
-            </div>
-        </div>
-        <div class="swiper overflow-hidden" data-swiper="geners-slider">
-            <ul class="swiper-wrapper   p-0 list-unstyled mb-0 ">
-                <li class="swiper-slide mb-3">
-                    
-                    
-                        <img src="~/assets/images/dashboard/17.png" id="23" class="mb-3 img-fluid rounded-3" alt="song-img">
-                        <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">sorrow</a>
-                        <small class="fw-normal text-capitalize line-count-1">top 12
-                                        songs from travels and</small>
-                </li>
-                <li class="swiper-slide mb-3">
-                    
-                    
-                        <img src="~/assets/images/dashboard/18.png" id="24" class="mb-3 img-fluid rounded-3" alt="song-img">
-                        <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">relax</a>
-                        <small class="fw-normal text-capitalize line-count-1">top 12
-                                        songs from travels and</small>
-                </li>
-                <li class="swiper-slide mb-3">
-                    
-                    
-                        <img src="~/assets/images/dashboard/19.png" id="25" class="mb-3 img-fluid rounded-3" alt="song-img">
-                        <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">travel</a>
-                        <small class="fw-normal text-capitalize line-count-1">top 12
-                                        songs from travels and</small>
-                </li>
-                <li class="swiper-slide mb-3">
-                    
-                    
-                        <img src="~/assets/images/dashboard/20.png" id="26" class="mb-3 img-fluid rounded-3" alt="song-img">
-                        <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">party</a>
-                        <small class="fw-normal text-capitalize line-count-1">top 12
-                                        songs from travels and</small>
-                </li>
-                <li class="swiper-slide mb-3">
-                    
-                    
-                        <img src="~/assets/images/dashboard/21.png" id="27" class="mb-3 img-fluid rounded-3" alt="song-img">
-                        <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">19’s retro song</a>
-                        <small class="fw-normal text-capitalize line-count-1">top 12 songs from travels and</small>
-                </li>
-                <li class="swiper-slide mb-3">
-                    
-                    
-                        <img src="~/assets/images/dashboard/18.png" id="29" class="mb-3 img-fluid rounded-3" alt="song-img">
-                        <a href="music-player.html" class=" text-capitalize line-count-1 h5 d-block">relax</a>
-                        <small class="fw-normal text-capitalize line-count-1">top 12
-                                        songs from travels and</small>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
 <div class="row  mb-5">
     <div class="col-lg-12">
         <div class="card-header mb-3">
@@ -1284,5 +701,30 @@
     </div></div>
             </div>
         </main>
- *@
 
+
+@* <div>
+    @User.Identity.Name
+</div>  *@
+
+@* <div class="row">
+    @if (Model != null && Model.Any())
+    {
+        @foreach (var item in Model)
+        {
+            <div class="card m-1" style="width:350px;">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Artists)</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(modelItem => item.Name)</h6>
+                    <p class="card-text">@Html.DisplayFor(modelItem => item.Date)</p>
+                    <img src="@Html.DisplayFor(modelItem => item.ImageUrl)" width="300" height="300" alt="Release picture" />
+                    <a href="@Html.DisplayFor(modelItem => item.Link)" target="_blank">Listen</a>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p>No data available</p>
+    }
+</div> *@

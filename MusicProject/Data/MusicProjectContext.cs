@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MusicProject.Models;
 
 namespace MusicProject.Data
 {
-    public class MusicProjectContext : DbContext
+    public class MusicProjectContext : IdentityDbContext<User>
     {
         public MusicProjectContext (DbContextOptions<MusicProjectContext> options)
             : base(options)
@@ -15,12 +16,22 @@ namespace MusicProject.Data
         }
 
         public DbSet<MusicProject.Models.User> User { get; set; } = default!;
-        public DbSet<MusicProject.Models.Track> Track { get; set; } = default!;
+        //public DbSet<MusicProject.Models.Track> Track { get; set; } = default!;
         public DbSet<MusicProject.Models.Playlist> Playlist { get; set; } = default!;
-        public DbSet<MusicProject.Models.Category> Category { get; set; } = default!;
-        public DbSet<MusicProject.Models.Art.Artist> Artist { get; set; } = default!;
+       // public DbSet<MusicProject.Models.Category> Category { get; set; } = default!;
+        //public DbSet<MusicProject.Models.Art.Artist> Artist { get; set; } = default!;
 
-        public DbSet<MusicProject.Models.Album> Album { get; set; } = default!;
+        //public DbSet<MusicProject.Models.Album> Album { get; set; } = default!;
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Artist>()
+        //        .HasMany(a => a.Songs) // Artist has many Tracks
+        //        .WithOne(t => t.Artist) // Track has one Artist
+        //        .HasForeignKey(t => t.ArtistId); // Foreign key relationship
+
+        //    // Other configurations
+        //}
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{

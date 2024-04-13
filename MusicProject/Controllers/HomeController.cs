@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MusicProject.Models;
 using MusicProject.Services.Spotify;
+using Newtonsoft.Json;
 using System.Collections;
 using System.Diagnostics;
 
@@ -22,27 +24,39 @@ namespace MusicProject.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var newRelease = await GetReleases();
-            return View(newRelease);
+            //var newRelease = await GetReleases();
+
+            //var topTracksResponse = await _spotifyService.GetTopTracks();
+            //var topTracks = JsonConvert.DeserializeObject<List<SpotifyTrack>>(topTracksResponse);
+            //return View(topTracks);
+
+            var playlistId = "37i9dQZF1DX4Wsb4d7NKfP";
+
+            //var playlistResponse = await _spotifyService.GetPlaylistAsync(playlistId);
+            //ViewBag.PlaylistResponse = playlistResponse;
+            //return View(playlistResponse);
+
+            var tracks = await _spotifyService.GetPlaylistTracksAsync(playlistId);
+            return View(tracks);
         }
 
-        private async Task<IEnumerable<Release>> GetReleases()
-        {
-            try
-            {
-                var token = await _spotifyAccountService.GetToken(_configuration["Spotify:ClientId"], _configuration["Spotify:ClientSecret"]);
+        //private async Task<IEnumerable<Release>> GetReleases()
+        //{
+        //    try
+        //    {
+        //        var token = await _spotifyAccountService.GetToken(_configuration["Spotify:ClientId"], _configuration["Spotify:ClientSecret"]);
 
-                var newReleases = await _spotifyService.GetNewReleases("US", 20, token);
+        //        var newReleases = await _spotifyService.GetNewReleases("US", 20, token);
 
-                return newReleases;
-            }
-            catch (Exception ex)
-            {
-                Debug.Write(ex);
+        //        return newReleases;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Debug.Write(ex);
 
-                return Enumerable.Empty<Release>();
-            }
-        }
+        //        return Enumerable.Empty<Release>();
+        //    }
+        //}
 
         public IActionResult Users()
         {

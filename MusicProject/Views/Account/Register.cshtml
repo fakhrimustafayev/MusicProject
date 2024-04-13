@@ -5,8 +5,8 @@
 
 @{
     Layout = "";
+    ViewBag.Title = "Register";
 }
-
 
 <!doctype html>
 <html lang="en" dir="ltr">
@@ -72,46 +72,34 @@
                             </a>
                         </div>
                         <div class="col-md-9">
-                            <div class="card auth-card  d-flex justify-content-center mb-0">
+                            <div class="card auth-card d-flex justify-content-center mb-0">
                                 <div class="card-body">
                                     <h2 class="mb-2 text-center">Sign Up</h2>
                                     <p class="text-center">Create your Muzik account.</p>
-                                    <form>
+                                    <form asp-action="Register" asp-controller="Account" method="post">
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label for="full-name" class="form-label">Full Name</label>
-                                                    <input type="text" class="form-control" id="full-name" placeholder="John">
+                                                    <label asp-for="Username" class="form-label">Username</label>
+                                                    <input asp-for="Username" type="text" class="form-control" placeholder="John">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label for="last-name" class="form-label">Last Name</label>
-                                                    <input type="text" class="form-control" id="last-name" placeholder="Doe">
+                                                    <label asp-for="Email" class="form-label">Email</label>
+                                                    <input asp-for="Email" type="email" class="form-control" placeholder="xyz@example.com">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label for="email" class="form-label">Email</label>
-                                                    <input type="email" class="form-control" id="email" placeholder="xyz@example.com">
+                                                    <label asp-for="Password" class="form-label">Password</label>
+                                                    <input asp-for="Password" type="password" class="form-control" placeholder=" ">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label for="phone" class="form-label">Phone No.</label>
-                                                    <input type="text" class="form-control" id="phone" placeholder="123456789">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label for="password" class="form-label">Password</label>
-                                                    <input type="password" class="form-control" id="password" placeholder=" ">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label for="confirm-password" class="form-label">Confirm Password</label>
-                                                    <input type="text" class="form-control" id="confirm-password" placeholder=" ">
+                                                    <label asp-for="ConfirmPassword" class="form-label">Confirm Password</label>
+                                                    <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder=" ">
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 d-flex justify-content-center">
@@ -124,26 +112,6 @@
                                         <div class="d-flex justify-content-center">
                                             <button type="submit" class="btn btn-primary">Sign Up</button>
                                         </div>
-                                        <p class="text-center my-3">or sign in with other accounts?</p>
-                                        <div class="d-flex justify-content-center">
-                                            <ul class="list-group list-group-horizontal list-group-flush">
-                                                <li class="list-group-item border-0 pb-0">
-                                                    <a href="#"><img src="https://templates.iqonic.design/muzik/html/assets/images/brands/gm.svg" alt="gm" loading="lazy"></a>
-                                                </li>
-                                                <li class="list-group-item border-0 pb-0">
-                                                    <a href="#"><img src="https://templates.iqonic.design/muzik/html/assets/images/brands/fb.svg" alt="fb" loading="lazy"></a>
-                                                </li>
-                                                <li class="list-group-item border-0 pb-0">
-                                                    <a href="#"><img src="https://templates.iqonic.design/muzik/html/assets/images/brands/im.svg" alt="im" loading="lazy"></a>
-                                                </li>
-                                                <li class="list-group-item border-0 pb-0">
-                                                    <a href="#"><img src="https://templates.iqonic.design/muzik/html/assets/images/brands/li.svg" alt="li" loading="lazy"></a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <p class="mt-3 text-center">
-                                            Already have an Account <a href="sign-in.html" class="text-underline">Sign In</a>
-                                        </p>
                                     </form>
                                 </div>
                             </div>

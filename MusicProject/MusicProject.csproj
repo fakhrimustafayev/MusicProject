@@ -7,14 +7,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\assets\80s\01. a-ha - Take On Me %28Official Video%29 [Remastered in 4K].mp3" />
+    <None Include="wwwroot\assets\80s\02. Guns N%27 Roses - Sweet Child O%27 Mine %28Official Music Video%29.mp3" />
+    <None Include="wwwroot\assets\80s\03. ELYAZ - Remember Home %28Official Video%29.mp3" />
+    <None Include="wwwroot\assets\80s\04. Chicago - You%27re the Inspiration %28Official Music Video%29.mp3" />
+    <None Include="wwwroot\assets\80s\05. Grover Washington Jr. - Just the Two of Us %28feat. Bill Withers%29 %28Official Lyric Video%29.mp3" />
+    <None Include="wwwroot\assets\80s\06. Glitter Dream, Milan Gavris - California Dreamin’ %28Lyric Video%29.mp3" />
+    <None Include="wwwroot\assets\80s\07. Starship - Sara %28Official Music Video%29 [HD].mp3" />
+    <None Include="wwwroot\assets\80s\08. Rick Astley - Never Gonna Give You Up %28Official Music Video%29.mp3" />
+    <None Include="wwwroot\assets\80s\09. Amy Correa Bell - First Time %28Official Video%29.mp3" />
+    <None Include="wwwroot\assets\80s\10. Chicago - Hard To Say I%27m Sorry %28Official Music Video%29.mp3" />
     <None Include="wwwroot\js\site.js" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OAuth" Version="2.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.1.39" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.3">
       <PrivateAssets>all</PrivateAssets>
@@ -26,13 +37,14 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Areas\admin\Data\" />
     <Folder Include="Areas\admin\Models\" />
+    <Folder Include="MyPlaylists\" />
   </ItemGroup>
 
 </Project>
