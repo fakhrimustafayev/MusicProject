@@ -23,8 +23,10 @@ namespace MusicProject.ViewModels
         public User User { get; set; }
 
         public GetTrackResponse GetTrackResponse { get; set; }
+        public List<GetTrackResponse> GetTrackResponses { get; set; }
 
         public List<GenreViewResponse> GenreViewResponses { get; set; }
-
+        public List<UserFavorite> UserFavorites { get; set; }
+   
     }
 }

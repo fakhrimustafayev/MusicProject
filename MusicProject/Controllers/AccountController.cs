@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MusicProject.Areas.admin.ViewModels;
 using MusicProject.Data;
 using MusicProject.Models;
 using MusicProject.Services.Users;
@@ -128,7 +128,7 @@ namespace MusicProject.Controllers
 
             var editUserViewModel = new EditUserViewModel
             {
-               // Id = user.Id, // Assuming Id is a property in your EditUserViewModel
+                // Id = user.Id, // Assuming Id is a property in your EditUserViewModel
                 UserName = user.UserName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber
@@ -283,10 +283,27 @@ namespace MusicProject.Controllers
         }
 
 
-        //public async Task<IActionResult> AddTrackToFavorites()
-        //{
-        //    _context.
-        //}
+        public async Task<IActionResult> AddTrackToFavorites(string id)
+        {
+            var userid = _userManager.GetUserId(User);
+          var resp=await _context.UserFavorites.Where(x =>
+           
+                x.TrackId == id && x.UserId == userid
+  
+            ).FirstOrDefaultAsync();
+            if (resp != null)
+            {
+                _context.UserFavorites.Remove(resp);
+                await _context.SaveChangesAsync();
+
+            }
+            else
+            {
+                await _context.UserFavorites.AddAsync(new() { UserId = userid, TrackId = id });
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("index","home");
+        }
 
 
     }

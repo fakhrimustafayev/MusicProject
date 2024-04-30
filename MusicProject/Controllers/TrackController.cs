@@ -7,6 +7,9 @@ using MusicProject.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using MusicProject.Services.Spotify;
+using Newtonsoft.Json;
+using System.Net.Http;
+using NuGet.DependencyResolver;
 
 namespace MusicProject.Controllers
 {
@@ -15,12 +18,14 @@ namespace MusicProject.Controllers
         private readonly UserManager<User> _userManager;
         private readonly MusicProjectContext _context;
         private readonly ISpotifyService _spotifyService;
+        private readonly HttpClient _httpClient;
 
-        public TrackController(MusicProjectContext context, UserManager<User> userManager, ISpotifyService spotifyService)
+        public TrackController(MusicProjectContext context, UserManager<User> userManager, ISpotifyService spotifyService, HttpClient httpClient)
         {
             _context = context;
             _userManager = userManager;
             _spotifyService = spotifyService;
+            _httpClient = httpClient;
         }
 
         //[HttpPost]
@@ -84,7 +89,7 @@ namespace MusicProject.Controllers
             }
 
             var alreadyFavorite = await _context.UserFavorites
-                .AnyAsync(uf => uf.UserId == currentUser.Id && uf.TrackId == trackId);
+                .AnyAsync(uf => uf.UserId == currentUser.Id && uf.TrackId     == trackId);
 
             if (!alreadyFavorite)
             {
@@ -102,29 +107,49 @@ namespace MusicProject.Controllers
         }
 
 
-        //[Authorize] 
-        //public async Task<IActionResult> MyFavorites()
-        //{
-        //    var currentUser = await _userManager.GetUserAsync(User);
-        //    if (currentUser == null)
-        //    {
-        //        return Unauthorized();
-        //    }
+        [Authorize]
+        public async Task<IActionResult> MyFavorites()
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser == null)
+            {
+                return Unauthorized();
+            }
 
-        //    var userWithFavorites = await _context.Users
-        //        .Include(u => u.FavoriteTracks)
-        //        //.ThenInclude(uf => uf.SpoTrack)
-        //        .FirstOrDefaultAsync(u => u.Id == currentUser.Id);
+       
 
-        //    if (userWithFavorites == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var vm = new IndexViewModel();
+            var favs=await  _context.UserFavorites.Where(x => x.UserId == currentUser.Id).ToListAsync();
+            var list = new List<GetTrackResponse>();
+     
+            foreach (var x in favs)
+            {
+                var request = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Get,
+                    RequestUri = new Uri($"https://spotify23.p.rapidapi.com/tracks/?ids={x.TrackId}"),
+                    Headers =
+        {
+            { "X-RapidAPI-Key", "67b9737f4cmsh37dac4a6c03c434p15a99cjsn7c13997ec06a" },
+            { "X-RapidAPI-Host", "spotify23.p.rapidapi.com" },
+        },
+                };
+                Console.WriteLine($"https://spotify23.p.rapidapi.com/tracks/?ids={x.TrackId}");
 
-        //    //var favoriteTracks = userWithFavorites.FavoriteTracks.Select(uf => uf.SpoTrack).ToList();
+                using (var response = await _httpClient.SendAsync(request))
+                {
+                    response.EnsureSuccessStatusCode();
+                    var jsonString = await response.Content.ReadAsStringAsync();
+                    var track = JsonConvert.DeserializeObject<GetTrackResponse>(jsonString);
+                    list.Add(track);
+                }
+            }
 
-        //    return View(favoriteTracks);
-        //}
+            vm.GetTrackResponses=list;
+
+            return View(vm);
+
+        }
 
         // GET: /Track/GetTrack?id=trackId
         public async Task<IActionResult> GetTrack(string id)

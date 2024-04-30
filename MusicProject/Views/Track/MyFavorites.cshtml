@@ -29,20 +29,105 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mb-4">
-                    @foreach (var track in Model.FavoriteTracks)
+                <div class="row mb-4 favoriteDivv" >
+
+
+                    @if (Model.GetTrackResponses.Any() )
                     {
-                        <div class="col-md-4 mb-4">
-                            <div class="card">
-                                <img src="@track.album.images.FirstOrDefault()?.url" class="card-img-top" alt="@track.name">
-                                <div class="card-body">
-                                    <h5 class="card-title">@track.name</h5>
-                                    <p class="card-text">@string.Join(", ", track.artists.Select(a => a.name))</p>
-                                    <button class="btn btn-danger" data-track-id="@track.id">Remove from Favorites</button>
-                                </div>
+                        foreach(var trackk in Model.GetTrackResponses)
+                        {
+                            <div class="favoriteTrackk">
+                            
+                            <img src="@trackk.tracks[0].album.images.FirstOrDefault()?.url" class="card-img-top" alt="@trackk.tracks[0].name" style="object-fit: cover; width: 200px; height: 200px;">
+                              <h4>@trackk.tracks[0].name</h4>
+                                <a href="@Url.Action("AddTrackToFavorites", "Account", new { id = trackk.tracks[0].id })" class="btn btn-primary toggle-favorite" data-track-id="@trackk.tracks[0].id" >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                    </svg>
+                                </a>
+
+                                <button class="btn btn-primary play-preview" data-preview-url="@trackk.tracks[0].preview_url">Play</button>
+                                <audio class="audio-preview" preload="none" src="@trackk.tracks[0].preview_url"></audio>
                             </div>
-                        </div>
+                        }
+                        var track = Model.GetTrackResponses[0]; // Assuming you are passing only one track to the view
+                        
+                    
+
                     }
+                    else
+                    {
+                        <div>No track found.</div>
+                    }
+                    <script>
+                        // Wait for the document to be fully loaded
+                        document.addEventListener("DOMContentLoaded", function () {
+                            // Get all elements with the class "play-preview"
+                            const playButtons = document.querySelectorAll(".play-preview");
+                            const audioElements = document.querySelectorAll(".audio-preview");
+
+                            // Function to pause all other audio elements except the specified one
+                            function pauseOtherAudioElements(currentAudio) {
+                                audioElements.forEach(audio => {
+                                    if (audio !== currentAudio && !audio.paused) {
+                                        audio.pause(); // Pause the audio
+                                        const playButton = audio.parentElement.querySelector(".play-preview");
+                                        if (playButton) {
+                                            playButton.textContent = "Play"; // Change button text back to "Play"
+                                        }
+                                    }
+                                });
+                            }
+
+                            // Iterate over each play button
+                            playButtons.forEach(button => {
+                                // Add a click event listener to each button
+                                button.addEventListener("click", function (event) {
+                                    event.preventDefault(); // Prevent default button behavior
+                                    const previewUrl = button.getAttribute("data-preview-url");
+                                    if (previewUrl) {
+                                        // Get the associated audio element
+                                        const audio = button.parentElement.querySelector(".audio-preview");
+                                        if (audio) {
+                                            // Pause all other audio elements except the current one
+                                            pauseOtherAudioElements(audio);
+                                            // Check if the audio is currently playing
+                                            if (audio.paused) {
+                                                audio.play(); // Play the audio
+                                                button.textContent = "Pause"; // Change button text to "Pause"
+                                            } else {
+                                                audio.pause(); // Pause the audio
+                                                button.textContent = "Play"; // Change button text back to "Play"
+                                            }
+                                        }
+                                    } else {
+                                        console.log("Preview URL not available.");
+                                    }
+                                });
+                            });
+                        });
+
+                    </script>
+          @*           @if (Model.GetTrackResponses.Any())
+                    {
+
+                        foreach (var track in Model.GetTrackResponses)
+                        {
+                            <div class="col-md-4 mb-4">
+                                <div class="card"> *@
+
+                                   @*  <img src="@track.album.images.FirstOrDefault()?.url" class="card-img-top" alt="@track.name">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@track.name</h5>
+                                        <p class="card-text">@string.Join(", ", track.artists.Select(a => a.name))</p>
+                                        <button class="btn btn-danger" data-track-id="@track.id">Remove from Favorites</button>
+                                    </div> 
+                                    <p>@track.UserId</p>
+                                    <p>@track.TrackId</p> *@
+                   @*              </div>
+                            </div>
+                        }
+                    } *@
                 </div>
             </div>
             <script>
@@ -155,3 +240,15 @@
 
 </body>
 </html>
+<style>
+    .favoriteDivv{
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:space-between;
+    }
+
+    .favoriteTrackk{
+        width:fit-content;
+        height:fit-content;
+    }
+</style>

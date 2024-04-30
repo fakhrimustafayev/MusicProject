@@ -6,7 +6,7 @@
         public string TrackId { get; set; }
 
         // Navigation properties
-        //public User User { get; set; }
-        //public SpoTrack SpoTrack { get; set; }
+        public User User { get; set; }
+        
     }
 }
