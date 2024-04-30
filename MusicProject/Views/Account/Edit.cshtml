@@ -1,0 +1,478 @@
+﻿@using MusicProject.ViewModels
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model EditUserViewModel
+
+
+@{
+    Layout = "";
+}
+
+
+
+<!doctype html>
+<html lang="en" dir="ltr">
+@await Html.PartialAsync("/Views/Partials/HeaderPartial.cshtml");
+<body class="  ">
+    <!-- loader Start -->
+    <div id="loading">
+        <div class="loader simple-loader">
+            <div class="loader-body ">
+                <img src="~/assets/images/loader.gif" alt="loader" class=" img-fluid ">
+            </div>
+        </div>
+    </div>
+    <!-- loader END -->
+    <aside class="sidebar sidebar-base sidebar-white sidebar-default  " id="first-tour"
+           data-toggle="main-sidebar" data-sidebar="responsive">
+        <div class="sidebar-header d-flex align-items-center justify-content-center">
+            <a asp-controller="Home" asp-action="Index" class="navbar-brand">
+
+                <!--Logo start-->
+                <div class="logo-main">
+                    <img src="https://templates.iqonic.design/muzik/html/assets/images/logo.svg" class="logo-normal img-fluid" alt="logo">
+                    <img src="https://templates.iqonic.design/muzik/html/assets/images/logo-dark.svg" class="logo-normal dark-normal img-fluid" alt="logo-dark">
+                    <img src="https://templates.iqonic.design/muzik/html/assets/images/logo-color.svg" class="logo-normal white-normal img-fluid" alt="logo-color">
+                    <img src="https://templates.iqonic.design/muzik/html/assets/images/logo-mini.svg" class="logo-mini img-fluid" alt="logo-mini">
+                    <img src="https://templates.iqonic.design/muzik/html/assets/images/logo-dark-mini.svg" class="logo-mini dark-mini img-fluid" alt="logo-dark-mini">
+                    <img src="https://templates.iqonic.design/muzik/html/assets/images/logo-color-mini.svg" class="logo-mini white-mini img-fluid" alt="logo-white-mini">
+                </div>
+                <!--logo End-->
+            </a>
+            <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
+                <i class="icon">
+
+                    <svg class="icon-10" width="10" height="10" viewBox="0 0 8 8" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.29853 8C7.11974 8 6.94002 7.93083 6.80335 7.79248L3.53927 4.50446C3.40728 4.37085 3.33333 4.18987 3.33333 4.00036C3.33333 3.81179 3.40728 3.63081 3.53927 3.4972L6.80335 0.207279C7.07762 -0.069408 7.52132 -0.069408 7.79558 0.209174C8.06892 0.487756 8.06798 0.937847 7.79371 1.21453L5.02949 4.00036L7.79371 6.78618C8.06798 7.06286 8.06892 7.51201 7.79558 7.79059C7.65892 7.93083 7.47826 8 7.29853 8Z"
+                              fill="white" />
+                        <path d="M3.96552 8C3.78673 8 3.60701 7.93083 3.47034 7.79248L0.206261 4.50446C0.0742745 4.37085 0.000325203 4.18987 0.000325203 4.00036C0.000325203 3.81179 0.0742745 3.63081 0.206261 3.4972L3.47034 0.207279C3.74461 -0.069408 4.18831 -0.069408 4.46258 0.209174C4.73591 0.487756 4.73497 0.937847 4.4607 1.21453L1.69649 4.00036L4.4607 6.78618C4.73497 7.06286 4.73591 7.51201 4.46258 7.79059C4.32591 7.93083 4.14525 8 3.96552 8Z"
+                              fill="white" />
+                    </svg>
+                </i>
+            </div>
+        </div>
+        <div class="sidebar-body pt-0 data-scrollbar">
+            <div class="sidebar-list">
+                <!-- Sidebar Menu Start -->
+                <ul class="navbar-nav iq-main-menu" id="sidebar-menu">
+                    <li class="nav-item static-item mt-5">
+                        <a class="nav-link static-item disabled text-start" href="#" tabindex="-1">
+                            <span class="custom-icon default-icon text-uppercase">Main</span>
+                            <span class="mini-icon" data-bs-toggle="tooltip" title="Home" data-bs-placement="right">-</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#home-menu" role="button" aria-expanded="false"
+                           aria-controls="home-menu">
+                            <i class="icon" data-bs-toggle="tooltip" title="Dashboard" data-bs-placement="right">
+                                <svg class="icon-20" xmlns="http://www.w3.org/2000/svg" width="20" class="icon-20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <g clip-path="url(#clip0_389_2893)">
+                                        <path d="M16.875 16.875V9.02655C16.875 8.93945 16.8568 8.85332 16.8215 8.77367C16.7863 8.69403 16.7348 8.62263 16.6703 8.56405L10.4203 2.66249C10.3052 2.55774 10.1552 2.49969 9.99961 2.49969C9.844 2.49969 9.69399 2.55774 9.57891 2.66249L3.32891 8.56405C3.26459 8.6227 3.21323 8.69413 3.17811 8.77377C3.143 8.85341 3.12491 8.93951 3.125 9.02655V16.875" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M1.25 16.875H18.75" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M11.875 16.875V12.5C11.875 12.3342 11.8092 12.1753 11.6919 12.0581C11.5747 11.9408 11.4158 11.875 11.25 11.875H8.75C8.58424 11.875 8.42527 11.9408 8.30806 12.0581C8.19085 12.1753 8.125 12.3342 8.125 12.5V16.875" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_389_2893">
+                                            <rect width="20" height="20" fill="white" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </i>
+                            <span class="item-name">Home</span>
+                            <i class="right-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" class="icon-18" fill="none" viewBox="0 0 24 24"
+                                     stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </i>
+                        </a>
+                        <ul class="sub-nav collapse" id="home-menu" data-bs-parent="#sidebar-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "Albums")">
+                                    <i class="icon">
+                                        <svg class="icon-10" width="10" viewBox="0 0 24 24" fill="currentColor"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <g>
+                                                <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                            </g>
+                                        </svg>
+                                    </i>
+                                    <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="Albums" data-bs-placement="right">
+                                        A
+                                    </i>
+                                    <span class="item-name">Albums</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+@*                                     @if (Model.User != null && Model.User.UserName == "Admin")
+                    { 
+                      <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-user" role="button" aria-expanded="false"
+                    aria-controls="sidebar-user">
+                    <i class="icon" data-bs-toggle="tooltip" title="Users" data-bs-placement="right">
+                    <svg class="icon-20" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <g clip-path="url(#clip0_389_11969)">
+                    <path d="M10 12.5C12.7614 12.5 15 10.2614 15 7.5C15 4.73858 12.7614 2.5 10 2.5C7.23858 2.5 5 4.73858 5 7.5C5 10.2614 7.23858 12.5 10 12.5Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M2.5 16.875C4.01328 14.2602 6.76172 12.5 10 12.5C13.2383 12.5 15.9867 14.2602 17.5 16.875" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                    </g>
+                    <defs>
+                    <clipPath id="clip0_389_11969">
+                    <rect width="20" height="20" fill="white" />
+                    </clipPath>
+                    </defs>
+                    </svg>
+                    </i>
+                    <span class="item-name">Users</span>
+                    <i class="right-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" class="icon-18" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                    </i>
+                    </a>
+                    <ul class="sub-nav collapse" id="sidebar-user" data-bs-parent="#sidebar-menu">
+                    <li class="nav-item">
+                    <a class="nav-link" href="app/user-add.html">
+                    <i class="icon">
+                    <svg class="icon-10" width="10" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                    <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                    </g>
+                    </svg>
+                    </i>
+                    <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="Add User" data-bs-placement="right"> A </i>
+                    <span class="item-name">Add User</span>
+                    </a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="app/user-list.html">
+                    <i class="icon">
+                    <svg class="icon-10" width="10" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                    <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                    </g>
+                    </svg>
+                    </i>
+                    <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="User List" data-bs-placement="right"> U </i>
+                    <span class="item-name">User List</span>
+                    </a>
+                    </li>
+                    </ul>
+                    </li> 
+                      } *@
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-my-favourites" role="button" aria-expanded="false"
+                           aria-controls="sidebar-my-favourites" onclick="redirectToMyFavorites()">
+                            <i class="icon" data-bs-toggle="tooltip" title="My Favourites" data-bs-placement="right">
+                                <svg class="icon-20" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <g clip-path="url(#clip0_389_11969)">
+                                        <path d="M10 12.5C12.7614 12.5 15 10.2614 15 7.5C15 4.73858 12.7614 2.5 10 2.5C7.23858 2.5 5 4.73858 5 7.5C5 10.2614 7.23858 12.5 10 12.5Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M2.5 16.875C4.01328 14.2602 6.76172 12.5 10 12.5C13.2383 12.5 15.9867 14.2602 17.5 16.875" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_389_11969">
+                                            <rect width="20" height="20" fill="white" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </i>
+                            <span class="item-name">My Favourites</span>
+                        </a>
+                        <ul class="sub-nav collapse" id="sidebar-my-favourites" data-bs-parent="#sidebar-menu">
+                        </ul>
+                    </li>
+
+                    <script>
+                        function redirectToMyFavorites() {
+                            // Redirect to the MyFavorites page
+                            window.location.href = "/Track/MyFavorites";
+                        }
+                    </script>
+
+
+                </ul>
+
+                <!-- Sidebar Menu End -->
+            </div>
+        </div>
+        <div class="sidebar-footer">
+        </div>
+    </aside>
+    <main class="main-content">
+        @await Html.PartialAsync("/Views/Partials/Navbar2.cshtml");
+        <div class="content-inner container-fluid pb-0" id="page_layout">
+            <div>
+                <div class="row">
+                   <div class="col-xl-3 col-lg-4" style="width: 1236px; height: 666px;">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between">
+                                <div class="header-title">
+                                    <h4 class="card-title">Add New User</h4>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form method="post" action="/Account/Edit">
+                                    <div class="form-group">
+                                        <div class="profile-img-edit position-relative">
+                                            <img src="~/assets/images/dashboard/user-icon.png" alt="profile-pic" class="theme-color-default-img profile-pic rounded avatar-100" loading="lazy">
+                                            <div class="upload-icone bg-primary">
+                                                <svg class="upload-button icon-14" width="14" height="14" viewBox="0 0 24 24">
+                                                    <path fill="#ffffff" d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" />
+                                                </svg>
+                                                <input class="file-upload" type="file" accept="image/*">
+                                            </div>
+                                        </div>
+                                        <div class="img-extension mt-3">
+                                            <div class="d-inline-block align-items-center">
+                                                <span>Only</span>
+                                                <a href="javascript:void(0);">.jpg</a>
+                                                <a href="javascript:void(0);">.png</a>
+                                                <a href="javascript:void(0);">.jpeg</a>
+                                                <span>allowed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="Id" value="@Model.Id" /> <!-- Include a hidden input for the user's ID -->
+                                    <div class="form-group col-md-12">
+                                        <label class="form-label" for="uname">User Name:</label>
+                                        <input type="text" class="form-control" id="uname" name="UserName" placeholder="User Name" value="@Model.UserName">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="email">Email:</label>
+                                        <input type="email" class="form-control" id="email" name="Email" placeholder="Email" value="@Model.Email">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="mobno">Mobile Number:</label>
+                                        <input type="text" class="form-control" id="mobno" name="PhoneNumber" placeholder="Mobile Number" value="@Model.PhoneNumber">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Confirm changes</button>
+                                   @*  <div class="form-group">
+                                        <label class="form-label" for="turl">Twitter Url:</label>
+                                        <input type="text" class="form-control" id="turl" placeholder="Twitter Url">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="instaurl">Instagram Url:</label>
+                                        <input type="text" class="form-control" id="instaurl" placeholder="Instagram Url">
+                                    </div>
+                                    <div class="form-group mb-0">
+                                        <label class="form-label" for="lurl">Linkedin Url:</label>
+                                        <input type="text" class="form-control" id="lurl" placeholder="Linkedin Url">
+                                    </div> *@
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    @* <div class="col-xl-9 col-lg-8">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between">
+                                <div class="header-title">
+                                    <h4 class="card-title">New User Information</h4>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="new-user-info">
+                                    <form>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label class="form-label" for="fname">First Name:</label>
+                                                <input type="text" class="form-control" id="fname" placeholder="First Name">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="form-label" for="lname">Last Name:</label>
+                                                <input type="text" class="form-control" id="lname" placeholder="Last Name">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="form-label" for="add1">Street Address 1:</label>
+                                                <input type="text" class="form-control" id="add1" placeholder="Street Address 1">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="form-label" for="add2">Street Address 2:</label>
+                                                <input type="text" class="form-control" id="add2" placeholder="Street Address 2">
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="form-label" for="cname">Company Name:</label>
+                                                <input type="text" class="form-control" id="cname" placeholder="Company Name">
+                                            </div>
+                                            <div class="form-group col-sm-12">
+                                                <label class="form-label">Country:</label>
+                                                <select name="type" class="selectpicker form-control" data-style="py-0">
+                                                    <option>Select Country</option>
+                                                    <option>Caneda</option>
+                                                    <option>Noida</option>
+                                                    <option>USA</option>
+                                                    <option>India</option>
+                                                    <option>Africa</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="form-label" for="mobno">Mobile Number:</label>
+                                                <input type="text" class="form-control" id="mobno" placeholder="Mobile Number">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="form-label" for="altconno">Alternate Contact:</label>
+                                                <input type="text" class="form-control" id="altconno" placeholder="Alternate Contact">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="form-label" for="email">Email:</label>
+                                                <input type="email" class="form-control" id="email" placeholder="Email">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="form-label" for="pno">Pin Code:</label>
+                                                <input type="text" class="form-control" id="pno" placeholder="Pin Code">
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="form-label" for="city">Town/City:</label>
+                                                <input type="text" class="form-control" id="city" placeholder="Town/City">
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h5 class="mb-3">Security</h5>
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <label class="form-label" for="uname">User Name:</label>
+                                                <input type="text" class="form-control" id="uname" placeholder="User Name">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="form-label" for="pass">Password:</label>
+                                                <input type="password" class="form-control" id="pass" placeholder="Password">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="form-label" for="rpass">Repeat Password:</label>
+                                                <input type="password" class="form-control" id="rpass" placeholder="Repeat Password ">
+                                            </div>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label class="form-label"><input class="form-check-input me-2" type="checkbox" value="" id="flexchexked">Enable Two-Factor-Authentication</label>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Add New User</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="card border-top mb-0">
+                            <diiv class="card-body">
+                                <div class="d-flex align-items-center justify-content-between flex-md-row flex-column gap-3">
+                                    <div class="">
+                                        <ul class="list-unstyled p-0 m-0 mb-3 text-capitalize d-flex gap-3 flex-md-nowrap flex-wrap">
+                                            <li>about</li>
+                                            <li>|</li>
+                                            <li>terms of use</li>
+                                            <li>|</li>
+                                            <li>privacy policy</li>
+                                            <li>|</li>
+                                            <li>support</li>
+                                            <li>|</li>
+                                            <li>feedback</li>
+                                            <li>|</li>
+                                        </ul>
+                                        <small>
+                                            Copyright <span id="copyright">
+                                                <script>document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))</script>
+                                            </span>. Made with love by Iqonic Design.
+                                        </small>
+                                    </div>
+                                    <div>
+                                        <ul class="list-unstyled m-0 p-0 d-flex align-items-center gap-3">
+                                            <li>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                                    <path d="M5.026 15C11.064 15 14.367 9.99702 14.367 5.66602C14.367 5.52602 14.367 5.38402 14.361 5.24402C15.0041 4.77851 15.5591 4.20217 16 3.54202C15.3993 3.80687 14.7628 3.98143 14.111 4.06002C14.7975 3.64966 15.3117 3.00399 15.558 2.24302C14.913 2.62515 14.207 2.8934 13.471 3.03602C12.9762 2.50905 12.3214 2.15994 11.6081 2.04278C10.8948 1.92562 10.1627 2.04694 9.52534 2.38796C8.88796 2.72897 8.38081 3.27065 8.08245 3.92908C7.78409 4.58751 7.71118 5.32595 7.875 6.03002C6.56974 5.96457 5.29282 5.62549 4.12704 5.03476C2.96127 4.44404 1.93268 3.61487 1.108 2.60102C0.68934 3.3241 0.561574 4.17942 0.750646 4.99329C0.939718 5.80715 1.43145 6.51855 2.126 6.98302C1.60554 6.96534 1.09652 6.82558 0.64 6.57502V6.62002C0.640897 7.3775 0.903307 8.11144 1.38287 8.69778C1.86244 9.28412 2.52975 9.68689 3.272 9.83802C2.99026 9.91564 2.69923 9.95433 2.407 9.95302C2.20098 9.95365 1.99538 9.93456 1.793 9.89602C2.00279 10.5481 2.41127 11.1182 2.96125 11.5265C3.51122 11.9348 4.17513 12.1609 4.86 12.173C3.69656 13.0868 2.2594 13.5824 0.78 13.58C0.519321 13.5811 0.258823 13.5661 0 13.535C1.50151 14.4923 3.2453 15.0006 5.026 15Z" fill="#4A525F" />
+                                                </svg>
+                                            </li>
+                                            <li>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                                    <g clip-path="url(#clip0_389_2574)">
+                                                        <path d="M0 1.146C0 0.513 0.526 0 1.175 0H14.825C15.474 0 16 0.513 16 1.146V14.854C16 15.487 15.474 16 14.825 16H1.175C0.526 16 0 15.487 0 14.854V1.146ZM4.943 13.394V6.169H2.542V13.394H4.943ZM3.743 5.182C4.58 5.182 5.101 4.628 5.101 3.934C5.086 3.225 4.581 2.686 3.759 2.686C2.937 2.686 2.4 3.226 2.4 3.934C2.4 4.628 2.921 5.182 3.727 5.182H3.743ZM8.651 13.394V9.359C8.651 9.143 8.667 8.927 8.731 8.773C8.904 8.342 9.299 7.895 9.963 7.895C10.832 7.895 11.179 8.557 11.179 9.529V13.394H13.58V9.25C13.58 7.03 12.396 5.998 10.816 5.998C9.542 5.998 8.971 6.698 8.651 7.191V7.216H8.635C8.64031 7.20765 8.64564 7.19932 8.651 7.191V6.169H6.251C6.281 6.847 6.251 13.394 6.251 13.394H8.651Z" fill="#4A525F" />
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_389_2574">
+                                                            <rect width="16" height="16" fill="white" />
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+                                            </li>
+                                            <li>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                                    <g clip-path="url(#clip0_389_2576)">
+                                                        <path d="M16 8.04902C16 3.60302 12.418 -0.000976562 8.00005 -0.000976562C3.58005 2.34375e-05 -0.00195312 3.60302 -0.00195312 8.05002C-0.00195312 12.067 2.92405 15.397 6.74805 16.001V10.376H4.71805V8.05002H6.75005V6.27502C6.75005 4.25802 7.94505 3.14402 9.77205 3.14402C10.648 3.14402 11.563 3.30102 11.563 3.30102V5.28102H10.554C9.56105 5.28102 9.25105 5.90202 9.25105 6.53902V8.04902H11.469L11.115 10.375H9.25005V16C13.074 15.396 16 12.066 16 8.04902Z" fill="#FF4545" />
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_389_2576">
+                                                            <rect width="16" height="16" fill="white" />
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+                                            </li>
+                                            <li>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                                    <g clip-path="url(#clip0_389_2578)">
+                                                        <path d="M8 0C5.829 0 5.556 0.01 4.703 0.048C3.85 0.088 3.269 0.222 2.76 0.42C2.22609 0.620819 1.74249 0.935826 1.343 1.343C0.936076 1.7427 0.621107 2.22624 0.42 2.76C0.222 3.268 0.087 3.85 0.048 4.7C0.01 5.555 0 5.827 0 8.001C0 10.173 0.01 10.445 0.048 11.298C0.088 12.15 0.222 12.731 0.42 13.24C0.625 13.766 0.898 14.212 1.343 14.657C1.787 15.102 2.233 15.376 2.759 15.58C3.269 15.778 3.849 15.913 4.701 15.952C5.555 15.99 5.827 16 8 16C10.173 16 10.444 15.99 11.298 15.952C12.149 15.912 12.732 15.778 13.241 15.58C13.7746 15.3791 14.2578 15.0641 14.657 14.657C15.102 14.212 15.375 13.766 15.58 13.24C15.777 12.731 15.912 12.15 15.952 11.298C15.99 10.445 16 10.173 16 8C16 5.827 15.99 5.555 15.952 4.701C15.912 3.85 15.777 3.268 15.58 2.76C15.3789 2.22623 15.0639 1.74268 14.657 1.343C14.2576 0.935676 13.774 0.620645 13.24 0.42C12.73 0.222 12.148 0.087 11.297 0.048C10.443 0.01 10.172 0 7.998 0H8.001H8ZM7.283 1.442H8.001C10.137 1.442 10.39 1.449 11.233 1.488C12.013 1.523 12.437 1.654 12.719 1.763C13.092 1.908 13.359 2.082 13.639 2.362C13.919 2.642 14.092 2.908 14.237 3.282C14.347 3.563 14.477 3.987 14.512 4.767C14.551 5.61 14.559 5.863 14.559 7.998C14.559 10.133 14.551 10.387 14.512 11.23C14.477 12.01 14.346 12.433 14.237 12.715C14.1087 13.0624 13.904 13.3764 13.638 13.634C13.358 13.914 13.092 14.087 12.718 14.232C12.438 14.342 12.014 14.472 11.233 14.508C10.39 14.546 10.137 14.555 8.001 14.555C5.865 14.555 5.611 14.546 4.768 14.508C3.988 14.472 3.565 14.342 3.283 14.232C2.9355 14.1039 2.62113 13.8996 2.363 13.634C2.09675 13.376 1.89172 13.0617 1.763 12.714C1.654 12.433 1.523 12.009 1.488 11.229C1.45 10.386 1.442 10.133 1.442 7.996C1.442 5.86 1.45 5.608 1.488 4.765C1.524 3.985 1.654 3.561 1.764 3.279C1.909 2.906 2.083 2.639 2.363 2.359C2.643 2.079 2.909 1.906 3.283 1.761C3.565 1.651 3.988 1.521 4.768 1.485C5.506 1.451 5.792 1.441 7.283 1.44V1.442ZM12.271 2.77C12.1449 2.77 12.0201 2.79483 11.9036 2.84308C11.7872 2.89132 11.6813 2.96203 11.5922 3.05118C11.503 3.14032 11.4323 3.24615 11.3841 3.36262C11.3358 3.4791 11.311 3.60393 11.311 3.73C11.311 3.85607 11.3358 3.9809 11.3841 4.09738C11.4323 4.21385 11.503 4.31968 11.5922 4.40882C11.6813 4.49797 11.7872 4.56868 11.9036 4.61692C12.0201 4.66517 12.1449 4.69 12.271 4.69C12.5256 4.69 12.7698 4.58886 12.9498 4.40882C13.1299 4.22879 13.231 3.98461 13.231 3.73C13.231 3.47539 13.1299 3.23121 12.9498 3.05118C12.7698 2.87114 12.5256 2.77 12.271 2.77ZM8.001 3.892C7.45607 3.8835 6.91489 3.98349 6.40898 4.18614C5.90306 4.3888 5.44251 4.69007 5.05415 5.07242C4.66579 5.45478 4.35736 5.91057 4.14684 6.41326C3.93632 6.91595 3.8279 7.4555 3.8279 8.0005C3.8279 8.5455 3.93632 9.08505 4.14684 9.58774C4.35736 10.0904 4.66579 10.5462 5.05415 10.9286C5.44251 11.3109 5.90306 11.6122 6.40898 11.8149C6.91489 12.0175 7.45607 12.1175 8.001 12.109C9.07954 12.0922 10.1082 11.6519 10.865 10.8833C11.6217 10.1146 12.0459 9.07917 12.0459 8.0005C12.0459 6.92183 11.6217 5.88641 10.865 5.11775C10.1082 4.34909 9.07954 3.90883 8.001 3.892ZM8.001 5.333C8.70833 5.333 9.38669 5.61399 9.88685 6.11415C10.387 6.61431 10.668 7.29267 10.668 8C10.668 8.70733 10.387 9.38569 9.88685 9.88585C9.38669 10.386 8.70833 10.667 8.001 10.667C7.29367 10.667 6.61531 10.386 6.11515 9.88585C5.61499 9.38569 5.334 8.70733 5.334 8C5.334 7.29267 5.61499 6.61431 6.11515 6.11415C6.61531 5.61399 7.29367 5.333 8.001 5.333Z" fill="#4A525F" />
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_389_2578">
+                                                            <rect width="16" height="16" fill="white" />
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </diiv>
+                        </div>
+                    </div> *@
+                </div>
+            </div>
+        </div>
+    </main>
+    <!--Footer Start-->
+    <!-- Footer Section Start -->
+   @*  @await Html.PartialAsync("/Views/Partials/Footer.cshtml"); *@
+    <!-- Footer Section End -->        <!--Footer End-->
+    <!--Burger Menu Start-->
+    @await Html.PartialAsync("/Views/Partials/BurgerMenu.cshtml");       <!--Burger Menu End-->
+    <!-- Wrapper End-->
+    @await Html.PartialAsync("/Views/Partials/Scripts.cshtml");
+
+</body>
+</html>
+
+
+@* <!DOCTYPE html>
+<html>
+<head>
+    <title>Edit User</title>
+</head>
+<body>
+    <h2>Edit User</h2>
+
+    @using (Html.BeginForm("Edit", "Account", FormMethod.Post))
+    {
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName)
+            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email)
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PhoneNumber)
+            @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control" })
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    }
+</body>
+</html>
+ *@

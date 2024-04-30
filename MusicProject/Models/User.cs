@@ -6,7 +6,11 @@ namespace MusicProject.Models;
     {
 
     //[Key]
-     public int Id { get; set; } 
+    //public int Id { get; set; }
+    // public byte[]? ProfileImage { get; set; }
+
+    public DateTime JoinDate { get; set; } = DateTime.UtcNow;
+    public ICollection<UserFavorite> FavoriteTracks { get; set; }
 
     //[StringLength(100)]
     //[MaxLength(100)]
@@ -16,5 +20,5 @@ namespace MusicProject.Models;
     //public string? Email { get; set; } 
 
     //public string Password { get; set; } = null!;
-    }
+}
 

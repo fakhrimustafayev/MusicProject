@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MusicProject.Data;
 using MusicProject.Models;
 using MusicProject.Services.Users;
@@ -19,9 +20,9 @@ public class UserService : IUserService
         _signInManager = signInManager;
     }
 
-    public async Task<User> GetUserById(int id)
+    public async Task<User> GetUserById(string id)
     {
-        return await _musicProjectContext.User.FindAsync(id);
+        return await _userManager.FindByIdAsync(id);
     }
 
 
@@ -34,22 +35,19 @@ public class UserService : IUserService
 
     public async Task UpdateUserAsync(User user)
     {
-        var existingUser =  await _musicProjectContext.User.FindAsync(user.Id);
-        if (existingUser != null)
+        _musicProjectContext.Attach(user).State = EntityState.Modified;
+        await _musicProjectContext.SaveChangesAsync();
+    }
+
+    public async Task DeleteUserAsync(string id)
+    {
+        var userToDelete = await _userManager.FindByIdAsync(id);
+        if (userToDelete != null)
         {
-            existingUser.UserName = user.UserName;
-            existingUser.Email = user.Email;
+            await _userManager.DeleteAsync(userToDelete);
         }
     }
 
-    public async Task DeleteUserAsync(int id)
-    {
-        var userToDelete =  await _musicProjectContext.User.FindAsync(id);
-        if (userToDelete != null)
-        {
-            _musicProjectContext.User.Remove(userToDelete);
-        }
-    }
 
     public IEnumerable<User> GetAllUsers()
     {

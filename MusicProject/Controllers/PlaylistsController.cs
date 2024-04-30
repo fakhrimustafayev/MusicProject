@@ -7,55 +7,74 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MusicProject.Data;
 using MusicProject.Models;
+using MusicProject.Services.Spotify;
+using MusicProject.ViewModels;
 using Newtonsoft.Json;
 
-namespace MusicProject.Areas.admin.Controllers
+namespace MusicProject.Controllers
 {
-    [Area("admin")]
     public class PlaylistsController : Controller
     {
         private readonly MusicProjectContext _context;
+        private readonly ISpotifyService _spotifyService;
 
-        public PlaylistsController(MusicProjectContext context)
+        public PlaylistsController(MusicProjectContext context, ISpotifyService spotifyService)
         {
             _context = context;
+            _spotifyService = spotifyService;
         }
 
 
         // GET: admin/Playlists
         public async Task<IActionResult> Index()
         {
-          
+
 
             return View(await _context.Playlist.ToListAsync());
         }
 
+        // GET: Playlists/Details/{playlistId}
+        public async Task<IActionResult> Details(string playlistId)
+        {
+            //// Call GetPlaylistTracksAsync from SpotifyService
+            //var playlistTracks = await _spotifyService.GetPlaylistTracksAsync(playlistId);
 
-     
+            //// You can pass playlistTracks to a view or perform any other actions
+            //return View(playlistTracks);
+            var playlistTracks = await _spotifyService.GetPlaylistTracksAsync(playlistId);
 
+            // Create an instance of IndexViewModel and assign the playlistTracks to it
+            var viewModel = new IndexViewModel
+            {
+                PlaylistTrack = playlistTracks // Assuming PlaylistTrack is a property in IndexViewModel
+            };
+
+            return View(viewModel); // Pass the viewModel to the view
+
+        }
 
 
         // GET: admin/Playlists/Details/5
-        public async Task<IActionResult> Details()
-        {
+        //public async Task<IActionResult> Details()
+        //{
 
-            //var tracks = GetTracksFromFolder("wwwroot/assets/80s");
-            //return View(tracks);
-            //if (id == null)
-            //{
-            //    return NotFound();
-            //}
+        //    //var tracks = GetTracksFromFolder("wwwroot/assets/80s");
+        //    //return View(tracks);
+        //    //if (id == null)
+        //    //{
+        //    //    return NotFound();
+        //    //}
 
-            //var playlist = await _context.Playlist
-            //    .FirstOrDefaultAsync(m => m.Id == id);
-            //if (playlist == null)
-            //{
-            //    return NotFound();
-            //}
+        //    //var playlist = await _context.Playlist
+        //    //    .FirstOrDefaultAsync(m => m.Id == id);
+        //    //if (playlist == null)
+        //    //{
+        //    //    return NotFound();
+        //    //}
 
-            //return View(playlist);
-            return View();
-        }
+        //    //return View(playlist);
+        //    return View();
+        //}
 
 
 

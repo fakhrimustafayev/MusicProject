@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using MusicProject.Models;
 
 namespace MusicProject.Data
@@ -14,11 +15,58 @@ namespace MusicProject.Data
             : base(options)
         {
         }
+        public DbSet<UserFavorite> UserFavorites { get; set; }
 
         public DbSet<MusicProject.Models.User> User { get; set; } = default!;
-        //public DbSet<MusicProject.Models.Track> Track { get; set; } = default!;
+        public DbSet<SpoTrack> SpoTracks { get; set; }
         public DbSet<MusicProject.Models.Playlist> Playlist { get; set; } = default!;
-       // public DbSet<MusicProject.Models.Category> Category { get; set; } = default!;
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<UserFavorite>()
+          .HasKey(uf => new { uf.UserId, uf.TrackId });
+
+            modelBuilder.Entity<SpoTrack>()
+                .HasKey(track => track.id);
+
+            // Configure foreign key for UserFavorite to User without cascade delete
+            //modelBuilder.Entity<UserFavorite>()
+            //    .HasOne(uf => uf.User)
+            //    .WithMany(u => u.FavoriteTracks)
+            //    .HasForeignKey(uf => uf.UserId)
+            //    .OnDelete(DeleteBehavior.ClientSetNull); // or DeleteBehavior.SetNull, depending on your needs
+
+            //// Configure foreign key for UserFavorite to SpoTrack without cascade delete
+            //modelBuilder.Entity<UserFavorite>()
+            //    .HasOne(uf => uf.SpoTrack)
+            //    .WithMany()
+            //    .HasForeignKey(uf => uf.TrackId)
+            //    .OnDelete(DeleteBehavior.ClientSetNull); // or DeleteBehavior.SetNull, depending on your needs
+
+            modelBuilder.Entity<SpoAlbum>()
+          .HasMany(album => album.artists)
+          .WithOne(artist => artist.Album)
+          .HasForeignKey(artist => artist.AlbumId);
+
+            modelBuilder.Entity<SpoTrack>().Ignore(e => e.external_ids);
+            modelBuilder.Entity<SpoAlbum>().Ignore(e => e.external_urls);
+            modelBuilder.Entity<SpoArtist>().Ignore(e => e.external_urls);
+            modelBuilder.Entity<SpoTrack>().Ignore(e => e.external_urls);
+            modelBuilder.Entity<Linked_From>().Ignore(e => e.external_urls);
+            modelBuilder.Entity<SpoAlbum>().Ignore(e => e.images);
+            // Configure other entities and relationships as needed
+        }
+
+
+
+
+
+
+
+
+        // public DbSet<MusicProject.Models.Category> Category { get; set; } = default!;
         //public DbSet<MusicProject.Models.Art.Artist> Artist { get; set; } = default!;
 
         //public DbSet<MusicProject.Models.Album> Album { get; set; } = default!;

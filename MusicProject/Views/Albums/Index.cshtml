@@ -1,69 +1,135 @@
-﻿@* @model List<MusicProject.Models.Track> *@
+﻿
+@model MusicProject.ViewModels.IndexViewModel
 
- <main class="main-content">
-    @await Html.PartialAsync("/Views/Partials/Navbar2.cshtml")
-            <div class="content-inner container-fluid pb-0" id="page_layout">
-<div class="row">
-   
-        <div class="col-lg-12">
-            <div class="card">
-               <div class="card-body px-0">
-                        <div class="table-responsive">
-                            <table class="table mb-0">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">No.</th>
-                                        <th scope="col">Title</th>
-                                        <th scope="col">Album</th>
-                                        <th scope="col">Time</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var track in Model)
-                                    {
-                                        <tr>
-                                            <td>@track.Id</td>
-                                            <td>
-                                                <div class="d-flex align-items-center col-10 col-md-5">
-                                                    <!-- Your track information display -->
-                                                    <div class="realese-song">
-                                                        <a href="javascript:void(0);"><img src="~/assets/images/dashboard/@track.ImageUrl" class="rounded avatar-60 img-fluid" alt=""></a>
-                                                    </div>
-                                                    <div class="ms-3">
-                                                        <p class="mb-0">@track.Title</p>
-                                                        <small>@track.Artist</small>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td><p class="mb-0">@track.Album</p></td>
-                                            <td><p class="mb-0">@track.Duration</p></td>
-                                            <td>
-                                                <audio controls>
-                                                    @* <source src="@Url.Content("~/assets/80s/" + track.FilePath)" type="audio/mpeg"> *@
-                                                     <source src="~/assets/80s/01. a-ha - Take On Me (Official Video) [Remastered in 4K].mp3" type="audio/mpeg">
-                                                    <source src="~/assets/80s/02. Guns N' Roses - Sweet Child O' Mine (Official Music Video).mp3" type="audio/mpeg">
-                                                    <source src="~/assets/80s/03. ELYAZ - Remember Home (Official Video).mp3" type="audio/mpeg">
-                                                    <source src="~/assets/80s/01. a-ha - Take On Me (Official Video) [Remastered in 4K].mp3" type="audio/mpeg"> 
-                                                     <source src="~/assets/80s/01. a-ha - Take On Me (Official Video) [Remastered in 4K].mp3" type="audio/mpeg"> 
-                                                     <source src="~/assets/80s/01. a-ha - Take On Me (Official Video) [Remastered in 4K].mp3" type="audio/mpeg"> 
-                                                     <source src="~/assets/80s/01. a-ha - Take On Me (Official Video) [Remastered in 4K].mp3" type="audio/mpeg"> 
-                                                    <source src="~/assets/80s/01. a-ha - Take On Me (Official Video) [Remastered in 4K].mp3" type="audio/mpeg"> 
-                                                     <source src="~/assets/80s/01. a-ha - Take On Me (Official Video) [Remastered in 4K].mp3" type="audio/mpeg"> 
-                                                    <source src="~/assets/80s/01. a-ha - Take On Me (Official Video) [Remastered in 4K].mp3" type="audio/mpeg"> 
-                                                    Your browser does not support the audio element.
-                                                </audio>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
+@* @{
+    Layout = "";
+} *@
 
-               </div>
+<!doctype html>
+<html lang="en" dir="ltr">
+   @await Html.PartialAsync("/Views/Partials/HeaderPartial.cshtml")
+    <body class="  ">
+        <!-- loader Start -->
+@*         <div id="loading">
+        <div class="loader simple-loader">
+            <div class="loader-body ">
+                <img src="~/assets/images/loader.gif" alt="loader" class=" img-fluid ">
             </div>
-         </div>
-         </div>
+        </div>
+        </div> *@
+        <!-- loader END -->
+        @await Html.PartialAsync("/Views/Partials/AsidePartial.cshtml")
+        <main class="main-content">
+           @await Html.PartialAsync("/Views/Partials/Navbar2.cshtml")
+        <div class="content-inner container-fluid pb-0" id="page_layout">
+            <div class="row mb-4">
+                <div class="col-lg-12">
+                    <div class="card-header mb-3">
+                        <div class="header-title">
+                            <h4 class="card-title text-capitalize">Albums</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="header-title">
+                                <h4 class="card-title">Please choose genre</h4>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <select class="select2-basic-single js-states form-select form-control" name="state" style="width: 100%;" onchange="redirectToGenre(this)">
+                                <option value="Please choose genre"></option>
+                                <option value="/Albums/Pop">Pop</option>
+                                <option value="/Albums/HipHop">Hip-Hop</option>
+                                <option value="/Albums/Rock">Rock</option>
+                                <option value="/Albums/Jazz">Jazz</option>
+                                <option value="/Albums/Classical">Classical</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    function redirectToGenre(select) {
+                        var url = select.value;
+                        if (url) {
+                            window.location.href = url;
+                        }
+                    }
+                </script>
+
+
+               @*  @{
+                    int popAlbumCount = 0;
+                    int maxPopAlbums = 118; // Change this to the maximum count of pop albums
+                    bool switchToHipHop = false;
+                    bool switchToRock = false;
+                    bool switchToJazz = false;
+                }
+
+                @foreach (var response in Model.GenreViewResponses)
+                {
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    @if (response.content != null && response.content.items != null)
+                                    {
+                                        int count = 0;
+                                        foreach (var item in response.content.items)
+                                        {
+                                            if (item.content != null && item.content.items != null)
+                                            {
+                                                foreach (var subItem in item.content.items)
+                                                {
+                                                    if (subItem.images != null && subItem.images.Length > 0)
+                                                    {
+                                                        <div class="col-6 col-md-4 col-lg-3 mb-2">
+                                                            <a href="@Url.Action("Details", "Playlists", new { playlistId = subItem.id })">
+                                                                <img src="@subItem.images[0].url" alt="Genre Image" class="img-fluid" style="object-fit: cover; height: 250px;" />
+                                                                <div>@subItem.name</div>
+                                                            </a>
+                                                        </div>
+                                                        count++;
+                                                        if (count == maxPopAlbums)
+                                                        {
+                                                            <h3>Hip-Hop</h3>
+                                                            switchToHipHop = true;
+                                                        }
+                                                        else if (switchToHipHop && count == 142)
+                                                        {
+                                                            <h3>Rock</h3>
+                                                            switchToRock = true;
+                                                        }
+                                                        else if (switchToRock && count == 108)
+                                                        {
+                                                            <h3>Jazz</h3>
+                                                            switchToJazz = true;
+                                                        }
+                                                        else if (switchToJazz && count == 55)
+                                                        {
+                                                            <h3>Classical</h3>
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+ *@
+
+
+
+            </div>
+        </div>
+
+
+
+
 
 
     <div class="card border-top mb-0">
@@ -136,29 +202,17 @@
     </div></div>
             </div>
         </main>
+        <!--Footer Start-->
+        <!-- Footer Section Start -->
+      @*   @await Html.PartialAsync("/Views/Partials/Footer.cshtml") *@
+        <!-- Footer Section End -->        <!--Footer End-->
 
+        <!--Burger Menu Start-->
+        @await Html.PartialAsync("/Views/Partials/BurgerMenu.cshtml")
+        <!--Burger Menu End-->
 
-@* @model MusicProject.Models.PlaylistViewModel
-
-@{
-    ViewData["Title"] = "Details";
-}
-
-<h1>@Model.PlaylistInfo.Title</h1>
-
-<p>Description: @Model.PlaylistInfo.Description</p>
-
-<h2>Tracks:</h2>
-<ul>
-    @foreach (var track in Model.Tracklist)
-    {
-        <li>
-            <a href="@track.Link">@track.Title</a>
-        </li>
-    }
-</ul>
-
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.PlaylistInfo.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div> *@
+          <!-- Wrapper End-->
+        @await Html.PartialAsync("/Views/Partials/Scripts.cshtml")
+        
+    </body>
+</html>

@@ -8,9 +8,9 @@ namespace MusicProject.Services.Users;
 
 public interface IUserService 
 {
-    Task<User> GetUserById(int userId);
+    Task<User> GetUserById(string userId);
     IEnumerable<User> GetAllUsers();
     Task<IdentityResult> RegisterUserAsync(User user, string password);
     Task UpdateUserAsync(User user);
-    Task DeleteUserAsync(int userId);
+    Task DeleteUserAsync(string id);
 }

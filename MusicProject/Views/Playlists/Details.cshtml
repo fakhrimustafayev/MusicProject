@@ -1,0 +1,552 @@
+﻿@model MusicProject.ViewModels.IndexViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "";
+}
+
+ 
+<!doctype html>
+  @await Html.PartialAsync("/Views/Partials/HeaderPartial.cshtml")  
+    <body class="  ">
+        <!-- loader Start -->
+        <div id="loading">
+        <div class="loader simple-loader">
+            <div class="loader-body ">
+                <img src="~/assets/images/loader.gif" alt="loader" class=" img-fluid ">
+            </div>
+        </div>
+        </div>
+        <!-- loader END -->
+       @await Html.PartialAsync("/Views/Partials/AsidePartial.cshtml")
+           <main class="main-content">
+        @await Html.PartialAsync("/Views/Partials/Navbar2.cshtml")
+        <div class="content-inner container-fluid pb-0" id="page_layout">
+<div class="row">
+    <div class="col-lg-12">
+            <div class="card">
+
+    </div>
+        <div class="col-lg-12">
+            <div class="card">
+               <div class="card-body px-0">
+                  <div class=" table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Track Name</th>
+                                                <th></th>
+                                                <th>Album</th>
+                                                <th>Artists</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var playlistTrack in Model.PlaylistTrack)
+                                            {
+                                                <tr>
+                                                    <td><img width="80" height="80" style="border-radius: 40px" src="@playlistTrack.Track.Album.Images[0].Url" /></td>
+                                                    <td>@playlistTrack.Track.Name</td>
+                                                    <td>
+                                                        @if (!string.IsNullOrEmpty(playlistTrack.Track.Preview_Url))
+                                                        {
+                                                            <button class="btn btn-primary play-preview" data-preview-url="@playlistTrack.Track.Preview_Url">Play</button>
+                                                            <audio class="audio-preview" preload="none" src="@playlistTrack.Track.Preview_Url"></audio>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>No preview available</span>
+                                                        }
+                                                    </td>
+                                                    <td>@playlistTrack.Track.Album.Name</td>
+                                                    <td>
+                                                        @foreach (var artist in playlistTrack.Track.Artists)
+                                                        {
+                                                            <span>@artist.Name</span>
+                                                            <br />
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                    <div class="audio-slider" style="display: none;">
+                                        <audio id="audio-player" controls>
+                                            <source id="audio-source" type="audio/mpeg">
+                                            Your browser does not support the audio element.
+                                        </audio>
+                                    </div>
+
+                                    <script>
+                                        // Wait for the document to be fully loaded
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            // Get all elements with the class "play-preview"
+                                            const playButtons = document.querySelectorAll(".play-preview");
+                                            const audioElements = document.querySelectorAll(".audio-preview");
+
+                                            // Function to pause all other audio elements except the specified one
+                                            function pauseOtherAudioElements(currentAudio) {
+                                                audioElements.forEach(audio => {
+                                                    if (audio !== currentAudio && !audio.paused) {
+                                                        audio.pause(); // Pause the audio
+                                                        const playButton = audio.parentElement.querySelector(".play-preview");
+                                                        if (playButton) {
+                                                            playButton.textContent = "Play"; // Change button text back to "Play"
+                                                        }
+                                                    }
+                                                });
+                                            }
+
+                                            // Iterate over each play button
+                                            playButtons.forEach(button => {
+                                                // Add a click event listener to each button
+                                                button.addEventListener("click", function (event) {
+                                                    event.preventDefault(); // Prevent default button behavior
+                                                    const previewUrl = button.getAttribute("data-preview-url");
+                                                    if (previewUrl) {
+                                                        // Get the associated audio element
+                                                        const audio = button.parentElement.querySelector(".audio-preview");
+                                                        if (audio) {
+                                                            // Pause all other audio elements except the current one
+                                                            pauseOtherAudioElements(audio);
+                                                            // Check if the audio is currently playing
+                                                            if (audio.paused) {
+                                                                audio.play(); // Play the audio
+                                                                button.textContent = "Pause"; // Change button text to "Pause"
+                                                            } else {
+                                                                audio.pause(); // Pause the audio
+                                                                button.textContent = "Play"; // Change button text back to "Play"
+                                                            }
+                                                        }
+                                                    } else {
+                                                        console.log("Preview URL not available.");
+                                                    }
+                                                });
+                                            });
+                                        });
+                                    </script>
+
+                </div>
+               </div>
+            </div>
+         </div>
+         </div>
+
+
+    <div class="card border-top mb-0">
+        <diiv class="card-body">
+            <div class="d-flex align-items-center justify-content-between flex-md-row flex-column gap-3">
+                <div class="">
+                    <ul class="list-unstyled p-0 m-0 mb-3 text-capitalize d-flex gap-3 flex-md-nowrap flex-wrap">
+                        <li>about</li>
+                        <li>|</li>
+                        <li>terms of use</li>
+                        <li>|</li>
+                        <li>privacy policy</li>
+                        <li>|</li>
+                        <li>support</li>
+                        <li>|</li>
+                        <li>feedback</li>
+                        <li>|</li>
+                    </ul>
+                    <small>Copyright <span id="copyright"> 
+    <script>document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))</script>
+    </span>. Made with love by Iqonic Design.</small>
+                </div>
+                <div>
+                    <ul class="list-unstyled m-0 p-0 d-flex align-items-center gap-3">
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M5.026 15C11.064 15 14.367 9.99702 14.367 5.66602C14.367 5.52602 14.367 5.38402 14.361 5.24402C15.0041 4.77851 15.5591 4.20217 16 3.54202C15.3993 3.80687 14.7628 3.98143 14.111 4.06002C14.7975 3.64966 15.3117 3.00399 15.558 2.24302C14.913 2.62515 14.207 2.8934 13.471 3.03602C12.9762 2.50905 12.3214 2.15994 11.6081 2.04278C10.8948 1.92562 10.1627 2.04694 9.52534 2.38796C8.88796 2.72897 8.38081 3.27065 8.08245 3.92908C7.78409 4.58751 7.71118 5.32595 7.875 6.03002C6.56974 5.96457 5.29282 5.62549 4.12704 5.03476C2.96127 4.44404 1.93268 3.61487 1.108 2.60102C0.68934 3.3241 0.561574 4.17942 0.750646 4.99329C0.939718 5.80715 1.43145 6.51855 2.126 6.98302C1.60554 6.96534 1.09652 6.82558 0.64 6.57502V6.62002C0.640897 7.3775 0.903307 8.11144 1.38287 8.69778C1.86244 9.28412 2.52975 9.68689 3.272 9.83802C2.99026 9.91564 2.69923 9.95433 2.407 9.95302C2.20098 9.95365 1.99538 9.93456 1.793 9.89602C2.00279 10.5481 2.41127 11.1182 2.96125 11.5265C3.51122 11.9348 4.17513 12.1609 4.86 12.173C3.69656 13.0868 2.2594 13.5824 0.78 13.58C0.519321 13.5811 0.258823 13.5661 0 13.535C1.50151 14.4923 3.2453 15.0006 5.026 15Z" fill="#4A525F"/>
+                            </svg>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <g clip-path="url(#clip0_389_2574)">
+                                    <path d="M0 1.146C0 0.513 0.526 0 1.175 0H14.825C15.474 0 16 0.513 16 1.146V14.854C16 15.487 15.474 16 14.825 16H1.175C0.526 16 0 15.487 0 14.854V1.146ZM4.943 13.394V6.169H2.542V13.394H4.943ZM3.743 5.182C4.58 5.182 5.101 4.628 5.101 3.934C5.086 3.225 4.581 2.686 3.759 2.686C2.937 2.686 2.4 3.226 2.4 3.934C2.4 4.628 2.921 5.182 3.727 5.182H3.743ZM8.651 13.394V9.359C8.651 9.143 8.667 8.927 8.731 8.773C8.904 8.342 9.299 7.895 9.963 7.895C10.832 7.895 11.179 8.557 11.179 9.529V13.394H13.58V9.25C13.58 7.03 12.396 5.998 10.816 5.998C9.542 5.998 8.971 6.698 8.651 7.191V7.216H8.635C8.64031 7.20765 8.64564 7.19932 8.651 7.191V6.169H6.251C6.281 6.847 6.251 13.394 6.251 13.394H8.651Z" fill="#4A525F"/>
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_389_2574">
+                                    <rect width="16" height="16" fill="white"/>
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <g clip-path="url(#clip0_389_2576)">
+                                    <path d="M16 8.04902C16 3.60302 12.418 -0.000976562 8.00005 -0.000976562C3.58005 2.34375e-05 -0.00195312 3.60302 -0.00195312 8.05002C-0.00195312 12.067 2.92405 15.397 6.74805 16.001V10.376H4.71805V8.05002H6.75005V6.27502C6.75005 4.25802 7.94505 3.14402 9.77205 3.14402C10.648 3.14402 11.563 3.30102 11.563 3.30102V5.28102H10.554C9.56105 5.28102 9.25105 5.90202 9.25105 6.53902V8.04902H11.469L11.115 10.375H9.25005V16C13.074 15.396 16 12.066 16 8.04902Z" fill="#FF4545"/>
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_389_2576">
+                                    <rect width="16" height="16" fill="white"/>
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <g clip-path="url(#clip0_389_2578)">
+                                    <path d="M8 0C5.829 0 5.556 0.01 4.703 0.048C3.85 0.088 3.269 0.222 2.76 0.42C2.22609 0.620819 1.74249 0.935826 1.343 1.343C0.936076 1.7427 0.621107 2.22624 0.42 2.76C0.222 3.268 0.087 3.85 0.048 4.7C0.01 5.555 0 5.827 0 8.001C0 10.173 0.01 10.445 0.048 11.298C0.088 12.15 0.222 12.731 0.42 13.24C0.625 13.766 0.898 14.212 1.343 14.657C1.787 15.102 2.233 15.376 2.759 15.58C3.269 15.778 3.849 15.913 4.701 15.952C5.555 15.99 5.827 16 8 16C10.173 16 10.444 15.99 11.298 15.952C12.149 15.912 12.732 15.778 13.241 15.58C13.7746 15.3791 14.2578 15.0641 14.657 14.657C15.102 14.212 15.375 13.766 15.58 13.24C15.777 12.731 15.912 12.15 15.952 11.298C15.99 10.445 16 10.173 16 8C16 5.827 15.99 5.555 15.952 4.701C15.912 3.85 15.777 3.268 15.58 2.76C15.3789 2.22623 15.0639 1.74268 14.657 1.343C14.2576 0.935676 13.774 0.620645 13.24 0.42C12.73 0.222 12.148 0.087 11.297 0.048C10.443 0.01 10.172 0 7.998 0H8.001H8ZM7.283 1.442H8.001C10.137 1.442 10.39 1.449 11.233 1.488C12.013 1.523 12.437 1.654 12.719 1.763C13.092 1.908 13.359 2.082 13.639 2.362C13.919 2.642 14.092 2.908 14.237 3.282C14.347 3.563 14.477 3.987 14.512 4.767C14.551 5.61 14.559 5.863 14.559 7.998C14.559 10.133 14.551 10.387 14.512 11.23C14.477 12.01 14.346 12.433 14.237 12.715C14.1087 13.0624 13.904 13.3764 13.638 13.634C13.358 13.914 13.092 14.087 12.718 14.232C12.438 14.342 12.014 14.472 11.233 14.508C10.39 14.546 10.137 14.555 8.001 14.555C5.865 14.555 5.611 14.546 4.768 14.508C3.988 14.472 3.565 14.342 3.283 14.232C2.9355 14.1039 2.62113 13.8996 2.363 13.634C2.09675 13.376 1.89172 13.0617 1.763 12.714C1.654 12.433 1.523 12.009 1.488 11.229C1.45 10.386 1.442 10.133 1.442 7.996C1.442 5.86 1.45 5.608 1.488 4.765C1.524 3.985 1.654 3.561 1.764 3.279C1.909 2.906 2.083 2.639 2.363 2.359C2.643 2.079 2.909 1.906 3.283 1.761C3.565 1.651 3.988 1.521 4.768 1.485C5.506 1.451 5.792 1.441 7.283 1.44V1.442ZM12.271 2.77C12.1449 2.77 12.0201 2.79483 11.9036 2.84308C11.7872 2.89132 11.6813 2.96203 11.5922 3.05118C11.503 3.14032 11.4323 3.24615 11.3841 3.36262C11.3358 3.4791 11.311 3.60393 11.311 3.73C11.311 3.85607 11.3358 3.9809 11.3841 4.09738C11.4323 4.21385 11.503 4.31968 11.5922 4.40882C11.6813 4.49797 11.7872 4.56868 11.9036 4.61692C12.0201 4.66517 12.1449 4.69 12.271 4.69C12.5256 4.69 12.7698 4.58886 12.9498 4.40882C13.1299 4.22879 13.231 3.98461 13.231 3.73C13.231 3.47539 13.1299 3.23121 12.9498 3.05118C12.7698 2.87114 12.5256 2.77 12.271 2.77ZM8.001 3.892C7.45607 3.8835 6.91489 3.98349 6.40898 4.18614C5.90306 4.3888 5.44251 4.69007 5.05415 5.07242C4.66579 5.45478 4.35736 5.91057 4.14684 6.41326C3.93632 6.91595 3.8279 7.4555 3.8279 8.0005C3.8279 8.5455 3.93632 9.08505 4.14684 9.58774C4.35736 10.0904 4.66579 10.5462 5.05415 10.9286C5.44251 11.3109 5.90306 11.6122 6.40898 11.8149C6.91489 12.0175 7.45607 12.1175 8.001 12.109C9.07954 12.0922 10.1082 11.6519 10.865 10.8833C11.6217 10.1146 12.0459 9.07917 12.0459 8.0005C12.0459 6.92183 11.6217 5.88641 10.865 5.11775C10.1082 4.34909 9.07954 3.90883 8.001 3.892ZM8.001 5.333C8.70833 5.333 9.38669 5.61399 9.88685 6.11415C10.387 6.61431 10.668 7.29267 10.668 8C10.668 8.70733 10.387 9.38569 9.88685 9.88585C9.38669 10.386 8.70833 10.667 8.001 10.667C7.29367 10.667 6.61531 10.386 6.11515 9.88585C5.61499 9.38569 5.334 8.70733 5.334 8C5.334 7.29267 5.61499 6.61431 6.11515 6.11415C6.61531 5.61399 7.29367 5.333 8.001 5.333Z" fill="#4A525F"/>
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_389_2578">
+                                    <rect width="16" height="16" fill="white"/>
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </diiv>
+    </div></div>
+            </div>
+        </main>
+        <!--Footer Start-->
+        <!-- Footer Section Start -->
+      @* @await Html.PartialAsync("/Views/Partials/Footer.cshtml")  *@
+  @*   <footer class="footer">
+        <div class="footer-top">
+            <div class="row">
+                <div class="col-12">
+                    <input type="range" min="1" max="100" value="0" class="seek_slider" onchange="seekTo()">
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container-fluid px-4">
+                <div class="row align-items-center">
+                    <div class="col-xl-4 col-md-4 col-sm-6">
+                        <div class="details">
+                            <div class="footer-track-detail d-flex align-items-center gap-3 flex-wrap justify-content-sm-start justify-content-center">
+                                <div class="track-art"></div>
+                                <div>
+                                    @foreach (var playlistTrack in Model.PlaylistTrack)
+                                    {
+                                        <div class="swiper-slide mb-3 col-md-4" style="flex: 0 0 auto; width: 200px;">
+                                            <div class="card">
+                                                <img src="@playlistTrack.Track.Album.Images.FirstOrDefault()?.Url" class="card-img-top" alt="@playlistTrack.Track.Name" style="object-fit: cover; width: 200px; height: 200px;">
+                                                <div class="card-body" style="width: 200px; height: 200px;">
+                                                    <h5 class="card-title text-truncate" style="max-width: 100%;">@playlistTrack.Track.Name</h5>
+                                                    @foreach (var artist in playlistTrack.Track.Artists)
+                                                    {
+                                                        <p class="track-artist text-white small m-0">@artist.Name</p>
+                                                    }
+                                                </div>
+                                            </div>
+                                            @if (Model.SelectedTrackId == playlistTrack.Track.Id)
+                                            {
+                                                <div class="playpause-track" onclick="playpauseTrack('@playlistTrack.Track.Preview_Url')">
+                                                    <span class="d-inline-block rounded-circle p-2 bg-primary text-white">
+                                                        <svg fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                            <path d="M16.6308 13.131C16.5743 13.189 16.3609 13.437 16.1622 13.641C14.9971 14.924 11.9576 17.024 10.3668 17.665C10.1252 17.768 9.51437 17.986 9.18802 18C8.8753 18 8.5772 17.928 8.29274 17.782C7.93814 17.578 7.65368 17.257 7.49781 16.878C7.39747 16.615 7.2416 15.828 7.2416 15.814C7.08573 14.953 7 13.554 7 12.008C7 10.535 7.08573 9.193 7.21335 8.319C7.22796 8.305 7.38383 7.327 7.55431 6.992C7.86702 6.38 8.47784 6 9.13151 6H9.18802C9.61374 6.015 10.509 6.395 10.509 6.409C12.0141 7.051 14.9834 9.048 16.1768 10.375C16.1768 10.375 16.5129 10.716 16.659 10.929C16.887 11.235 17 11.614 17 11.993C17 12.416 16.8724 12.81 16.6308 13.131Z" fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                                <div class="like text-white flex-shrink-0 ms-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"
+                                         fill="none">
+                                        <g>
+                                            <path d="M9 15.1875C9 15.1875 1.6875 11.25 1.6875 6.60938C1.6875 5.60238 2.08753 4.63663 2.79958 3.92458C3.51163 3.21253 4.47738 2.8125 5.48438 2.8125C7.07273 2.8125 8.43328 3.67805 9 5.0625C9.56672 3.67805 10.9273 2.8125 12.5156 2.8125C13.5226 2.8125 14.4884 3.21253 15.2004 3.92458C15.9125 4.63663 16.3125 5.60238 16.3125 6.60938C16.3125 11.25 9 15.1875 9 15.1875Z"
+                                                  stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                                        </g>
+                                        <defs>
+                                            <clipPath>
+                                                <rect width="18" height="18" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-3 col-sm-6 mt-sm-0 mt-3">
+                        <div class="d-flex align-items-center justify-content-md-center justify-content-sm-end justify-content-center gap-3">
+                            <div class="track-suffle text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"
+                                     fill="none">
+                                    <g>
+                                        <path d="M6.67969 6.358L5.69109 5.36941C5.30132 4.97784 4.83776 4.66747 4.32723 4.45626C3.81671 4.24505 3.26936 4.13719 2.71687 4.13894H0.849022C0.625246 4.13894 0.410634 4.22783 0.252401 4.38607C0.0941667 4.5443 0.00527191 4.75891 0.00527191 4.98269C0.00527191 5.20646 0.0941667 5.42107 0.252401 5.57931C0.410634 5.73754 0.625246 5.82644 0.849022 5.82644H2.71512C3.04606 5.82554 3.3739 5.89033 3.67962 6.01706C3.98535 6.14379 4.26288 6.32994 4.49613 6.56472L5.48437 7.5512C5.6426 7.70971 5.85732 7.79887 6.08128 7.79907C6.30525 7.79927 6.52012 7.71049 6.67863 7.55226C6.83714 7.39403 6.9263 7.17931 6.9265 6.95535C6.9267 6.73138 6.83791 6.51651 6.67969 6.358Z"
+                                              fill="currentColor" />
+                                        <path d="M5.68336 12.6299L11.7506 6.56259C11.9839 6.32784 12.2614 6.14172 12.5672 6.01499C12.8729 5.88826 13.2007 5.82345 13.5316 5.82431H15.1281L14.1529 6.79954C14.0742 6.87793 14.0118 6.97107 13.9692 7.07363C13.9266 7.17619 13.9047 7.28615 13.9047 7.3972C13.9047 7.50825 13.9266 7.61821 13.9692 7.72076C14.0118 7.82332 14.0742 7.91647 14.1529 7.99486C14.3111 8.15308 14.5257 8.24196 14.7495 8.24196C14.9732 8.24196 15.1878 8.15308 15.3461 7.99486L17.7465 5.59579C17.8271 5.51525 17.8911 5.41961 17.9347 5.31435C17.9783 5.20909 18.0008 5.09626 18.0008 4.98232C18.0008 4.86837 17.9783 4.75555 17.9347 4.65028C17.8911 4.54502 17.8271 4.44938 17.7465 4.36884L15.3461 1.96872C15.1898 1.81251 14.9785 1.72382 14.7576 1.72172C14.5366 1.71961 14.3237 1.80426 14.1645 1.95747C13.8234 2.28548 13.8315 2.84095 14.1662 3.17564L15.127 4.13646H13.5316C12.9792 4.13475 12.4318 4.24263 11.9213 4.45383C11.4108 4.66504 10.9472 4.97539 10.5574 5.36693L4.49016 11.4363C4.2569 11.6711 3.97937 11.8572 3.67365 11.984C3.36792 12.1107 3.04009 12.1755 2.70914 12.1746H0.84375C0.619974 12.1746 0.405362 12.2635 0.247129 12.4217C0.0888948 12.5799 0 12.7946 0 13.0183C0 13.2421 0.0888948 13.4567 0.247129 13.615C0.405362 13.7732 0.619974 13.8621 0.84375 13.8621H2.70914C3.26174 13.8635 3.80913 13.7553 4.31965 13.5438C4.83016 13.3323 5.29367 13.0217 5.68336 12.6299Z"
+                                              fill="currentColor" />
+                                        <path d="M15.3461 16.0311L17.7465 13.6317C17.8271 13.5512 17.891 13.4556 17.9347 13.3504C17.9783 13.2451 18.0007 13.1323 18.0007 13.0184C18.0007 12.9045 17.9783 12.7917 17.9347 12.6865C17.891 12.5812 17.8271 12.4856 17.7465 12.4051L15.3461 10.0053C15.1898 9.84913 14.9785 9.76044 14.7576 9.75834C14.5366 9.75624 14.3237 9.84088 14.1645 9.99409C13.8234 10.3221 13.8315 10.8776 14.1662 11.2123L15.127 12.1731H13.5376C13.2067 12.1739 12.8789 12.1091 12.5731 11.9824C12.2674 11.8557 11.9899 11.6695 11.7566 11.4348L10.6625 10.3407C10.5844 10.2613 10.4914 10.1982 10.3887 10.1549C10.2861 10.1117 10.1759 10.0892 10.0645 10.0887C9.95314 10.0883 9.84277 10.1099 9.73978 10.1523C9.63679 10.1947 9.54322 10.2571 9.46446 10.3359C9.3857 10.4146 9.32331 10.5082 9.2809 10.6112C9.23849 10.7142 9.21688 10.8245 9.21734 10.9359C9.21779 11.0473 9.24029 11.1575 9.28354 11.2601C9.32679 11.3628 9.38994 11.4558 9.46934 11.5339L10.5634 12.6284C10.9533 13.0198 11.4168 13.3301 11.9273 13.5413C12.4378 13.7525 12.9852 13.8604 13.5376 13.8588H15.1277L14.1529 14.8358C13.9946 14.994 13.9057 15.2086 13.9057 15.4324C13.9057 15.6562 13.9946 15.8708 14.1529 16.029C14.3108 16.1875 14.5253 16.2768 14.749 16.2772C14.9728 16.2776 15.1875 16.1891 15.3461 16.0311Z"
+                                              fill="currentColor" />
+                                    </g>
+                                    <defs>
+                                        <clipPath>
+                                            <rect width="18" height="18" fill="white" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <div class="prev-track text-white" onclick="prevTrack()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
+                                     fill="none">
+                                    <g>
+                                        <path d="M13 2.9925V13.0075C12.9981 13.1848 12.9492 13.3584 12.8581 13.5105C12.767 13.6627 12.6372 13.7879 12.4818 13.8733C12.3264 13.9587 12.1511 14.0013 11.9739 13.9966C11.7966 13.992 11.6238 13.9403 11.4731 13.8469L4 9.17313V13.5C4 13.6326 3.94732 13.7598 3.85355 13.8536C3.75979 13.9473 3.63261 14 3.5 14C3.36739 14 3.24021 13.9473 3.14645 13.8536C3.05268 13.7598 3 13.6326 3 13.5V2.5C3 2.36739 3.05268 2.24021 3.14645 2.14645C3.24021 2.05268 3.36739 2 3.5 2C3.63261 2 3.75979 2.05268 3.85355 2.14645C3.94732 2.24021 4 2.36739 4 2.5V6.82688L11.4731 2.15313C11.6236 2.05865 11.7966 2.00612 11.9743 2.00097C12.1519 1.99582 12.3277 2.03825 12.4834 2.12385C12.6391 2.20946 12.7691 2.33513 12.8599 2.48785C12.9508 2.64058 12.9991 2.81481 13 2.9925Z"
+                                              fill="currentColor" />
+                                    </g>
+                                    <defs>
+                                        <clipPath>
+                                            <rect width="16" height="16" fill="white" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <div>
+                                @foreach (var playlistTrack in Model.PlaylistTrack)
+                                {
+                                    <div class="playpause-track" onclick="playpauseTrack('@playlistTrack.Track.Preview_Url')">
+                                        <span class="d-inline-block rounded-circle p-2 bg-primary text-white">
+                                            <svg fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                <path d="M16.6308 13.131C16.5743 13.189 16.3609 13.437 16.1622 13.641C14.9971 14.924 11.9576 17.024 10.3668 17.665C10.1252 17.768 9.51437 17.986 9.18802 18C8.8753 18 8.5772 17.928 8.29274 17.782C7.93814 17.578 7.65368 17.257 7.49781 16.878C7.39747 16.615 7.2416 15.828 7.2416 15.814C7.08573 14.953 7 13.554 7 12.008C7 10.535 7.08573 9.193 7.21335 8.319C7.22796 8.305 7.38383 7.327 7.55431 6.992C7.86702 6.38 8.47784 6 9.13151 6H9.18802C9.61374 6.015 10.509 6.395 10.509 6.409C12.0141 7.051 14.9834 9.048 16.1768 10.375C16.1768 10.375 16.5129 10.716 16.659 10.929C16.887 11.235 17 11.614 17 11.993C17 12.416 16.8724 12.81 16.6308 13.131Z" fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                    </div>
+                                }
+                            </div>
+
+                            <script>
+                                function playpauseTrack(previewUrl) {
+                                    // Check if the audio element already exists
+                                    var audioElement = document.getElementById('audio-preview');
+                                    if (audioElement) {
+                                        // If the audio element exists, update its source and play/pause
+                                        audioElement.src = previewUrl;
+                                        audioElement.paused ? audioElement.play() : audioElement.pause();
+                                    } else {
+                                        // If the audio element doesn't exist, create a new one and play
+                                        audioElement = document.createElement('audio');
+                                        audioElement.id = 'audio-preview';
+                                        audioElement.src = previewUrl;
+                                        audioElement.preload = 'auto';
+                                        audioElement.controls = true;
+                                        document.body.appendChild(audioElement);
+                                        audioElement.play();
+                                    }
+                                }
+                            </script>
+
+                            <div class="next-track text-white" onclick="nextTrack()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
+                                     fill="none">
+                                    <g>
+                                        <path d="M13 2.5V13.5C13 13.6326 12.9473 13.7598 12.8536 13.8536C12.7598 13.9473 12.6326 14 12.5 14C12.3674 14 12.2402 13.9473 12.1464 13.8536C12.0527 13.7598 12 13.6326 12 13.5V9.17313L4.52688 13.8469C4.37638 13.9414 4.20336 13.9939 4.02574 13.999C3.84811 14.0042 3.67235 13.9618 3.51663 13.8761C3.36091 13.7905 3.23091 13.6649 3.14007 13.5121C3.04924 13.3594 3.00088 13.1852 3 13.0075V2.9925C3.00088 2.81481 3.04924 2.64058 3.14007 2.48785C3.23091 2.33513 3.36091 2.20946 3.51663 2.12385C3.67235 2.03825 3.84811 1.99582 4.02574 2.00097C4.20336 2.00612 4.37638 2.05865 4.52688 2.15313L12 6.82688V2.5C12 2.36739 12.0527 2.24021 12.1464 2.14645C12.2402 2.05268 12.3674 2 12.5 2C12.6326 2 12.7598 2.05268 12.8536 2.14645C12.9473 2.24021 13 2.36739 13 2.5Z"
+                                              fill="currentColor" />
+                                    </g>
+                                    <defs>
+                                        <clipPath>
+                                            <rect width="16" height="16" fill="white" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <div class="track-replay text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
+                                     fill="none">
+                                    <g>
+                                        <path d="M15.3762 9.55705C15.6487 7.4768 15.0562 5.53405 13.909 4.0368C13.7607 3.8433 13.4937 3.78655 13.2827 3.90855L12.2672 4.49555C12.009 4.6448 11.9535 4.98655 12.141 5.2188C13.0152 6.30055 13.4742 7.7303 13.2757 9.26405C12.965 11.6633 11.0062 13.5823 8.60125 13.8473C5.397 14.2001 2.678 11.6906 2.678 8.5568C2.678 5.6228 5.064 3.23505 7.99975 3.23505V3.86855C7.99975 4.23805 8.3995 4.4688 8.7195 4.28405L11.6535 2.59005C11.9732 2.4053 11.9732 1.9438 11.6535 1.75905L8.71975 0.0650508C8.4 -0.119699 8 0.111051 8 0.480551V1.11455C3.89675 1.11455 0.557999 4.45305 0.557999 8.55655C0.557999 12.9438 4.37125 16.4553 8.85575 15.9518C12.2132 15.5753 14.9377 12.9066 15.3762 9.55705Z"
+                                              fill="currentColor" />
+                                    </g>
+                                    <defs>
+                                        <clipPath>
+                                            <rect width="16" height="16" fill="white" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-5 mt-md-0 mt-3">
+                        <div class="row align-items-center gx-xl-5 justify-content-md-end justify-content-center">
+                            <div class="col-lg-2 d-lg-block d-none"></div>
+                            <div class="col-lg-4 col-md-5 col-sm-4 col-4">
+                                <div class="track-volumne d-flex align-items-center justify-content-md-end justify-content-sm-start justify-content-center">
+                                    <div class="flex-shrink-0 text-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                                             fill="none">
+                                            <g>
+                                                <path d="M6.25 13.125H2.5C2.33424 13.125 2.17527 13.0592 2.05806 12.9419C1.94085 12.8247 1.875 12.6658 1.875 12.5V7.5C1.875 7.33424 1.94085 7.17527 2.05806 7.05806C2.17527 6.94085 2.33424 6.875 2.5 6.875H6.25L11.875 2.5V17.5L6.25 13.125Z"
+                                                      stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M15 8.125V11.875" stroke="currentColor" stroke-linecap="round"
+                                                      stroke-linejoin="round" />
+                                            </g>
+                                            <defs>
+                                                <clipPath>
+                                                    <rect width="20" height="20" fill="white" />
+                                                </clipPath>
+                                            </defs>
+                                        </svg>
+                                    </div>
+                                    <input type="range" min="1" max="100" value="99" class="volume_slider"
+                                           onchange="setVolume()">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-4 col-5">
+                                <div class="track-time text-center">
+                                    <span class="current-time text-white small">00:00</span>
+                                    <span class="mx-1 text-white">
+                                        <svg width="6" height="16" viewBox="0 0 4 9" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M2.73047 0.392578H3.62109L0.890625 9H0L2.73047 0.392578Z"
+                                                  fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                    <span class="total-duration text-white small">00:00</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-3">
+                                <ul class="list-unstyled m-0 p-0 d-flex align-items-center justify-content-sm-end justify-content-center">
+                                    <li>
+                                        <svg class="" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                                             fill="none">
+                                            <g>
+                                                <path d="M3.125 5H16.875" stroke="#AAAAAA" stroke-linecap="round"
+                                                      stroke-linejoin="round" />
+                                                <path d="M3.125 10H10.625" stroke="#AAAAAA" stroke-linecap="round"
+                                                      stroke-linejoin="round" />
+                                                <path d="M3.125 15H10.625" stroke="#AAAAAA" stroke-linecap="round"
+                                                      stroke-linejoin="round" />
+                                                <path d="M18.75 12.5L13.75 15.625V9.375L18.75 12.5Z" stroke="#AAAAAA"
+                                                      stroke-linecap="round" stroke-linejoin="round" />
+                                            </g>
+                                            <defs>
+                                                <clipPath>
+                                                    <rect width="20" height="20" fill="white" />
+                                                </clipPath>
+                                            </defs>
+                                        </svg>
+                                    </li>
+                                    <li class="nav-item iq-full-screen d-none d-xl-block ms-3" id="fullscreen-item">
+                                        <a href="#" class="nav-link" id="btnFullscreen" data-bs-toggle="dropdown">
+                                            <span class="btn-inner">
+                                                <svg class="normal-screen icon-24" width="24" height="24"
+                                                     viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M18.5528 5.99656L13.8595 10.8961" stroke="#AAAAAA"
+                                                          stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                                    </path>
+                                                    <path d="M14.8016 5.97618L18.5524 5.99629L18.5176 9.96906"
+                                                          stroke="#AAAAAA" stroke-width="1.5" stroke-linecap="round"
+                                                          stroke-linejoin="round"></path>
+                                                    <path d="M5.8574 18.896L10.5507 13.9964" stroke="#AAAAAA"
+                                                          stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                                    </path>
+                                                    <path d="M9.60852 18.9164L5.85775 18.8963L5.89258 14.9235"
+                                                          stroke="#AAAAAA" stroke-width="1.5" stroke-linecap="round"
+                                                          stroke-linejoin="round"></path>
+                                                </svg>
+                                                <svg class="full-normal-screen icon-32 d-none" width="24" height="24"
+                                                     viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M13.7542 10.1932L18.1867 5.79319" stroke="#AAAAAA"
+                                                          stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                                    </path>
+                                                    <path d="M17.2976 10.212L13.7547 10.1934L13.7871 6.62518"
+                                                          stroke="#AAAAAA" stroke-width="1.5" stroke-linecap="round"
+                                                          stroke-linejoin="round"></path>
+                                                    <path d="M10.4224 13.5726L5.82149 18.1398" stroke="#AAAAAA"
+                                                          stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                                    </path>
+                                                    <path d="M6.74391 13.5535L10.4209 13.5723L10.3867 17.2755"
+                                                          stroke="#AAAAAA" stroke-width="1.5" stroke-linecap="round"
+                                                          stroke-linejoin="round"></path>
+                                                </svg>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+ *@
+        <!-- Footer Section End -->        <!--Footer End-->
+
+        <!--Burger Menu Start-->
+        @await Html.PartialAsync("/Views/Partials/BurgerMenu.cshtml")   
+        <!--Burger Menu End-->
+
+          <!-- Wrapper End-->
+      @await Html.PartialAsync("/Views/Partials/Scripts.cshtml")
+    </body>
+</html>
+
+
+
+@* @model MusicProject.Models.PlaylistViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>@Model.PlaylistInfo.Title</h1>
+
+<p>Description: @Model.PlaylistInfo.Description</p>
+
+<h2>Tracks:</h2>
+<ul>
+    @foreach (var track in Model.Tracklist)
+    {
+        <li>
+            <a href="@track.Link">@track.Title</a>
+        </li>
+    }
+</ul>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.PlaylistInfo.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div> *@
+
+@* <div class="card-body">
+                <div class="row">
+                <div class="col-lg-4">
+                    <div class="card mb-0 bg-soft-secondary">
+                        <img src="../assets/images/dashboard/01.png" class="img-fluid w-100" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="d-flex align-items-top justify-content-between">
+                        <div class="music-detail">
+                            <h3 class="mb-3">Eliana D’cruz Playlist</h3>
+                            <p class="mb-3">Lorem Ipsum is simply dummy text of the printing and typesetting industry. <br>when an unknown printer took a galley of type and scrambled</p>
+                            <div class="d-flex align-items-center mb-4">
+                            <h6 class="mb-1 fw-bold me-3">Smith Jonas</h6>
+                            <h6 class="ps-3 fw-bold me-3 border-start">15 Tracks</h6>
+                            <h6 class="ps-3 fw-bold border-start">03:00 Duration</h6>
+                        </div>
+
+                            <div class="d-flex align-items-center">
+                            <a href="javascript:void(0);" class="btn btn-primary">Play music</a>
+                            <a href="javascript:void(0);" class="btn btn-outline-secondary ms-3">Add Playlist</a>
+                            </div>
+                        </div>
+                        <div class="music-right">
+                            <div class="d-flex align-items-center flex-wrap">
+                            <div class="iq-circle me-2 share"><a href="javascript:void();"><svg class="text-primary" width="18" class="me-1" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M18 16.08C17.24 16.08 16.56 16.38 16.04 16.85L8.91 12.7C8.96 12.47 9 12.24 9 12S8.96 11.53 8.91 11.3L15.96 7.19C16.5 7.69 17.21 8 18 8C19.66 8 21 6.66 21 5S19.66 2 18 2 15 3.34 15 5C15 5.24 15.04 5.47 15.09 5.7L8.04 9.81C7.5 9.31 6.79 9 6 9C4.34 9 3 10.34 3 12S4.34 15 6 15C6.79 15 7.5 14.69 8.04 14.19L15.16 18.34C15.11 18.55 15.08 18.77 15.08 19C15.08 20.61 16.39 21.91 18 21.91S20.92 20.61 20.92 19C20.92 17.39 19.61 16.08 18 16.08M18 4C18.55 4 19 4.45 19 5S18.55 6 18 6 17 5.55 17 5 17.45 4 18 4M6 13C5.45 13 5 12.55 5 12S5.45 11 6 11 7 11.45 7 12 6.55 13 6 13M18 20C17.45 20 17 19.55 17 19S17.45 18 18 18 19 18.45 19 19 18.55 20 18 20Z"></path>
+                                </svg></a></div>
+                            <div class="iq-circle me-2"><a href="javascript:void();"><svg class="icon-20 text-primary" width="20" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M12.1,18.55L12,18.65L11.89,18.55C7.14,14.24 4,11.39 4,8.5C4,6.5 5.5,5 7.5,5C9.04,5 10.54,6 11.07,7.36H12.93C13.46,6 14.96,5 16.5,5C18.5,5 20,6.5 20,8.5C20,11.39 16.86,14.24 12.1,18.55M16.5,3C14.76,3 13.09,3.81 12,5.08C10.91,3.81 9.24,3 7.5,3C4.42,3 2,5.41 2,8.5C2,12.27 5.4,15.36 10.55,20.03L12,21.35L13.45,20.03C18.6,15.36 22,12.27 22,8.5C22,5.41 19.58,3 16.5,3Z"></path>
+                            </svg></a></div>
+                            <div class="iq-circle">
+                                <a href="javascript:void();"><svg class="icon-20" width="20" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M28.1562 19.1224V26.1224C28.1562 26.6528 27.9455 27.1615 27.5705 27.5366C27.1954 27.9116 26.6867 28.1224 26.1562 28.1224H6.15625C5.62582 28.1224 5.11711 27.9116 4.74204 27.5366C4.36696 27.1615 4.15625 26.6528 4.15625 26.1224V19.1224C4.15625 18.8571 4.26161 18.6028 4.44914 18.4153C4.63668 18.2277 4.89103 18.1224 5.15625 18.1224C5.42147 18.1224 5.67582 18.2277 5.86336 18.4153C6.05089 18.6028 6.15625 18.8571 6.15625 19.1224V26.1224H26.1562V19.1224C26.1562 18.8571 26.2616 18.6028 26.4491 18.4153C26.6367 18.2277 26.891 18.1224 27.1562 18.1224C27.4215 18.1224 27.6758 18.2277 27.8634 18.4153C28.0509 18.6028 28.1562 18.8571 28.1562 19.1224ZM15.4487 19.8299C15.5416 19.9228 15.6519 19.9966 15.7733 20.0469C15.8947 20.0972 16.0248 20.1231 16.1562 20.1231C16.2877 20.1231 16.4178 20.0972 16.5392 20.0469C16.6606 19.9966 16.7709 19.9228 16.8638 19.8299L21.8638 14.8299C21.9567 14.737 22.0304 14.6266 22.0806 14.5053C22.1309 14.3839 22.1568 14.2538 22.1568 14.1224C22.1568 13.991 22.1309 13.8609 22.0806 13.7395C22.0304 13.6181 21.9567 13.5078 21.8638 13.4149C21.7708 13.3219 21.6605 13.2482 21.5391 13.198C21.4178 13.1477 21.2876 13.1218 21.1562 13.1218C21.0249 13.1218 20.8947 13.1477 20.7734 13.198C20.652 13.2482 20.5417 13.3219 20.4487 13.4149L17.1562 16.7086V5.12236C17.1562 4.85714 17.0509 4.60279 16.8634 4.41525C16.6758 4.22772 16.4215 4.12236 16.1562 4.12236C15.891 4.12236 15.6367 4.22772 15.4491 4.41525C15.2616 4.60279 15.1562 4.85714 15.1562 5.12236V16.7086L11.8638 13.4149C11.6761 13.2272 11.4216 13.1218 11.1562 13.1218C10.8909 13.1218 10.6364 13.2272 10.4487 13.4149C10.2611 13.6025 10.1557 13.857 10.1557 14.1224C10.1557 14.3877 10.2611 14.6422 10.4487 14.8299L15.4487 19.8299Z" fill="currentColor"/>
+                                </svg></a>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> *@

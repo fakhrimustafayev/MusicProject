@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MusicProject.Data;
+using Microsoft.AspNetCore.Identity;
+using MusicProject.Areas.admin.ViewModels;
 using MusicProject.Models;
 
 namespace MusicProject.Areas.admin.Controllers
@@ -13,158 +14,112 @@ namespace MusicProject.Areas.admin.Controllers
     [Area("admin")]
     public class UsersController : Controller
     {
+        private readonly UserManager<User> _userManager;
 
+        public UsersController(UserManager<User> userManager)
+        {
+            _userManager = userManager;
+        }
 
         public async Task<IActionResult> Index()
         {
-            return View(/*await _context.User.ToListAsync()*/);
+            var users = await _userManager.Users.ToListAsync();
+            var userIdMap = new Dictionary<string, int>();
+            for (int i = 0; i < users.Count; i++)
+            {
+                userIdMap[users[i].Id] = i + 1;
+            }
+            var model = new AdminViewModel(users.Count)
+            {
+                Users = users,
+                UserIdMap = userIdMap
+            };
+            return View(model);
         }
-        #region Comment
+        [HttpGet]
+        public IActionResult AddUser()
+        {
+            // Your logic to prepare the view for adding a new user
+            return View();
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> AddUser(User newUser)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userManager.CreateAsync(newUser);
+                if (result.Succeeded)
+                {
+                    return Json(new { success = true, message = "User added successfully" });
+                }
+                else
+                {
+                    var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                    return Json(new { success = false, message = "Failed to add user: " + errors });
+                }
+            }
+            else
+            {
+                return Json(new { success = false, message = "Invalid user data" });
+            }
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> EditUser(User editedUser)
+        {
+            if (ModelState.IsValid)
+            {
+                var existingUser = await _userManager.FindByIdAsync(editedUser.Id);
+                if (existingUser != null)
+                {
+                    existingUser.UserName = editedUser.UserName;
+                    existingUser.Email = editedUser.Email;
 
-        //private readonly MusicProjectContext _context;
+                    var result = await _userManager.UpdateAsync(existingUser);
+                    if (result.Succeeded)
+                    {
+                        return Json(new { success = true, message = "User edited successfully" });
+                    }
+                    else
+                    {
+                        var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                        return Json(new { success = false, message = "Failed to edit user: " + errors });
+                    }
+                }
+                else
+                {
+                    return Json(new { success = false, message = "User not found" });
+                }
+            }
+            else
+            {
+                return Json(new { success = false, message = "Invalid user data" });
+            }
+        }
 
-        //public UsersController(MusicProjectContext context)
-        //{
-        //    _context = context;
-        //}
-
-
-        //// GET: admin/Users
-        //public async Task<IActionResult> Index()
-        //{
-        //    return View(await _context.User.ToListAsync());
-        //}
-
-        //// GET: admin/Users/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var user = await _context.User
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(user);
-        //}
-
-        //// GET: admin/Users/Create
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
-
-        //// POST: admin/Users/Create
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Id,Username,Email,Password")] User user)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(user);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(user);
-        //}
-
-        //// GET: admin/Users/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var user = await _context.User.FindAsync(id);
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(user);
-        //}
-
-        //// POST: admin/Users/Edit/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("Id,Username,Email,Password")] User user)
-        //{
-        //    if (id != user.Id)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(user);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!UserExists(user.Id))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(user);
-        //}
-
-        //// GET: admin/Users/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var user = await _context.User
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(user);
-        //}
-
-        //// POST: admin/Users/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    var user = await _context.User.FindAsync(id);
-        //    if (user != null)
-        //    {
-        //        _context.User.Remove(user);
-        //    }
-
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
-
-        //private bool UserExists(int id)
-        //{
-        //    return _context.User.Any(e => e.Id == id);
-        //} 
-        #endregion
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                var result = await _userManager.DeleteAsync(user);
+                if (result.Succeeded)
+                {
+                    return Json(new { success = true, message = "User deleted successfully" });
+                }
+                else
+                {
+                    var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                    return Json(new { success = false, message = "Failed to delete user: " + errors });
+                }
+            }
+            else
+            {
+                return Json(new { success = false, message = "User not found" });
+            }
+        }
     }
 }
+

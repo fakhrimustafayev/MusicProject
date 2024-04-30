@@ -1,17 +1,32 @@
-﻿<aside class="sidebar sidebar-base sidebar-white sidebar-default  " id="first-tour"
+﻿@model MusicProject.ViewModels.IndexViewModel
+@* @model MusicProject.Areas.admin.ViewModels.AdminViewModel *@
+@* @model User *@
+
+<aside class="sidebar sidebar-base sidebar-white sidebar-default  " id="first-tour"
        data-toggle="main-sidebar" data-sidebar="responsive">
     <div class="sidebar-header d-flex align-items-center justify-content-center">
-        <a href="index-2.html" class="navbar-brand">
+        <a asp-controller="Home" asp-action="Index" class="navbar-brand">
 
             <!--Logo start-->
-            <div class="logo-main">
+          @*   <div class="logo-main">
                 <img src="https://templates.iqonic.design/muzik/html/assets/images/logo.svg" class="logo-normal img-fluid" alt="logo">
                 <img src="https://templates.iqonic.design/muzik/html/assets/images/logo-dark.svg" class="logo-normal dark-normal img-fluid" alt="logo-dark">
                 <img src="https://templates.iqonic.design/muzik/html/assets/images/logo-color.svg" class="logo-normal white-normal img-fluid" alt="logo-color">
                 <img src="https://templates.iqonic.design/muzik/html/assets/images/logo-mini.svg" class="logo-mini img-fluid" alt="logo-mini">
                 <img src="https://templates.iqonic.design/muzik/html/assets/images/logo-dark-mini.svg" class="logo-mini dark-mini img-fluid" alt="logo-dark-mini">
                 <img src="https://templates.iqonic.design/muzik/html/assets/images/logo-color-mini.svg" class="logo-mini white-mini img-fluid" alt="logo-white-mini">
+            </div> *@
+            <div class="logo-main">
+                <img src="~/assets/thirtify.png" class="logo-normal img-fluid large-logo" alt="logo" style="width: 150px; height: 150px;">
             </div>
+
+            <style>
+                .large-logo {
+                    width: 200px !important;
+                    height: 95px !important;
+                }
+            </style>
+
             <!--logo End-->
         </a>
         <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
@@ -64,42 +79,7 @@
                     </a>
                     <ul class="sub-nav collapse" id="home-menu" data-bs-parent="#sidebar-menu">
                         <li class="nav-item">
-                            <a class="nav-link active"
-                               href="index-2.html">
-                                <i class="icon">
-                                    <svg class="icon-10" width="10" viewBox="0 0 24 24" fill="currentColor"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                        </g>
-                                    </svg>
-                                </i>
-                                <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="Dashboard" data-bs-placement="right">
-                                    H
-                                </i>
-                                <span class="item-name"> Dashboard </span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link "
-                               href="release.html">
-                                <i class="icon svg-icon">
-                                    <svg class="icon-10" width="10" viewBox="0 0 24 24" fill="currentColor"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                        </g>
-                                    </svg>
-                                </i>
-                                <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="Release" data-bs-placement="right">
-                                    R
-                                </i>
-                                <span class="item-name">Release</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link "
-                               href="albums.html">
+                            <a class="nav-link" href="@Url.Action("Index", "Albums")">
                                 <i class="icon">
                                     <svg class="icon-10" width="10" viewBox="0 0 24 24" fill="currentColor"
                                          xmlns="http://www.w3.org/2000/svg">
@@ -116,129 +96,69 @@
                         </li>
                     </ul>
                 </li>
+               
+@*                 @if (Model.User != null && Model.User.UserName == "Admin")
+                { *@
+                   @*  <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-user" role="button" aria-expanded="false"
+                           aria-controls="sidebar-user">
+                            <i class="icon" data-bs-toggle="tooltip" title="Users" data-bs-placement="right">
+                                <svg class="icon-20" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <g clip-path="url(#clip0_389_11969)">
+                                        <path d="M10 12.5C12.7614 12.5 15 10.2614 15 7.5C15 4.73858 12.7614 2.5 10 2.5C7.23858 2.5 5 4.73858 5 7.5C5 10.2614 7.23858 12.5 10 12.5Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M2.5 16.875C4.01328 14.2602 6.76172 12.5 10 12.5C13.2383 12.5 15.9867 14.2602 17.5 16.875" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_389_11969">
+                                            <rect width="20" height="20" fill="white" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </i>
+                            <span class="item-name">Users</span>
+                            <i class="right-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" class="icon-18" fill="none" viewBox="0 0 24 24"
+                                     stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </i>
+                        </a>
+                        <ul class="sub-nav collapse" id="sidebar-user" data-bs-parent="#sidebar-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="app/user-add.html">
+                                    <i class="icon">
+                                        <svg class="icon-10" width="10" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <g>
+                                                <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                            </g>
+                                        </svg>
+                                    </i>
+                                    <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="Add User" data-bs-placement="right"> A </i>
+                                    <span class="item-name">Add User</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="app/user-list.html">
+                                    <i class="icon">
+                                        <svg class="icon-10" width="10" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <g>
+                                                <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                            </g>
+                                        </svg>
+                                    </i>
+                                    <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="User List" data-bs-placement="right"> U </i>
+                                    <span class="item-name">User List</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li> *@
+               @*  } *@
+
+
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#admin-menu" role="button" aria-expanded="false"
-                       aria-controls="admin-menu">
-                        <i class="icon" data-bs-toggle="tooltip" title="Admin" data-bs-placement="right">
-                            <svg class="icon-20" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <g clip-path="url(#clip0_389_2900)">
-                                    <path d="M8.4375 12.5C11.0263 12.5 13.125 10.4013 13.125 7.8125C13.125 5.22367 11.0263 3.125 8.4375 3.125C5.84867 3.125 3.75 5.22367 3.75 7.8125C3.75 10.4013 5.84867 12.5 8.4375 12.5Z" stroke="currentColor" stroke-width="1.2" stroke-miterlimit="10" />
-                                    <path d="M1.875 15.625C3.48047 13.7148 5.74688 12.5 8.4375 12.5C11.1281 12.5 13.3945 13.7148 15 15.625" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M16.875 11.875C17.5654 11.875 18.125 11.3154 18.125 10.625C18.125 9.93464 17.5654 9.375 16.875 9.375C16.1846 9.375 15.625 9.93464 15.625 10.625C15.625 11.3154 16.1846 11.875 16.875 11.875Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M16.875 9.375V8.4375" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M15.7922 10L14.9805 9.53125" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M15.7922 11.25L14.9805 11.7188" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M16.875 11.875V12.8125" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M17.9578 11.25L18.7695 11.7188" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M17.9578 10L18.7695 9.53125" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_389_2900">
-                                        <rect width="20" height="20" fill="white" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                        </i>
-                        <span class="item-name">Admin</span>
-                        <i class="right-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" class="icon-18" fill="none" viewBox="0 0 24 24"
-                                 stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                            </svg>
-                        </i>
-                    </a>
-                    <ul class="sub-nav collapse" id="admin-menu" data-bs-parent="#sidebar-menu">
-                        <li class="nav-item">
-                            <a class="nav-link "
-                               href="admin/dashboard.html">
-                                <i class="icon">
-                                    <svg class="icon-10" width="10" viewBox="0 0 24 24" fill="currentColor"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                        </g>
-                                    </svg>
-                                </i>
-                                <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="Admin" data-bs-placement="right">
-                                    A
-                                </i>
-                                <span class="item-name"> Admin </span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link "
-                               href="admin/admin-category.html">
-                                <i class="icon svg-icon">
-                                    <svg class="icon-10" width="10" viewBox="0 0 24 24" fill="currentColor"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                        </g>
-                                    </svg>
-                                </i>
-                                <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="Category" data-bs-placement="right">
-                                    C
-                                </i>
-                                <span class="item-name">Category</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link "
-                               href="admin/admin-writer.html">
-                                <i class="icon">
-                                    <svg class="icon-10" width="10" viewBox="0 0 24 24" fill="currentColor"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                        </g>
-                                    </svg>
-                                </i>
-                                <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="Writer" data-bs-placement="right">
-                                    W
-                                </i>
-                                <span class="item-name">Writer</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link "
-                               href="admin/admin-singer.html">
-                                <i class="icon">
-                                    <svg class="icon-10" width="10" viewBox="0 0 24 24" fill="currentColor"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                        </g>
-                                    </svg>
-                                </i>
-                                <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="Singer" data-bs-placement="right">
-                                    S
-                                </i>
-                                <span class="item-name">Singer</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link "
-                               href="admin/admin-song.html">
-                                <i class="icon">
-                                    <svg class="icon-10" width="10" viewBox="0 0 24 24" fill="currentColor"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                        </g>
-                                    </svg>
-                                </i>
-                                <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="Muzic" data-bs-placement="right">
-                                    M
-                                </i>
-                                <span class="item-name">Muzic</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-user" role="button" aria-expanded="false"
-                       aria-controls="sidebar-user">
-                        <i class="icon" data-bs-toggle="tooltip" title="Users" data-bs-placement="right">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-my-favourites" role="button" aria-expanded="false"
+                       aria-controls="sidebar-my-favourites" onclick="redirectToMyFavorites()">
+                        <i class="icon" data-bs-toggle="tooltip" title="My Favourites" data-bs-placement="right">
                             <svg class="icon-20" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                 <g clip-path="url(#clip0_389_11969)">
                                     <path d="M10 12.5C12.7614 12.5 15 10.2614 15 7.5C15 4.73858 12.7614 2.5 10 2.5C7.23858 2.5 5 4.73858 5 7.5C5 10.2614 7.23858 12.5 10 12.5Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
@@ -251,102 +171,19 @@
                                 </defs>
                             </svg>
                         </i>
-                        <span class="item-name">Users</span>
-                        <i class="right-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" class="icon-18" fill="none" viewBox="0 0 24 24"
-                                 stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                            </svg>
-                        </i>
+                        <span class="item-name">My Favourites</span>
                     </a>
-                    <ul class="sub-nav collapse" id="sidebar-user" data-bs-parent="#sidebar-menu">
-                        <li class="nav-item">
-                            <a class="nav-link "
-                               href="app/user-.html">
-                                <i class="icon">
-                                    <svg class="icon-10" width="10" viewBox="0 0 24 24" fill="currentColor"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                        </g>
-                                    </svg>
-                                </i>
-                                <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="User Profile"
-                                   data-bs-placement="right"> U </i>
-                                <span class="item-name">User Profile</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link "
-                               href="app/user-add.html">
-                                <i class="icon">
-                                    <svg class="icon-10" width="10" viewBox="0 0 24 24" fill="currentColor"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                        </g>
-                                    </svg>
-                                </i>
-                                <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="Add User" data-bs-placement="right">
-                                    A
-                                </i>
-                                <span class="item-name">Add User</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link "
-                               href="app/user-list.html">
-                                <i class="icon">
-                                    <svg class="icon-10" width="10" viewBox="0 0 24 24" fill="currentColor"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                        </g>
-                                    </svg>
-                                </i>
-                                <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="User List" data-bs-placement="right">
-                                    U
-                                </i>
-                                <span class="item-name">User List</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-my-playlist" role="button" aria-expanded="false"
-                       aria-controls="sidebar-my-playlist" onclick="redirectToPlaylistControllerIndex()">
-                        <i class="icon" data-bs-toggle="tooltip" title="My Playlist" data-bs-placement="right">
-                            <svg class="icon-20" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <g clip-path="url(#clip0_389_11969)">
-                                    <path d="M10 12.5C12.7614 12.5 15 10.2614 15 7.5C15 4.73858 12.7614 2.5 10 2.5C7.23858 2.5 5 4.73858 5 7.5C5 10.2614 7.23858 12.5 10 12.5Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M2.5 16.875C4.01328 14.2602 6.76172 12.5 10 12.5C13.2383 12.5 15.9867 14.2602 17.5 16.875" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_389_11969">
-                                        <rect width="20" height="20" fill="white" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                        </i>
-                        <span class="item-name">My Playlist</span>
-                       @*  <i class="right-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" class="icon-18" fill="none" viewBox="0 0 24 24"
-                                 stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                            </svg>
-                        </i> *@
-                    </a>
-                    <ul class="sub-nav collapse" id="sidebar-my-playlist" data-bs-parent="#sidebar-menu">
-                        <!-- Remove the "Add Playlist" option -->
+                    <ul class="sub-nav collapse" id="sidebar-my-favourites" data-bs-parent="#sidebar-menu">
                     </ul>
                 </li>
 
                 <script>
-                    function redirectToPlaylistControllerIndex() {
-                        // Assuming your route to the PlaylistController index is "/playlistcontroller/index"
-                        window.location.href = "/admin/Playlists/Index";
+                    function redirectToMyFavorites() {
+                        // Redirect to the MyFavorites page
+                        window.location.href = "/Track/MyFavorites";
                     }
                 </script>
+
 
             </ul>
 

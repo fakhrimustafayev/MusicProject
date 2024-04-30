@@ -27,7 +27,7 @@ public class Playlist
     public DateTime CreationDate { get; set; }
     public string Md5Image { get; set; }
     public string PictureType { get; set; }
-    public Creator Creator { get; set; }
+    //public Creator Creator { get; set; }
 
     public string Description { get; set; }
 }

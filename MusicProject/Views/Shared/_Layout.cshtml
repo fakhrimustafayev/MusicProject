@@ -1,57 +1,15 @@
 ﻿<!doctype html>
 <html lang="en" dir="ltr">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title data-setting="app_name" data-rightJoin=" Responsive Bootstrap 5 Admin Dashboard Template">Muzik Responsive Bootstrap 5 Admin Dashboard Template</title>
-    <meta name="description" content="Muzik is a revolutionary Bootstrap Admin Dashboard Template and UI Components Library. The Admin Dashboard Template and UI Component features 8 modules.">
-    <meta name="keywords" content="premium, admin, dashboard, template, bootstrap 5, clean ui, muzik, admin dashboard,responsive dashboard, optimized dashboard,">
-    <meta name="author" content="Iqonic Design">
-    <meta name="DC.title" content="Muzik Responsive Bootstrap 5 Admin Dashboard Template">
-
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="https://templates.iqonic.design/muzik/html/assets/images/favicon.ico">
-
-    <!-- Library / Plugin Css Build -->
-    <link rel="stylesheet" href="~/assets/css/core/libs.min.css">
-
-    <link rel="stylesheet" href="~/assets/vendor/sheperd/dist/css/sheperd.css">
-
-
-
-
-    <!-- muzik Design System Css -->
-    <link rel="stylesheet" href="~/assets/css/muzik.minf700.css?v=1.0.1">
-
-    <!-- Custom Css -->
-    <link rel="stylesheet" href="~/assets/css/custom.minf700.css?v=1.0.1">
-    <!-- Dark Css -->
-    <link rel="stylesheet" href="~/assets/css/dark.minf700.css?v=1.0.1">
-
-    <!-- Customizer Css -->
-    <link rel="stylesheet" href="~/assets/css/customizer.minf700.css?v=1.0.1">
-
-    <!-- RTL Css -->
-    <link rel="stylesheet" href="~/assets/css/rtl.minf700.css?v=1.0.1">
-
-    <link rel="stylesheet" href="~/assets/vendor/swiperSlider/swiper-bundle.min.css">
-
-
-    <!-- Google Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com/">
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com/">
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet">
-    <meta name="root_path" content="../">
-</head>
+@await Html.PartialAsync("/Views/Partials/HeaderPartial.cshtml")
 
 <body class="  ">
         <!-- loader Start -->
         <div id="loading">
         <div class="loader simple-loader">
-            <div class="loader-body ">
-                <img src="~/assets/images/loader.gif" alt="loader" class=" img-fluid ">
+            <div class="iq-loader-box">
+                <div class="iq-loader-15">
+                    <div class="loader-inner"></div>
+                </div>
             </div>
         </div>
         </div>
@@ -62,7 +20,7 @@
         <!-- Music Player -->
 
         
-    @* @await Html.PartialAsync("/Views/Partials/MusicPlayerPartialFooter.cshtml") *@
+    @* @await Html.PartialAsync("/Views/Partials/Footer.cshtml") *@
 
     @await Html.PartialAsync("/Views/Partials/IqFloatMenu.cshtml")
 
