@@ -17,7 +17,8 @@ namespace MusicProject.ViewModels
         public ArtistOverviewResponse ArtistOverviewResponse { get; set; }
         public IndexViewModel()
         {
-            ArtistOverviewResponse = new ArtistOverviewResponse(); // Initialize the property
+            ArtistOverviewResponse = new ArtistOverviewResponse();
+            ArtistTracks = new ArtistTracks();// Initialize the property
         }
 
         public User User { get; set; }
@@ -27,6 +28,8 @@ namespace MusicProject.ViewModels
 
         public List<GenreViewResponse> GenreViewResponses { get; set; }
         public List<UserFavorite> UserFavorites { get; set; }
+
+        public ArtistTracks ArtistTracks { get; set; }
    
     }
 }

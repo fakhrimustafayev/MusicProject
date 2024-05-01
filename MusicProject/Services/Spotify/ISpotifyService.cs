@@ -25,6 +25,8 @@ namespace MusicProject.Services.Spotify
         Task<SearchResponse> SearchAsync(string query);
 
         Task<GetTrackResponse> GetTrackInfoAsync(string trackId);
+
+        Task<ArtistTracks> GetArtistTracksAsync(string artistId);
         //Task<List<GenreViewResponse>> GetGenreViewsAsync(List<string> genreIds, int limit);
         //Task<TopArtist[]> GetTopArtistsAsync();
 

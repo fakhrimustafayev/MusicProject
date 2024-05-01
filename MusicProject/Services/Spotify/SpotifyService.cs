@@ -338,6 +338,36 @@ namespace MusicProject.Services.Spotify
                 return track;
             }
         }
+
+        public async Task<ArtistTracks> GetArtistTracksAsync(string artistId)
+        {
+            // Construct the request message
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://spotify23.p.rapidapi.com/artist_singles/?id={artistId}&offset=0&limit=20"),
+                Headers =
+            {
+                { "X-RapidAPI-Key", "67b9737f4cmsh37dac4a6c03c434p15a99cjsn7c13997ec06a" },
+                { "X-RapidAPI-Host", "spotify23.p.rapidapi.com" },
+            },
+            };
+
+            // Send the request and process the response
+            using (var response = await _httpClient.SendAsync(request))
+            {
+                // Ensure a successful response
+                response.EnsureSuccessStatusCode();
+
+                // Read the response body as a string
+                var responseBody = await response.Content.ReadAsStringAsync();
+
+                // Deserialize the JSON response to your model class
+                var artistTracks = Newtonsoft.Json.JsonConvert.DeserializeObject<ArtistTracks>(responseBody);
+
+                return artistTracks;
+            }
+        }
     }
 
 

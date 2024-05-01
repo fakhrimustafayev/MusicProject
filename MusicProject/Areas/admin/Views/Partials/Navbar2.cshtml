@@ -6,12 +6,16 @@
                          
                          <!--Logo start-->
                          <div class="logo-main">
-                             <img src="https://templates.iqonic.design/muzik/html/assets/images/logo.svg" class="logo-normal img-fluid" alt="logo">
-                             <img src="https://templates.iqonic.design/muzik/html/assets/images/logo-dark.svg" class="logo-normal dark-normal img-fluid" alt="logo-dark">
-                             <img src="https://templates.iqonic.design/muzik/html/assets/images/logo-color.svg" class="logo-normal white-normal img-fluid" alt="logo-color">
-                             <img src="https://templates.iqonic.design/muzik/html/assets/images/logo-mini.svg" class="logo-mini img-fluid" alt="logo-mini">
-                             <img src="https://templates.iqonic.design/muzik/html/assets/images/logo-dark-mini.svg" class="logo-mini dark-mini img-fluid" alt="logo-dark-mini">
-                             <img src="https://templates.iqonic.design/muzik/html/assets/images/logo-color-mini.svg" class="logo-mini white-mini img-fluid" alt="logo-white-mini">
+                    <div class="logo-main">
+                        <img src="~/assets/thirtify.png" class="logo-normal img-fluid large-logo" alt="logo" style="width: 150px; height: 150px;">
+                    </div>
+
+                    <style>
+                        .large-logo {
+                            width: 200px !important;
+                            height: 95px !important;
+                        }
+                    </style>
                          </div>
                          <!--logo End-->      </a>
                       <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
@@ -25,18 +29,16 @@
                          <div class="offcanvas offcanvas-end shadow-none iq-product-menu-responsive" tabindex="-1" id="offcanvasBottom">
                             <div class="offcanvas-body">
                                <ul class="iq-nav-menu list-unstyled">
-                                  <li class="nav-item">
-                                     <a class="nav-link active" aria-current="page"
-                                        href="index-2.html">
-                                        <span class="item-name">Home</span>
-                                     </a>
-                                  </li>
-                                  <li class="nav-item">
-                                     <a class="nav-link " aria-current="page"
-                                           href="albums.html">
-                                           <span class="item-name">Albums</span>
-                                     </a>
-                                  </li>
+                            <li class="nav-item">
+                                <a asp-controller="Home" asp-action="Index" asp-area="" class="nav-link active" aria-current="page">
+                                    <span class="item-name">Home</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="Albums" asp-action="Index" asp-area="" class="nav-link" aria-current="page">
+                                    <span class="item-name">Albums</span>
+                                </a>
+                            </li>
                                </ul>
                             </div>
                          </div>
@@ -54,36 +56,20 @@
                       </div>
                       <div class="collapse navbar-collapse" id="navbarSupportedContent">
                          <div class="search-box d-xl-block d-none">
-                            <div class="dropdown">
-                               <div class="search-box-drop" id="search-box-drop" data-bs-toggle="dropdown">
-                                  <div class="d-flex align-items-center justify-content-between gap-2">
-                                     <div class="search-box-inner">
-                                        <button type="submit" class="search-box-drop-submit">
-                                           <svg fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                              viewBox="0 0 24 24">
-                                              <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5"
-                                                 stroke-linecap="round" stroke-linejoin="round" />
-                                              <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5"
-                                                 stroke-linecap="round" stroke-linejoin="round" />
-                                           </svg>
-                                        </button>
-                                        <input type="text" placeholder="Search Here...">
-                                     </div>
-                                     <div class="flex-shrink-0 search-box-btn">
-                                        <a class="btn  text-capitalize">
-                                           clt + k
-                                        </a>
-                                     </div>
-                                  </div>
-                               </div>
-                               <ul class="p-0 sub-drop dropdown-menu dropdown-menu-end" aria-labelledby="search-drop">
-                                  <li class="">
-                                     <div class="p-0 card-body all-notification">
-                                        
-                                     </div>
-                                  </li>
-                               </ul>
-                            </div>
+                    <form id="searchForm" action="@Url.Action("Search", "Home")" method="get">
+                        <input type="text" id="searchInput" name="query" placeholder="Search..." /> <!-- Change name to "query" -->
+                        <a id="searchButton" class="button btn button-icon btn-primary" href="#">Search</a>
+                    </form>
+
+                    <script>
+                        document.getElementById('searchButton').addEventListener('click', function () {
+                            var searchQuery = document.getElementById('searchInput').value;
+                            var searchUrl = '@Url.Action("Search", "Home")' + '?query=' + encodeURIComponent(searchQuery);
+                            document.getElementById('searchForm').action = searchUrl;
+                            document.getElementById('searchForm').submit();
+                        });
+                    </script>
+
                          </div>
                          <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
                             <li class="nav-item dropdown d-xl-none d-block">
@@ -125,15 +111,17 @@
                             <div class="iq-profile-badge  bg-success"></div>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile-setting">
-                            <li><a asp-controller="Home" asp-action="Users" class="dropdown-item">Profile</a></li>
+                            <li><a asp-controller="Home" asp-action="Users" asp-area="" class="dropdown-item">Profile</a></li>
                             @if (User.Identity.IsAuthenticated)
                             {
-                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                                <li>
+                                    <a asp-controller="Account" asp-action="Logout" asp-area="" class="dropdown-item">Logout</a>
+                                </li>
                             }
                             else
                             {
                                 <li>
-                                    <a asp-controller="Account" asp-action="Login" class="dropdown-item">
+                                    <a asp-controller="Account" asp-action="Login" asp-area="" class="dropdown-item">
                                         Login
                                     </a>
                                 </li>

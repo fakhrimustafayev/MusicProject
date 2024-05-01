@@ -120,7 +120,7 @@
                             <li><a asp-controller="Home" asp-action="Users" class="dropdown-item">Profile</a></li>
                             @if (User.Identity.IsAuthenticated)
                             {
-                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("Logout", "Account")">Logout</a></li>
                             }
                             else
                             {

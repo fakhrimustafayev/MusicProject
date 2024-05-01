@@ -10,7 +10,12 @@ namespace MusicProject.Models;
     // public byte[]? ProfileImage { get; set; }
 
     public DateTime JoinDate { get; set; } = DateTime.UtcNow;
-    public ICollection<UserFavorite> FavoriteTracks { get; set; }
+    public ICollection<UserFavorite>? FavoriteTracks { get; set; }
+
+
+    //[Required(ErrorMessage = "The UserName field is required.")]
+    //[RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "Username can only contain letters or digits.")]
+    //public string UserName { get; set; }
 
     //[StringLength(100)]
     //[MaxLength(100)]

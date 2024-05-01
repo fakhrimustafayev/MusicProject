@@ -44,59 +44,100 @@ namespace MusicProject.Areas.admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddUser(User newUser)
+        public async Task<IActionResult> AddUser(User user)
         {
             if (ModelState.IsValid)
             {
-                var result = await _userManager.CreateAsync(newUser);
+                var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
-                    return Json(new { success = true, message = "User added successfully" });
+                    // User creation succeeded, redirect to the Index action in the admin/Home controller
+                    return RedirectToAction("Index", "Home", new { area = "admin" });
                 }
-                else
+                foreach (var error in result.Errors)
                 {
-                    var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-                    return Json(new { success = false, message = "Failed to add user: " + errors });
+                    ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-            else
-            {
-                return Json(new { success = false, message = "Invalid user data" });
-            }
+            // If ModelState is not valid or user creation failed, return to the view with errors
+            return View(user); // Assuming you have a view for adding users
         }
 
-        [HttpPost]
-        public async Task<IActionResult> EditUser(User editedUser)
+
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> EditUser(string id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var model = new AdminViewModel(0) // Pass appropriate value for TotalUsers
+            {
+                User = user
+            };
+
+            return View(model); // Pass the AdminViewModel instance to the view
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditUser(string id, User user)
+        {
+            if (id != user.Id)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
-                var existingUser = await _userManager.FindByIdAsync(editedUser.Id);
-                if (existingUser != null)
+                try
                 {
-                    existingUser.UserName = editedUser.UserName;
-                    existingUser.Email = editedUser.Email;
+                    var existingUser = await _userManager.FindByIdAsync(id);
+                    existingUser.UserName = user.UserName;
+                    existingUser.Email = user.Email;
+                    existingUser.PhoneNumber = user.PhoneNumber;
 
                     var result = await _userManager.UpdateAsync(existingUser);
                     if (result.Succeeded)
                     {
-                        return Json(new { success = true, message = "User edited successfully" });
+                        return RedirectToAction("Index", "Home", new { area = "admin" });
+                    }
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UserExists(id))
+                    {
+                        return NotFound();
                     }
                     else
                     {
-                        var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-                        return Json(new { success = false, message = "Failed to edit user: " + errors });
+                        throw;
                     }
                 }
-                else
-                {
-                    return Json(new { success = false, message = "User not found" });
-                }
             }
-            else
-            {
-                return Json(new { success = false, message = "Invalid user data" });
-            }
+            return View(user); // Return to the edit view with errors if ModelState is not valid
         }
+
+        private bool UserExists(string id)
+        {
+            return _userManager.Users.Any(u => u.Id == id);
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> DeleteUser(string userId)
@@ -122,4 +163,3 @@ namespace MusicProject.Areas.admin.Controllers
         }
     }
 }
-

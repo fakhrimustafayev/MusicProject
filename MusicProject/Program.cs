@@ -47,6 +47,7 @@ builder.Services.AddIdentity<User, IdentityRole>(
     })
     .AddEntityFrameworkStores<MusicProjectContext>().AddDefaultTokenProviders();
 
+builder.Services.AddScoped<PasswordHasher<User>>();
 
 var app = builder.Build();
 
