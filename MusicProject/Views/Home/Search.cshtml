@@ -21,68 +21,6 @@
     @await Html.PartialAsync("/Views/Partials/AsidePartial.cshtml")
     <main class="main-content">
         @await Html.PartialAsync("/Views/Partials/Navbar2.cshtml")
-        @* <div class="content-inner container-fluid pb-0" id="page_layout">
-            <div class="row mb-4">
-                <div class="col-lg-12">
-                    <div class="card-header mb-3">
-                        <div class="header-title">
-                            <h4 class="card-title text-capitalize">Genres</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            @if (Model != null && Model.SearchResponse.users != null)
-            {
-                <h3>Users</h3>
-                <div class="row">
-                    @foreach (var userItem in Model.SearchResponse.users.items)
-                    {
-                        <div class="col-md-4 mb-3">
-                            <div>@userItem.data.displayName</div>
-                            <img src="@userItem.data.image.smallImageUrl" alt="User Image" />
-                        </div>
-                    }
-                </div>
-            }
-
-            @if (Model != null && Model.SearchResponse.albums != null && Model.SearchResponse.albums.items != null)
-            {
-                <h3>Albums</h3>
-                <div class="row">
-                    @foreach (var albumItem in Model.SearchResponse.albums.items)
-                    {
-                        <div class="col-md-4 mb-3">
-                            <div>@albumItem.data.name</div>
-                            @if (albumItem.data.coverArt != null && albumItem.data.coverArt.sources != null)
-                            {
-                                <div class="row">
-                                    @foreach (var source in albumItem.data.coverArt.sources)
-                                    {
-                                        <div class="col-md-6">
-                                            <img src="@source.url" alt="Cover Art" />
-                                        </div>
-                                    }
-                                </div>
-                            }
-                        </div>
-                    }
-                </div>
-            }
-
-            @if (Model != null && Model.SearchResponse.playlists != null && Model.SearchResponse.playlists.items != null)
-            {
-                <h3>Playlists</h3>
-                <div class="row">
-                    @foreach (var playlistItem in Model.SearchResponse.playlists.items)
-                    {
-                        <div class="col-md-4 mb-3">
-                            <div>@playlistItem.data.name</div>
-                        </div>
-                    }
-                </div>
-            }
-        </div> *@
         <div class="content-inner container-fluid pb-0" id="page_layout">
             <div class="row mb-4">
                 <div class="col-lg-12">

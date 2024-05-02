@@ -28,45 +28,7 @@ namespace MusicProject.Controllers
             _httpClient = httpClient;
         }
 
-        //[HttpPost]
-        //public IActionResult ToggleFavorite(string trackId, bool isFavorite)
-        //{
-        //    var userId = _userManager.GetUserId(User);
 
-        //    if (string.IsNullOrEmpty(userId))
-        //    {
-        //        return Json(new { success = false, message = "User not authenticated." });
-        //    }
-
-        //    try
-        //    {
-        //        var track = _context.Tracks.FirstOrDefault(t => t.id == trackId && t.UserId == userId);
-
-        //        if (track == null)
-        //        {
-        //            track = new SpoTrack
-        //            {
-        //                id = trackId,
-        //                UserId = userId,
-        //                IsFavorite = isFavorite,
-        //                name = "Default Track Name"
-        //            };
-        //            _context.Tracks.Add(track);
-        //        }
-        //        else
-        //        {
-        //            track.IsFavorite = !isFavorite;
-        //        }
-
-        //        _context.SaveChanges();
-
-        //        return Json(new { success = true, isFavorite = track.IsFavorite });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Json(new { success = false, message = "Error toggling favorite status: " + ex.Message });
-        //    }
-        //}
 
         [HttpPost]
         public async Task<IActionResult> AddToFavorites(string trackId)

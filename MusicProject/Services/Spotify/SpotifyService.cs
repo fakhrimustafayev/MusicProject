@@ -17,26 +17,6 @@ namespace MusicProject.Services.Spotify
             _httpClient.DefaultRequestHeaders.Add("X-RapidAPI-Key", "67b9737f4cmsh37dac4a6c03c434p15a99cjsn7c13997ec06a");
             _httpClient.DefaultRequestHeaders.Add("X-RapidAPI-Host", "spotify81.p.rapidapi.com");
         }
-        //public async Task<IEnumerable<Release>> GetNewReleases(string countryCode, int limit, string accessToken)
-        //{
-        //    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-        //    var response = await _httpClient.GetAsync($"browse/new-releases?country={countryCode}&limit={limit}");
-
-        //    response.EnsureSuccessStatusCode();
-
-        //    using var responseStream = await response.Content.ReadAsStreamAsync();
-        //    var responseObject = await System.Text.Json.JsonSerializer.DeserializeAsync<GetNewReleaseResult>(responseStream);
-
-        //    return responseObject?.albums?.items.Select(i => new Release
-        //    {
-        //        Name = i.name,
-        //        Date = i.release_date,
-        //        ImageUrl = i.images.FirstOrDefault().url,
-        //        Link = i.external_urls.spotify,
-        //        Artists = string.Join(",", i.artists.Select(i => i.name))
-        //    });
-        //}
 
         public async Task<string> GetTopTracks()
         {
@@ -172,37 +152,6 @@ namespace MusicProject.Services.Spotify
                 return tracks;
             }
         }
-
-        //public async Task<TopArtist[]> GetTopArtistsAsync()
-        //{
-        //    var response = await _httpClient.GetAsync("https://spotify81.p.rapidapi.com/top_20_by_monthly_listeners");
-        //    response.EnsureSuccessStatusCode();
-        //    var responseBody = await response.Content.ReadAsStringAsync();
-        //    var topArtists = JsonConvert.DeserializeObject<TopArtist[]>(responseBody);
-        //    return topArtists;
-        //}
-
-        //public async Task<List<ArtistResponse>> GetRelatedArtistsAsync()
-        //{
-        //    var request = new HttpRequestMessage
-        //    {
-        //        Method = HttpMethod.Get,
-        //        RequestUri = new Uri("https://spotify-web2.p.rapidapi.com/search/?q=weeknd&type=multi&offset=0&limit=10&numberOfTopResults=5"),
-        //        Headers =
-        //    {
-        //        { "X-RapidAPI-Key", "67b9737f4cmsh37dac4a6c03c434p15a99cjsn7c13997ec06a" },
-        //        { "X-RapidAPI-Host", "spotify-web2.p.rapidapi.com" },
-        //    },
-        //    };
-
-        //    using (var response = await _httpClient.SendAsync(request))
-        //    {
-        //        response.EnsureSuccessStatusCode();
-        //        var body = await response.Content.ReadAsStringAsync();
-        //        var artists = JsonConvert.DeserializeObject<List<ArtistResponse>>(body);
-        //        return artists;
-        //    }
-        //}
 
         public async Task<SpotifyArtistResponse> GetArtistsDataAsync(List<string> artistIds)
         {

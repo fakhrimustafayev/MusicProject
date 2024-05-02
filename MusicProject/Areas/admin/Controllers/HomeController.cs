@@ -43,11 +43,11 @@ namespace MusicProject.Areas.admin.Controllers
             var userToDelete = await _userManager.FindByIdAsync(userId);
             if (userToDelete == null)
             {
-                return NotFound(); // Or handle not found scenario appropriately
+                return NotFound(); 
             }
 
             await _userService.DeleteUserAsync(userId);
-            return RedirectToAction("Index", "Home", new { area = "admin" }); // Redirect to admin dashboard or user list
+            return RedirectToAction("Index", "Home", new { area = "admin" });
         }
     }
 }

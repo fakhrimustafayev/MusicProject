@@ -39,7 +39,6 @@ namespace MusicProject.Areas.admin.Controllers
         [HttpGet]
         public IActionResult AddUser()
         {
-            // Your logic to prepare the view for adding a new user
             return View();
         }
 
@@ -51,7 +50,6 @@ namespace MusicProject.Areas.admin.Controllers
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
-                    // User creation succeeded, redirect to the Index action in the admin/Home controller
                     return RedirectToAction("Index", "Home", new { area = "admin" });
                 }
                 foreach (var error in result.Errors)
@@ -59,8 +57,7 @@ namespace MusicProject.Areas.admin.Controllers
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-            // If ModelState is not valid or user creation failed, return to the view with errors
-            return View(user); // Assuming you have a view for adding users
+            return View(user); 
         }
 
 

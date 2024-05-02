@@ -19,27 +19,6 @@ namespace MusicProject.Controllers
             _spotifyService = spotifyService;
         }
 
-        //    public async Task<IActionResult> Index()
-        //    {
-        //        var genreIds = new List<string>
-        //{
-        //    "0JQ5DAqbMKFEC4WFtoNRpw", // Pop genre ID
-        //    "0JQ5DAqbMKFQ00XGBls6ym",// Hip-hop genre ID
-        //    "0JQ5DAqbMKFDXXwE9BDJAr",
-        //    "0JQ5DAqbMKFAJ5xb0fwo9m",
-        //    "0JQ5DAqbMKFPrEiAOxgac3"
-        //};
-
-        //        var genreViewResponses = await _spotifyService.GetGenreViewsAsync(genreIds);
-
-        //        var viewModel = new IndexViewModel
-        //        {
-        //            GenreViewResponses = genreViewResponses
-        //        };
-
-        //        return View(viewModel);
-        //    }
-
         public async Task<IActionResult> Index()
         {
             // Display the list of genres for selection
@@ -56,7 +35,7 @@ namespace MusicProject.Controllers
                 GenreViewResponses = genreViewResponses
             };
 
-            return View("Pop", viewModel); // Render the same view as Index with Pop genre data
+            return View("Pop", viewModel); 
         }
 
         public async Task<IActionResult> HipHop()
@@ -69,7 +48,7 @@ namespace MusicProject.Controllers
                 GenreViewResponses = genreViewResponses
             };
 
-            return View("HipHop", viewModel); // Render the same view as Index with Hip-Hop genre data
+            return View("HipHop", viewModel); 
         }
 
 
@@ -83,7 +62,7 @@ namespace MusicProject.Controllers
                 GenreViewResponses = genreViewResponses
             };
 
-            return View("Rock", viewModel); // Render the same view as Index with Pop genre data
+            return View("Rock", viewModel);
         }
 
         public async Task<IActionResult> Jazz()
@@ -96,7 +75,7 @@ namespace MusicProject.Controllers
                 GenreViewResponses = genreViewResponses
             };
 
-            return View("Jazz", viewModel); // Render the same view as Index with Hip-Hop genre data
+            return View("Jazz", viewModel); 
         }
 
         public async Task<IActionResult> Classical()
@@ -109,7 +88,7 @@ namespace MusicProject.Controllers
                 GenreViewResponses = genreViewResponses
             };
 
-            return View("Classical", viewModel); // Render the same view as Index with Pop genre data
+            return View("Classical", viewModel); 
         }
 
 

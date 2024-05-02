@@ -56,23 +56,22 @@ namespace MusicProject.Controllers
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
 
-                    // Check if the user is an admin
-                    var isAdmin = User.IsInRole("Admin"); // Assuming you have roles set up
+                    var isAdmin = User.IsInRole("Admin"); 
 
-                    // Redirect to different views based on user role
+                    
                     if (isAdmin)
                     {
-                        // Redirect to Admin Dashboard or Admin-specific view
+             
                         return RedirectToAction("Index", "Home", new { area = "admin" });
                     }
                     else
                     {
-                        // Redirect to a general success view for non-admin users
+
                         return RedirectToAction("RegistrationSuccess", "Account");
                     }
                 }
 
-                // Handle other registration errors
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
@@ -123,16 +122,16 @@ namespace MusicProject.Controllers
 
             if (user == null)
             {
-                return NotFound(); // Or handle the case where the user is not found
+                return NotFound();
             }
 
             var editUserViewModel = new EditUserViewModel
             {
-                // Id = user.Id, // Assuming Id is a property in your EditUserViewModel
+
                 UserName = user.UserName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber
-                // Other properties as needed
+
             };
 
             return View(editUserViewModel);
@@ -156,7 +155,7 @@ namespace MusicProject.Controllers
                 var result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home"); // Redirect to the home page upon successful update
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -166,10 +165,10 @@ namespace MusicProject.Controllers
                     }
                 }
             }
-            return View(model); // If model state is invalid, return the edit view with validation errors
+            return View(model); 
         }
 
-        [HttpGet] // This action is for displaying the delete view, so it should use HTTP GET
+        [HttpGet] 
         public IActionResult Delete()
         {
             return View();
@@ -181,92 +180,22 @@ namespace MusicProject.Controllers
             var currentUser = await _userManager.GetUserAsync(User); // Get the current logged-in user
 
             var userToDelete = await _userManager.FindByNameAsync(username);
-            if (userToDelete == null || userToDelete.Id != currentUser.Id) // Check if the user to delete is the current user
+            if (userToDelete == null || userToDelete.Id != currentUser.Id) 
             {
                 ModelState.AddModelError(string.Empty, "Invalid request.");
-                return View("Delete"); // Return to the Delete view with the error message
+                return View("Delete"); 
             }
 
-            // Validate the username and password
             var signInResult = await _signInManager.CheckPasswordSignInAsync(userToDelete, password, false);
             if (!signInResult.Succeeded)
             {
                 ModelState.AddModelError(string.Empty, "Invalid username or password.");
-                return View("Delete"); // Return to the Delete view with the error message
+                return View("Delete"); 
             }
 
-            // Proceed with deleting the user if the credentials are correct
             await _userService.DeleteUserAsync(userToDelete.Id);
-            return RedirectToAction("Login", "Account"); // Redirect to the login page after successful deletion
+            return RedirectToAction("Login", "Account"); 
         }
-
-        //// ToggleFavorite action in AccountController
-        //[HttpPost]
-        //public IActionResult ToggleFavorite(string trackId, bool isFavorite)
-        //{
-        //    var userId = _userManager.GetUserId(User);
-
-        //    if (string.IsNullOrEmpty(userId))
-        //    {
-        //        return Json(new { success = false, message = "User not authenticated." });
-        //    }
-
-        //    try
-        //    {
-        //        var track = _context.Tracks.FirstOrDefault(t => t.id == trackId && t.UserId == userId);
-
-        //        if (track == null)
-        //        {
-        //            // Create a new track object and mark it as favorite
-        //            track = new SpoTrack
-        //            {
-        //                id = trackId,
-        //                UserId = userId,
-        //                IsFavorite = isFavorite,
-        //                // Set other required properties such as 'name'
-        //                name = "Default Track Name" // Example: Set a default name
-        //            };
-        //            _context.Tracks.Add(track);
-        //        }
-        //        else
-        //        {
-        //            // Toggle the favorite status
-        //            track.IsFavorite = !isFavorite;
-        //        }
-
-        //        _context.SaveChanges();
-
-        //        return Json(new { success = true, isFavorite = track.IsFavorite });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Json(new { success = false, message = "Error toggling favorite status: " + ex.Message });
-        //    }
-        //}
-
-
-
-        //[HttpGet]
-        //public IActionResult MyFavorites()
-        //{
-        //    var userId = _userManager.GetUserId(User); // Get the current user ID
-
-        //    if (userId == null)
-        //    {
-        //        return RedirectToAction("Login", "Account"); // Redirect to login if user not authenticated
-        //    }
-
-        //    var favoriteTracks = _context.Tracks.Where(t => t.UserId == userId && t.IsFavorite).ToList();
-
-        //    var viewModel = new IndexViewModel
-        //    {
-        //        FavoriteTracks = favoriteTracks
-        //        // Initialize other properties of the view model as needed
-        //    };
-
-        //    return View(viewModel);
-        //}
-
 
 
 

@@ -31,19 +31,6 @@ namespace MusicProject.Data
             modelBuilder.Entity<SpoTrack>()
                 .HasKey(track => track.id);
 
-            // Configure foreign key for UserFavorite to User without cascade delete
-            //modelBuilder.Entity<UserFavorite>()
-            //    .HasOne(uf => uf.User)
-            //    .WithMany(u => u.FavoriteTracks)
-            //    .HasForeignKey(uf => uf.UserId)
-            //    .OnDelete(DeleteBehavior.ClientSetNull); // or DeleteBehavior.SetNull, depending on your needs
-
-            //// Configure foreign key for UserFavorite to SpoTrack without cascade delete
-            //modelBuilder.Entity<UserFavorite>()
-            //    .HasOne(uf => uf.SpoTrack)
-            //    .WithMany()
-            //    .HasForeignKey(uf => uf.TrackId)
-            //    .OnDelete(DeleteBehavior.ClientSetNull); // or DeleteBehavior.SetNull, depending on your needs
 
             modelBuilder.Entity<SpoAlbum>()
           .HasMany(album => album.artists)

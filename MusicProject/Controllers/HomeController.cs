@@ -29,46 +29,7 @@ namespace MusicProject.Controllers
 
         public async Task<IActionResult> Index()
         {
-            //var newReleases = await GetReleases();
-            //return View(newReleases);
 
-            //var topTracksResponse = await _spotifyService.GetTopTracks();
-            //var topTracks = JsonConvert.DeserializeObject<List<SpotifyTrack>>(topTracksResponse);
-            //return View(topTracks);
-
-
-
-            //var playlistResponse = await _spotifyService.GetPlaylistAsync(playlistId);
-            //ViewBag.PlaylistResponse = playlistResponse;
-            //return View(playlistResponse);
-
-            //var playlistId = "37i9dQZF1DX4Wsb4d7NKfP";
-            //var tracks = await _spotifyService.GetPlaylistTracksAsync(playlistId);
-            //return View(tracks);
-
-            //var homeResponse = await _spotifyService.GetSpotifyHomepageAsync();
-            //return View(homeResponse);
-
-            //string episodeId = "3LEK1k9KaFRLAmPwMbj3o9"; // Replace with the actual episode ID you want to fetch
-            //var episodes = await _spotifyService.GetPodcastEpisodesAsync(episodeId);
-            //return View(episodes);
-
-            //var recommendations = await _spotifyService.GetRecommendationsAsync();
-            //return View(recommendations);
-
-            //var topArtists = await _spotifyService.GetTopArtistsAsync();
-            //return View(topArtists);
-
-            //var relatedArtists = await _spotifyService.GetRelatedArtistsAsync();
-            //return View(relatedArtists);
-
-
-
-            //var artistId = "2w9zwq3AktTeYYMuhMjju8"; // Replace with actual artist ID
-            //var artistOverview = await _spotifyService.GetArtistOverviewAsync(artistId);
-
-            //// Do something with the artist overview, such as passing it to the view
-            //return View(artistOverview);
 
             var homeResponse = await _spotifyService.GetSpotifyHomepageAsync();
             var recommendations = await _spotifyService.GetRecommendationsAsync();
@@ -85,17 +46,13 @@ namespace MusicProject.Controllers
 
             var artistsData = await _spotifyService.GetArtistsDataAsync(artistIds);
 
-            //var trackId = "4WNcduiCmDNfmTEz7JvmLv";
 
-           // var trackResponse = await _spotifyService.GetTrackInfoAsync("4WNcduiCmDNfmTEz7JvmLv");
-            //return View(artistsData);
 
             var model = new IndexViewModel
             {
                 HomeResponse = homeResponse,
                 TrackRecommendationResponse = recommendations,
                 SpotifyArtistResponse = artistsData,
-              //  GetTrackResponse = trackResponse
             };
 
             return View(model);
@@ -108,7 +65,6 @@ namespace MusicProject.Controllers
         {
             if (string.IsNullOrEmpty(query))
             {
-                // Handle empty or invalid input
                 return RedirectToAction("Index");
             }
 
@@ -119,28 +75,11 @@ namespace MusicProject.Controllers
                 SearchResponse = searchResult,
             };
 
-            // Pass the search result to the view
+    
             return View(viewModel);
         }
 
 
-        //private async Task<IEnumerable<Release>> GetReleases()
-        //{
-        //    try
-        //    {
-        //        var token = await _spotifyAccountService.GetToken(_configuration["Spotify:ClientId"], _configuration["Spotify:ClientSecret"]);
-
-        //        var newReleases = await _spotifyService.GetNewReleases("US", 20, token);
-
-        //        return newReleases;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Debug.Write(ex);
-
-        //        return Enumerable.Empty<Release>();
-        //    }
-        //}
 
         public async Task<IActionResult> Users()
         {
@@ -149,17 +88,16 @@ namespace MusicProject.Controllers
 
             if (user == null)
             {
-                return NotFound(); // Or handle the case where the user is not found
+                return NotFound(); 
             }
 
-            // Assuming you have a service or method to populate the other properties of IndexViewModel
             var indexViewModel = new IndexViewModel
             {
                 User = user,
-                // Populate other properties as needed
+            
             };
 
-            return View(indexViewModel); // Pass IndexViewModel to the view
+            return View(indexViewModel); 
         }
 
         public IActionResult Privacy()
